@@ -79,6 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/sim"
+                        tools:ignore="ContentDescription"
                         />
 
                 </androidx.cardview.widget.CardView>
@@ -90,6 +91,7 @@
                     android:src="@drawable/ic_visa"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription"
                     />
 
                 <TextView
@@ -100,7 +102,7 @@
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/ic_subtraction_a"
                     android:gravity="center"
-                    android:hint="Card Number: 0000 0000 0000 0000"
+                    android:hint="@string/card_number_0000_0000_0000_0000"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     app:layout_constraintBottom_toTopOf="@id/expiryDate"

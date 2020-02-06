@@ -17,8 +17,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.easypay.R;
-import com.example.easypay.ui.qrcode.capture.ScanQrFragment;
-import com.example.easypay.ui.qrcode.scan.MyQrFragment;
+import com.example.easypay.ui.qrcode.my.MyQrFragment;
+import com.example.easypay.ui.qrcode.scan.ScanQrFragment;
 import com.example.easypay.ui.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;

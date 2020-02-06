@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.easypay"
+    android:targetSandboxVersion="1"
     >
+
+    <!--    <uses-feature-->
+    <!--        android:name="android.hardware.camera2"-->
+    <!--        android:required="true"-->
+    <!--        />-->
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -14,9 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         >
-        <activity android:name=".ui.card.CardActivity"></activity>
+        <activity android:name=".ui.card.CardActivity" />
         <activity android:name=".ui.qrcode.QrActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.splash.SplashActivity">

@@ -77,4 +77,5 @@
     <string name="enter_cvv">Enter CVV</string>
     <string name="pay_now">Pay Now</string>
     <string name="add_another_card">Add another card</string>
+    <string name="card_number_0000_0000_0000_0000">Card Number: 0000 0000 0000 0000</string>
 </resources>

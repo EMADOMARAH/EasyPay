@@ -1,4 +1,4 @@
-package com.example.easypay.ui.qrcode.capture;
+package com.example.easypay.ui.qrcode.scan;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.easypay.R;
 import com.otaliastudios.cameraview.CameraView;
+import com.otaliastudios.cameraview.controls.Audio;
 
 public class ScanQrFragment extends Fragment {
     private CameraView cameraView;
@@ -22,6 +23,9 @@ public class ScanQrFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         cameraView = view.findViewById(R.id.qrCam);
+        cameraView.setLifecycleOwner(getViewLifecycleOwner());
+        cameraView.setAudio(Audio.OFF);
+        cameraView.open();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.easypay.ui.qrcode.scan;
+package com.example.easypay.ui.qrcode.my;
 
 import android.os.Bundle;
 import android.view.View;
