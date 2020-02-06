@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="26dp"
+            android:drawableEnd="@drawable/ic_edit"
+            android:lineSpacingExtra="7sp"
+            android:text="@string/checkout"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="26dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/lay1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="19dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/lay2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="5sp"
+                        android:text="@string/from"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="5sp"
+                        android:text="Cairo"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="15sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="19dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/lay3"
+                    app:layout_constraintTop_toBottomOf="@id/lay1"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="5sp"
+                        android:text="@string/to"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="5sp"
+                        android:text="Aswan"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="15sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="19dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/lay4"
+                    app:layout_constraintTop_toBottomOf="@id/lay2"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="5sp"
+                        android:text="@string/date"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="5sp"
+                        android:text="Monday, 12 Oct 2019"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="15sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="19dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/lay5"
+                    app:layout_constraintTop_toBottomOf="@id/lay3"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="5sp"
+                        android:text="@string/time"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="5sp"
+                        android:text="2:30 PM"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="15sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="19dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/viw"
+                    app:layout_constraintTop_toBottomOf="@id/lay4"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="5sp"
+                        android:text="@string/quantity"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="5sp"
+                        android:text="1 Ticket"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="15sp"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viw"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="19dp"
+                    android:background="@color/white_three"
+                    app:layout_constraintBottom_toTopOf="@id/lay6"
+                    app:layout_constraintTop_toBottomOf="@id/lay5"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/lay6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineSpacingExtra="5sp"
+                        android:text="@string/ticket_cost"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="7sp"
+                        android:text="200 EGP"
+                        android:textColor="@color/tealish"
+                        android:textSize="20sp"
+                        />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/confirm_train"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="52dp"
+            android:layout_marginBottom="52dp"
+            android:background="@drawable/ic_rectangle_8"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/confirm"
+            android:textColor="@color/tealish"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

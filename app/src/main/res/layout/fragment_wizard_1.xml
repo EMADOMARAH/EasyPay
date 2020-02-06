@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_three"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="30dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_humaaan_9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_humaaan_11"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_humaaan_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_path_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        />
+
+    <TextView
+        android:id="@+id/textView6"
+        style="@style/TextStyle6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/easy_pay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView3"
+        />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/start_back_gr"
+        android:text="@string/next"
+        android:textColor="@color/tealish"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtBody"
+        />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/TextStyle7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/app_for_everyone_to_pay_easily"
+        app:layout_constraintBottom_toTopOf="@id/txtBody"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageView5"
+        />
+
+    <TextView
+        android:id="@+id/txtBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pay_your_transportation_fees_in_bus_or_metro_with_no_hustle_easy_to_use_for_everyone"
+        android:textColor="#000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/button"
+        app:layout_constraintStart_toStartOf="@id/txtTitle"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

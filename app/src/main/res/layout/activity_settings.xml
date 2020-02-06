@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_three"
+        android:orientation="vertical"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/settings"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:theme="@style/ToolTheme"
+                app:menu="@menu/tool_menu"
+                />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyish"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/name"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/name_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="26dp"
+            android:background="@drawable/ic_subtraction_2"
+            android:inputType="textNoSuggestions"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            tools:ignore="Autofill,LabelFor"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/email"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/email_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="26dp"
+            android:background="@drawable/ic_subtraction_2"
+            android:inputType="textEmailAddress"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            tools:ignore="Autofill,LabelFor"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/password"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/pass_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="26dp"
+            android:background="@drawable/ic_subtraction_2"
+            android:inputType="textPassword"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            tools:ignore="Autofill,LabelFor"
+            />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="52dp"
+            android:background="@drawable/ic_rectangle_8"
+            android:text="@string/edit"
+            android:textColor="@color/tealish"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/side_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_nav_main"
+        app:menu="@menu/main_nav"
+        />
+
+</androidx.drawerlayout.widget.DrawerLayout>

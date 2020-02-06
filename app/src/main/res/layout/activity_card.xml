@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_three"
+        android:orientation="vertical"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/pay_with_card"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                app:menu="@menu/tool_menu"
+                />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyish"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/tealish"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sim"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/visa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_visa"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/cvvTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/ic_subtraction_a"
+                    android:gravity="center"
+                    android:hint="Card Number: 0000 0000 0000 0000"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:layout_constraintBottom_toTopOf="@id/expiryDate"
+                    app:layout_constraintTop_toBottomOf="@id/sim"
+                    />
+
+                <Button
+                    android:id="@+id/expiryDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_subtraction_2"
+                    android:text="@string/expiry_date"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/holderName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cvvTxt"
+                    />
+
+                <Button
+                    android:id="@+id/holderName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/ic_subtraction_2"
+                    android:text="@string/holder_name"
+                    app:layout_constraintBottom_toBottomOf="@id/expiryDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/expiryDate"
+                    app:layout_constraintTop_toTopOf="@id/expiryDate"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:id="@+id/cvvEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_subtraction_2"
+            android:hint="@string/enter_cvv"
+            android:inputType="number"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            tools:ignore="Autofill"
+            />
+
+        <TextView
+            android:id="@+id/addCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/add_another_card"
+            />
+
+        <Button
+            android:id="@+id/payNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/ic_rectangle_8"
+            android:text="@string/pay_now"
+            android:textColor="@color/tealish"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/side_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_nav_main"
+        app:menu="@menu/main_nav"
+        />
+
+</androidx.drawerlayout.widget.DrawerLayout>

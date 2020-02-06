@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_humaaan_8"
+        android:gravity="bottom"
+
+        />
+    <item
+        android:drawable="@drawable/ic_humaaan_11"
+        android:gravity="start|bottom"
+        />
+    <item
+        android:drawable="@drawable/ic_humaaan_9"
+        android:gravity="top"
+        />
+</layer-list>

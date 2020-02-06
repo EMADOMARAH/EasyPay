@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_three"
+    android:fillViewport="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="20dp"
+            android:drawableStart="@drawable/ic_check_mark_button"
+            android:drawablePadding="10dp"
+            android:lineSpacingExtra="7sp"
+            android:text="@string/successful_payment"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.vipulasri.ticketview.TicketView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_alignTop="@id/contentTicket"
+                android:layout_alignBottom="@id/contentTicket"
+                android:layout_margin="20dp"
+                app:ticketBackgroundColor="@color/white"
+                app:ticketCornerRadius="20dp"
+                app:ticketCornerType="rounded"
+                app:ticketDividerColor="@color/white_three"
+                app:ticketDividerDashLength="20dp"
+                app:ticketDividerType="dash"
+                app:ticketElevation="10dp"
+                app:ticketScallopPositionPercent="69"
+                app:ticketShowDivider="true"
+                />
+
+            <LinearLayout
+                android:id="@+id/contentTicket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="25dp"
+                    android:text="@string/ticket_number"
+                    android:textColor="@color/tealish"
+                    android:textSize="13sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="7sp"
+                    android:text="4253 8879"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="11dp"
+                    android:background="@color/white_three"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:text="@string/line_number"
+                    android:textColor="@color/tealish"
+                    android:textSize="13sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="7sp"
+                    android:text="219"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="11dp"
+                    android:background="@color/white_three"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:text="@string/payment_date"
+                    android:textColor="@color/tealish"
+                    android:textSize="13sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="7sp"
+                    android:text="2:35 PM, 16 Oct 2019"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:lineSpacingExtra="7sp"
+                    android:text="@string/ticket_cost"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="36dp"
+                    android:lineSpacingExtra="7sp"
+                    android:text="5 EGP"
+                    android:textColor="@color/tealish"
+                    android:textSize="20sp"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/something_wrong_get_help"
+            android:textColor="#a1a1a1"
+            android:textSize="15sp"
+            />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
