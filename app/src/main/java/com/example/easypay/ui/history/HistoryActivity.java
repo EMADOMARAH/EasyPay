@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easypay.R;
 import com.example.easypay.models.ChargeHistoryModel;
 import com.example.easypay.network.MyRetroFitHelper;
+import com.example.easypay.ui.registration.SignInActivity;
 import com.example.easypay.ui.settings.SettingsActivity;
 import com.example.easypay.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
@@ -54,7 +55,8 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
 
     private void initRetro() {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, 0);
-        int myId = sharedPreferences.getInt(Constants.TOKEN, 0);
+//        int myId = sharedPreferences.getInt(Constants.TOKEN, 0);
+        int myId = 102;
         MyRetroFitHelper.getInstance().getPaymentHistory(myId).enqueue(new Callback<List<ChargeHistoryModel>>() {
             @Override
             public void onResponse(Call<List<ChargeHistoryModel>> call, Response<List<ChargeHistoryModel>> response) {
@@ -128,6 +130,13 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             case R.id.help:
                 return true;
             case R.id.logout:
+                getSharedPreferences(Constants.SHARED_PREFS, 0)
+                        .edit()
+                        .remove(Constants.TOKEN)
+                        .remove(Constants.EMAIL)
+                        .remove(Constants.PASS).apply();
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
                 return true;
         }
         return false;

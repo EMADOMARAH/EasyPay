@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:lineSpacingExtra="5sp"
-                android:text="Charge: 100 EGP"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -42,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:lineSpacingExtra="5sp"
-                android:text="Charge date: 3 May 2019"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 />
@@ -53,7 +51,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:lineSpacingExtra="5sp"
-                android:text="Payment method: Fawry"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 />

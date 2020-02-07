@@ -19,6 +19,7 @@ import com.example.easypay.R;
 import com.example.easypay.network.MyRetroFitHelper;
 import com.example.easypay.ui.home.payment.PaymentFragment;
 import com.example.easypay.ui.home.wallet.WalletFragment;
+import com.example.easypay.ui.registration.SignInActivity;
 import com.example.easypay.ui.settings.SettingsActivity;
 import com.example.easypay.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
@@ -131,6 +132,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.help:
                 return true;
             case R.id.logout:
+                getSharedPreferences(Constants.SHARED_PREFS, 0)
+                        .edit()
+                        .remove(Constants.TOKEN)
+                        .remove(Constants.EMAIL)
+                        .remove(Constants.PASS)
+                        .apply();
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
                 return true;
         }
         return false;

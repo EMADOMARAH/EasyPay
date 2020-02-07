@@ -23,6 +23,7 @@ import com.example.easypay.models.GetSettingModel;
 import com.example.easypay.models.SetSettingModel;
 import com.example.easypay.network.MyRetroFitHelper;
 import com.example.easypay.network.RetroHelper;
+import com.example.easypay.ui.registration.SignInActivity;
 import com.example.easypay.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 
@@ -197,6 +198,13 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             case R.id.help:
                 return true;
             case R.id.logout:
+                getSharedPreferences(Constants.SHARED_PREFS, 0)
+                        .edit()
+                        .remove(Constants.TOKEN)
+                        .remove(Constants.EMAIL)
+                        .remove(Constants.PASS).apply();
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
                 return true;
         }
         return false;

@@ -19,7 +19,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.easypay.R;
 import com.example.easypay.ui.qrcode.my.MyQrFragment;
 import com.example.easypay.ui.qrcode.scan.ScanQrFragment;
+import com.example.easypay.ui.registration.SignInActivity;
 import com.example.easypay.ui.settings.SettingsActivity;
+import com.example.easypay.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -127,6 +129,13 @@ public class QrActivity extends AppCompatActivity implements NavigationView.OnNa
             case R.id.help:
                 return true;
             case R.id.logout:
+                getSharedPreferences(Constants.SHARED_PREFS, 0)
+                        .edit()
+                        .remove(Constants.TOKEN)
+                        .remove(Constants.EMAIL)
+                        .remove(Constants.PASS).apply();
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
                 return true;
         }
         return false;

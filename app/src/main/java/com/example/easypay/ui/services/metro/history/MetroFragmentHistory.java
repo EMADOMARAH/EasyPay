@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easypay.R;
@@ -25,7 +26,6 @@ import retrofit2.Response;
 public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapter.MetroHistoryListener {
 
     private static final String TAG = "MyTag";
-    private RecyclerView recyclerView;
     private MetroHistoryAdapter adapter;
     private int myId;
 
@@ -39,7 +39,8 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
 
         adapter = new MetroHistoryAdapter(new ArrayList<MetroHistoryModel>(), this);
 
-        recyclerView = view.findViewById(R.id.recycler_metro);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_metro);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
     }
 

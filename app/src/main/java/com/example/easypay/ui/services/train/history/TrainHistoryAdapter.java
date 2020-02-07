@@ -31,6 +31,7 @@ public class TrainHistoryAdapter extends RecyclerView.Adapter<TrainHistoryAdapte
 
     public void setTrainHistoryModelList(List<TrainHistoryModel> busHistoryModelList) {
         this.trainHistoryModelList = busHistoryModelList;
+        notifyDataSetChanged();
     }
 
     @NonNull

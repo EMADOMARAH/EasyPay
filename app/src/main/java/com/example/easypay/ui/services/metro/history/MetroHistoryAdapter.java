@@ -31,6 +31,7 @@ public class MetroHistoryAdapter extends RecyclerView.Adapter<MetroHistoryAdapte
 
     public void setMetroHistoryModelList(List<MetroHistoryModel> busHistoryModelList) {
         this.metroHistoryModelList = busHistoryModelList;
+        notifyDataSetChanged();
     }
 
     @NonNull

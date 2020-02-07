@@ -31,6 +31,7 @@ public class BusHistoryAdapter extends RecyclerView.Adapter<BusHistoryAdapter.VH
 
     public void setBusHistoryModelList(List<BusHistoryModel> busHistoryModelList) {
         this.busHistoryModelList = busHistoryModelList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -45,7 +46,7 @@ public class BusHistoryAdapter extends RecyclerView.Adapter<BusHistoryAdapter.VH
         BusHistoryModel busHistoryModel = busHistoryModelList.get(position);
 
         holder.number.setText(busHistoryModel.getTicketNumber() + "");
-        holder.date.setText(busHistoryModel.getTicketDate());
+        holder.date.setText(busHistoryModel.getTicketDate() + "");
     }
 
     @Override

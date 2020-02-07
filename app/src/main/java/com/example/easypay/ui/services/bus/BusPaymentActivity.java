@@ -17,9 +17,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.easypay.R;
+import com.example.easypay.ui.registration.SignInActivity;
 import com.example.easypay.ui.services.bus.current.BusFragmentCurrent;
 import com.example.easypay.ui.services.bus.history.BusFragmentHistory;
 import com.example.easypay.ui.settings.SettingsActivity;
+import com.example.easypay.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -86,12 +88,12 @@ public class BusPaymentActivity extends AppCompatActivity implements NavigationV
         tabLayout = findViewById(R.id.tabLayout_bus);
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            private Fragment[] fragments = new Fragment[]{
-                    new BusFragmentCurrent(),
-                    new BusFragmentHistory()
+            Fragment[] fragments = new Fragment[]{
+                    BusFragmentCurrent.getInstance(),
+                    BusFragmentHistory.getInstance(),
             };
 
-            private String[] strings = new String[]{
+            String[] strings = new String[]{
                     "Current", "History"
             };
 
@@ -126,6 +128,13 @@ public class BusPaymentActivity extends AppCompatActivity implements NavigationV
             case R.id.help:
                 return true;
             case R.id.logout:
+                getSharedPreferences(Constants.SHARED_PREFS, 0)
+                        .edit()
+                        .remove(Constants.TOKEN)
+                        .remove(Constants.EMAIL)
+                        .remove(Constants.PASS).apply();
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
                 return true;
         }
         return false;

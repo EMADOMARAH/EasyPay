@@ -11,10 +11,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="12dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        app:cardElevation="5dp"
         >
 
         <LinearLayout
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="7sp"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="12sp"
                     />
 
             </LinearLayout>
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5sp"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     />
 
             </LinearLayout>

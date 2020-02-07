@@ -8,12 +8,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easypay.R;
 import com.example.easypay.models.TrainHistoryModel;
 import com.example.easypay.network.MyRetroFitHelper;
-import com.example.easypay.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,7 @@ import retrofit2.Response;
 public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapter.TrainHistoryListener {
 
     private static final String TAG = "MyTag";
-    RecyclerView recyclerView;
-    TrainHistoryAdapter adapter;
+    private TrainHistoryAdapter adapter;
 
     public TrainFragmentHistory() {
         super(R.layout.fragment_train_history);
@@ -38,7 +37,8 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
 
         adapter = new TrainHistoryAdapter(new ArrayList<TrainHistoryModel>(), this);
 
-        recyclerView = view.findViewById(R.id.recycler_train);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_train);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
     }
 
@@ -50,7 +50,8 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     }
 
     private void getData() {
-        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+//        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+        int myId = 102;
         MyRetroFitHelper.getInstance()
                 .getTrainHistory(myId)
                 .enqueue(new Callback<List<TrainHistoryModel>>() {
