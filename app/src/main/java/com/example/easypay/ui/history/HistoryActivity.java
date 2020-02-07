@@ -55,8 +55,7 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
 
     private void initRetro() {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, 0);
-//        int myId = sharedPreferences.getInt(Constants.TOKEN, 0);
-        int myId = 102;
+        int myId = sharedPreferences.getInt(Constants.TOKEN, 0);
         MyRetroFitHelper.getInstance().getPaymentHistory(myId).enqueue(new Callback<List<ChargeHistoryModel>>() {
             @Override
             public void onResponse(Call<List<ChargeHistoryModel>> call, Response<List<ChargeHistoryModel>> response) {

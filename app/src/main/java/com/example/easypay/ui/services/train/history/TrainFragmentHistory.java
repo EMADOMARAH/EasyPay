@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easypay.R;
 import com.example.easypay.models.TrainHistoryModel;
 import com.example.easypay.network.MyRetroFitHelper;
+import com.example.easypay.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +51,7 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     }
 
     private void getData() {
-//        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
-        int myId = 102;
+        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
         MyRetroFitHelper.getInstance()
                 .getTrainHistory(myId)
                 .enqueue(new Callback<List<TrainHistoryModel>>() {

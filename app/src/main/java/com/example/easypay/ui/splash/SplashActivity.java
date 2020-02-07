@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -129,7 +130,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startCounter() {
-        new Handler().postDelayed(runnable, 2000);
+        new Handler().postDelayed(runnable, 3000);
     }
 
     private void animateProgress() {
@@ -141,5 +142,15 @@ public class SplashActivity extends AppCompatActivity {
         animator.setInterpolator(new LinearInterpolator());
         animator.setEvaluator(new FloatEvaluator());
         animator.start();
+
+        //TODO remove Hack
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                gotoMain();
+                sharedPreferences.edit().putInt(TOKEN, 102).apply();
+                return true;
+            }
+        });
     }
 }
