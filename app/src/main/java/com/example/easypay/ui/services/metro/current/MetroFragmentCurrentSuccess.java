@@ -1,10 +1,8 @@
 package com.example.easypay.ui.services.metro.current;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,23 +10,25 @@ import androidx.fragment.app.Fragment;
 
 import com.example.easypay.R;
 import com.example.easypay.models.MetroTicketModel;
-import com.example.easypay.network.MyRetroFitHelper;
 import com.example.easypay.utils.Constants;
 import com.example.easypay.utils.Spacify;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class MetroFragmentCurrentSuccess extends Fragment {
 
-    private static final String TAG = "MyTag";
     private TextView ticket, start, end, date, cost;
 
     public MetroFragmentCurrentSuccess() {
         super(R.layout.fragment_metro_current_success);
+    }
+
+    public static MetroFragmentCurrentSuccess getInstance(MetroTicketModel metroTicketModel) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.MODEL_KEY, metroTicketModel);
+
+        MetroFragmentCurrentSuccess metroFragmentCurrentSuccess = new MetroFragmentCurrentSuccess();
+        metroFragmentCurrentSuccess.setArguments(bundle);
+
+        return metroFragmentCurrentSuccess;
     }
 
     @Override
@@ -46,25 +46,7 @@ public class MetroFragmentCurrentSuccess extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initData();
-    }
-
-    private void initData() {
-        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
-        MyRetroFitHelper.getInstance().getMetroTicket(myId).enqueue(new Callback<List<MetroTicketModel>>() {
-            @Override
-            public void onResponse(Call<List<MetroTicketModel>> call, Response<List<MetroTicketModel>> response) {
-                if (response.isSuccessful()) {
-                    updateData(response.body().get(0));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<MetroTicketModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        updateData((MetroTicketModel) getArguments().getParcelable(Constants.MODEL_KEY));
     }
 
     private void updateData(MetroTicketModel metroTicketModel) {

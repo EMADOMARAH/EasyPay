@@ -1,8 +1,11 @@
 package com.example.easypay.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class MetroTicketModel {
+public class MetroTicketModel implements Parcelable {
     @SerializedName("Ticket_number")
     private int ticketNumber;
 
@@ -24,6 +27,26 @@ public class MetroTicketModel {
         this.endStation = endStation;
         this.ticketDate = ticketDate;
         this.metroCost = metroCost;
+    }
+
+    public static final Creator<MetroTicketModel> CREATOR = new Creator<MetroTicketModel>() {
+        @Override
+        public MetroTicketModel createFromParcel(Parcel in) {
+            return new MetroTicketModel(in);
+        }
+
+        @Override
+        public MetroTicketModel[] newArray(int size) {
+            return new MetroTicketModel[size];
+        }
+    };
+
+    private MetroTicketModel(Parcel in) {
+        ticketNumber = in.readInt();
+        startStation = in.readString();
+        endStation = in.readString();
+        ticketDate = in.readString();
+        metroCost = in.readInt();
     }
 
     public int getTicketNumber() {
@@ -64,5 +87,19 @@ public class MetroTicketModel {
 
     public void setMetroCost(int metroCost) {
         this.metroCost = metroCost;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(ticketNumber);
+        dest.writeString(startStation);
+        dest.writeString(endStation);
+        dest.writeString(ticketDate);
+        dest.writeInt(metroCost);
     }
 }

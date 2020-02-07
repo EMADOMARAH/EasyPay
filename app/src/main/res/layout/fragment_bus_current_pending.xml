@@ -68,12 +68,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/ticketNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="4253 8879"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     />
@@ -98,12 +98,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/lineNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="219"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     />
@@ -135,7 +135,7 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="36dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="____"
+                    android:text="@string/nan"
                     android:textColor="@color/tealish"
                     android:textSize="20sp"
                     />

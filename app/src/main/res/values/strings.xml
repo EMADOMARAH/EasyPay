@@ -88,4 +88,6 @@
     <string name="year_yyyy">Year (YYYY)</string>
     <string name="card_number">Card Number</string>
     <string name="select_line">Select Line</string>
+    <string name="nan">____</string>
+    <string name="working_on_it">Working on it</string>
 </resources>
