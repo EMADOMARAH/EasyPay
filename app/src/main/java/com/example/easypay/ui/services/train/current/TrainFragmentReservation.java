@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment;
 import com.example.easypay.R;
 
 public class TrainFragmentReservation extends Fragment {
-    private TrainFragmentReservation1 reservation1;
-    private TrainFragmentReservation2 reservation2;
-    private TrainFragmentReservation3 reservation3;
+    private TrainFragmentReservationForm reservation1;
+    private TrainFragmentReservationCheck reservation2;
+    private TrainFragmentReservationSuccess reservation3;
 
     public TrainFragmentReservation() {
         super(R.layout.fragment_train_reservation);
@@ -30,19 +30,19 @@ public class TrainFragmentReservation extends Fragment {
         switch (page) {
             case 0:
                 if (reservation1 == null) {
-                    reservation1 = new TrainFragmentReservation1();
+                    reservation1 = new TrainFragmentReservationForm();
                 }
                 fragment = reservation1;
                 break;
             case 1:
                 if (reservation2 == null) {
-                    reservation2 = new TrainFragmentReservation2();
+                    reservation2 = new TrainFragmentReservationCheck();
                 }
                 fragment = reservation2;
                 break;
             case 2:
                 if (reservation3 == null) {
-                    reservation3 = new TrainFragmentReservation3();
+                    reservation3 = new TrainFragmentReservationSuccess();
                 }
                 fragment = reservation3;
                 break;

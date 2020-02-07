@@ -21,12 +21,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TrainFragmentReservation3 extends Fragment {
+public class TrainFragmentReservationSuccess extends Fragment {
 
     private static final String TAG = "MyTag";
     private TextView start, end, date, time, quantity, payDate, ticketCost, chairNumber;
 
-    public TrainFragmentReservation3() {
+    public TrainFragmentReservationSuccess() {
         super(R.layout.fragment_train_reservation_success);
     }
 
@@ -72,7 +72,7 @@ public class TrainFragmentReservation3 extends Fragment {
     private void updateViews(TrainTicketModel trainTicketModel) {
         start.setText(trainTicketModel.getStartStation());
         end.setText(trainTicketModel.getEndStation());
-        date.setText(trainTicketModel.getTicketTime());
+        date.setText(trainTicketModel.getTicketTime());//TODO date time
         time.setText(trainTicketModel.getTicketTime());
         quantity.setText(trainTicketModel.getQuantity() + "");
         payDate.setText(trainTicketModel.getReserveTime());

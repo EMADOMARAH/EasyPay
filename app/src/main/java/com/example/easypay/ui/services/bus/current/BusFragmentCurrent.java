@@ -19,7 +19,7 @@ public class BusFragmentCurrent extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loadFragment(new BusFragmentCurrent1());
+        loadFragment(new BusFragmentCurrentSuccess());
     }
 
     private void loadFragment(Fragment fragment) {

@@ -30,7 +30,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
 
-    EditText cvvEdt, name, mon, yr, amount;
+    EditText cardNo, cvvEdt, name, mon, yr, amount;
     TextView cvvTxt, mName, exDate, addCrd;
     Button confirm;
 
@@ -45,6 +45,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initViews() {
+        cardNo = findViewById(R.id.cardNo);
         cvvEdt = findViewById(R.id.cvvEdt);
         mName = findViewById(R.id.holderName);
         exDate = findViewById(R.id.expiryDate);
@@ -56,7 +57,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         cvvTxt = findViewById(R.id.cvvTxt);
         confirm = findViewById(R.id.payNow);
 
-        cvvEdt.addTextChangedListener(new TextWatcher() {
+        cardNo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

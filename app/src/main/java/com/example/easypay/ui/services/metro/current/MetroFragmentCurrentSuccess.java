@@ -1,4 +1,4 @@
-package com.example.easypay.ui.services.bus.current;
+package com.example.easypay.ui.services.metro.current;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.easypay.R;
-import com.example.easypay.models.BusTicketModel;
+import com.example.easypay.models.MetroTicketModel;
 import com.example.easypay.network.MyRetroFitHelper;
 import com.example.easypay.utils.Constants;
 import com.example.easypay.utils.Spacify;
@@ -22,13 +22,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BusFragmentCurrent1 extends Fragment {
+public class MetroFragmentCurrentSuccess extends Fragment {
 
     private static final String TAG = "MyTag";
-    private TextView ticket, line, date, cost;
+    private TextView ticket, start, end, date, cost;
 
-    public BusFragmentCurrent1() {
-        super(R.layout.fragment_bus_current_success);
+    public MetroFragmentCurrentSuccess() {
+        super(R.layout.fragment_metro_current_success);
     }
 
     @Override
@@ -36,7 +36,8 @@ public class BusFragmentCurrent1 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ticket = view.findViewById(R.id.ticketNumber);
-        line = view.findViewById(R.id.lineNumber);
+        start = view.findViewById(R.id.startStation);
+        end = view.findViewById(R.id.endStation);
         date = view.findViewById(R.id.payDate);
         cost = view.findViewById(R.id.cost);
     }
@@ -50,26 +51,27 @@ public class BusFragmentCurrent1 extends Fragment {
 
     private void initData() {
         int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
-        MyRetroFitHelper.getInstance().getBusTicket(myId).enqueue(new Callback<List<BusTicketModel>>() {
+        MyRetroFitHelper.getInstance().getMetroTicket(myId).enqueue(new Callback<List<MetroTicketModel>>() {
             @Override
-            public void onResponse(Call<List<BusTicketModel>> call, Response<List<BusTicketModel>> response) {
+            public void onResponse(Call<List<MetroTicketModel>> call, Response<List<MetroTicketModel>> response) {
                 if (response.isSuccessful()) {
-                    updateViews(response.body().get(0));
+                    updateData(response.body().get(0));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<BusTicketModel>> call, Throwable t) {
+            public void onFailure(Call<List<MetroTicketModel>> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.toString());
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void updateViews(BusTicketModel busTicketModel) {
-        ticket.setText(Spacify.take(busTicketModel.getTicketNumber() + ""));
-        line.setText(busTicketModel.getLineNumber());
-        date.setText(busTicketModel.getTicketDate());
-        cost.setText(busTicketModel.getLineCost());
+    private void updateData(MetroTicketModel metroTicketModel) {
+        ticket.setText(Spacify.take(metroTicketModel.getTicketNumber() + ""));
+        start.setText(metroTicketModel.getStartStation());
+        end.setText(metroTicketModel.getEndStation());
+        date.setText(metroTicketModel.getTicketDate());
+        cost.setText(metroTicketModel.getMetroCost() + " EGP");
     }
 }

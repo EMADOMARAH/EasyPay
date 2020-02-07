@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.easypay.R;
 
-public class BusFragmentCurrent2 extends Fragment {
+public class BusFragmentCurrentPending extends Fragment {
 
-    public BusFragmentCurrent2() {
+    public BusFragmentCurrentPending() {
         super(R.layout.fragment_bus_current_pending);
     }
 

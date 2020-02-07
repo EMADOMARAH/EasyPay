@@ -1,10 +1,12 @@
 package com.example.easypay.network;
 
+import com.example.easypay.models.AvailableTrainsModel;
 import com.example.easypay.models.BalanceModel;
 import com.example.easypay.models.BusHistoryModel;
 import com.example.easypay.models.BusTicketModel;
 import com.example.easypay.models.CreditCheckModel;
 import com.example.easypay.models.GetSettingModel;
+import com.example.easypay.models.LineModel;
 import com.example.easypay.models.MetroHistoryModel;
 import com.example.easypay.models.MetroTicketModel;
 import com.example.easypay.models.SetSettingModel;
@@ -109,6 +111,26 @@ public interface RetroHelper {
             @Query("php_id") int id
     );
 
-    @POST("Select_Station.php")
-    Call<List<StationModel>> getStations();
+    @POST("select_line.php")
+    Call<List<LineModel>> getLines();
+
+    @POST("select_station.php")
+    Call<List<StationModel>> getStations(
+            @Query("php_line") String lineName
+    );
+
+    @POST("avaliable_trains.php")
+    Call<List<AvailableTrainsModel>> getAvailableTrains(
+            @Query("php_start") String from,
+            @Query("php_end") String to
+    );
+
+    @POST("saveTrainTicket.php")
+    Call<Void> saveTrainTicket(
+            @Query("php_id") int id,
+            @Query("php_reserve_from") String from,
+            @Query("php_reserve_to") String to,
+            @Query("php_ticket_time") String time,
+            @Query("php_quantity") int quantity
+    );
 }

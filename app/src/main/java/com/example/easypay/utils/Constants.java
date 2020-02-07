@@ -7,4 +7,5 @@ public class Constants {
     public static final String EMAIL = "EmailPrefs";
     public static final String PASS = "PassPrefs";
     public static final String FIRST_TIME="FirstPrefs";
+    public static final String TRAIN_TICKET = "TrainTicketPrefs";
 }

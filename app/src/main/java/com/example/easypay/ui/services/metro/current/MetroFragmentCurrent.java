@@ -19,7 +19,7 @@ public class MetroFragmentCurrent extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loadFragment(new MetroFragmentCurrent1());
+        loadFragment(new MetroFragmentCurrentSuccess());
     }
 
     private void loadFragment(Fragment fragment) {

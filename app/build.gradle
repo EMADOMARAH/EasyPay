@@ -32,11 +32,12 @@ dependencies {
     implementation 'com.github.aakira:expandable-layout:1.6.0@aar'
     implementation 'com.r0adkll:slidableactivity:2.1.0'
     implementation 'com.google.android.material:material:1.1.0'
-    implementation "com.andkulikov:transitionseverywhere:2.1.0"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.vipulasri:ticketview:1.0.7'
     implementation 'com.otaliastudios:cameraview:2.6.1'
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

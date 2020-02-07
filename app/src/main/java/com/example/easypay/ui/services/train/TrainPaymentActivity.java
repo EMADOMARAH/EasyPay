@@ -18,14 +18,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.easypay.R;
 import com.example.easypay.ui.services.train.current.TrainFragmentReservation;
-import com.example.easypay.ui.services.train.current.TrainFragmentReservation1;
-import com.example.easypay.ui.services.train.current.TrainFragmentReservation2;
+import com.example.easypay.ui.services.train.current.TrainFragmentReservationCheck;
+import com.example.easypay.ui.services.train.current.TrainFragmentReservationForm;
 import com.example.easypay.ui.services.train.history.TrainFragmentHistory;
 import com.example.easypay.ui.settings.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-public class TrainPaymentActivity extends AppCompatActivity implements TrainFragmentReservation1.TrainListener, TrainFragmentReservation2.TrainListener, NavigationView.OnNavigationItemSelectedListener {
+public class TrainPaymentActivity extends AppCompatActivity implements TrainFragmentReservationForm.TrainListener, TrainFragmentReservationCheck.TrainListener, NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -124,11 +124,6 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
     }
 
     @Override
-    public void gotoFragment(int page) {
-        trainFragmentReservation.loadFragment(page);
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
@@ -142,5 +137,10 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void gotoFragment(int page) {
+        trainFragmentReservation.loadFragment(page);
     }
 }

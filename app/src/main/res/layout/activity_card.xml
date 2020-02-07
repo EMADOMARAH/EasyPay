@@ -151,11 +151,26 @@
             </androidx.cardview.widget.CardView>
 
             <EditText
+                android:id="@+id/cardNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ic_subtraction_2"
+                android:hint="@string/card_number"
+                android:inputType="number"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                tools:ignore="Autofill"
+                />
+
+            <EditText
                 android:id="@+id/cvvEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/ic_subtraction_2"
                 android:hint="@string/enter_cvv"
                 android:inputType="number"

@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.easypay.R;
 
-public class MetroFragmentCurrent2 extends Fragment {
+public class MetroFragmentCurrentPending extends Fragment {
 
-    public MetroFragmentCurrent2() {
+    public MetroFragmentCurrentPending() {
         super(R.layout.fragment_metro_current_pending);
     }
 
