@@ -4,6 +4,7 @@ import com.example.easypay.models.AvailableTrainsModel;
 import com.example.easypay.models.BalanceModel;
 import com.example.easypay.models.BusHistoryModel;
 import com.example.easypay.models.BusTicketModel;
+import com.example.easypay.models.ChargeHistoryModel;
 import com.example.easypay.models.CreditCheckModel;
 import com.example.easypay.models.GetSettingModel;
 import com.example.easypay.models.LineModel;
@@ -16,6 +17,7 @@ import com.example.easypay.models.TrainHistoryModel;
 import com.example.easypay.models.TrainTicketModel;
 import com.example.easypay.models.WalletModel;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,7 +52,7 @@ public interface RetroHelper {
     @POST("credits.php")
     Call<Void> setCredits(
             @Query("php_id") int id,
-            @Query("php_card_number") int cardNumber,
+            @Query("php_card_number") BigInteger cardNumber,
             @Query("php_cvv") int cvvKey,
             @Query("php_month") int month,
             @Query("php_year") int year,
@@ -78,6 +80,11 @@ public interface RetroHelper {
 
     @POST("wallet.php")
     Call<List<WalletModel>> getWallet(
+            @Query("php_id") int id
+    );
+
+    @POST("charges.php")
+    Call<List<ChargeHistoryModel>> getPaymentHistory(
             @Query("php_id") int id
     );
 

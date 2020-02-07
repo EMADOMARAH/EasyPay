@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,19 +21,27 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.easypay.R;
+import com.example.easypay.network.MyRetroFitHelper;
 import com.example.easypay.ui.settings.SettingsActivity;
+import com.example.easypay.utils.Constants;
 import com.example.easypay.utils.Spacify;
 import com.google.android.material.navigation.NavigationView;
 
+import java.math.BigInteger;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "MyTag";
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
-
     EditText cardNo, cvvEdt, name, mon, yr, amount;
-    TextView cvvTxt, mName, exDate, addCrd;
+    TextView cvvTxt, mName, exDate;
     Button confirm;
 
     @Override
@@ -53,7 +63,6 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         yr = findViewById(R.id.yrEdt);
         name = findViewById(R.id.nameEdt);
         amount = findViewById(R.id.amountEdt);
-        addCrd = findViewById(R.id.addCard);
         cvvTxt = findViewById(R.id.cvvTxt);
         confirm = findViewById(R.id.payNow);
 
@@ -66,9 +75,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() <= 16) {
-                    cvvTxt.setText("Card Number: " + Spacify.take(s.toString()));
-                }
+                cvvTxt.setText("Card Number: " + Spacify.take(s.toString()));
             }
 
             @Override
@@ -103,7 +110,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                 String ys = yr.getText().toString().trim();
                 int y = 0;
                 if (!ys.isEmpty()) {
-                    y = Integer.parseInt(ys);
+                    y = Integer.valueOf(ys);
                 }
                 if (y > 2019 && y <= 2050) {
                     exDate.setText(s + "/" + ys);
@@ -126,7 +133,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                 String ms = mon.getText().toString().trim();
                 int m = 0;
                 if (!ms.isEmpty()) {
-                    m = Integer.parseInt(ms);
+                    m = Integer.valueOf(ms);
                 }
                 if (m >= 1 && m <= 12) {
                     exDate.setText(ms + "/" + s);
@@ -141,7 +148,33 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO credits Api
+                BigInteger card = BigInteger.valueOf(Long.parseLong(cardNo.getText().toString().trim()));
+                int cvv = Integer.valueOf(cvvEdt.getText().toString().trim());
+                String holderName = mName.getText().toString().trim();
+                int m = Integer.valueOf(exDate.getText().toString().trim().split("/")[0]);
+                int y = Integer.valueOf(exDate.getText().toString().trim().split("/")[1]);
+                int am = Integer.valueOf(amount.getText().toString().trim());
+                setCredits(card, cvv, holderName, m, y, am);
+            }
+        });
+    }
+
+    private void setCredits(BigInteger card, int cvv, String holderName, int m, int y, int am) {
+        MyRetroFitHelper.getInstance().setCredits(
+                getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0),
+                card, cvv, m, y, holderName, am, "VISA"
+        ).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    onBackPressed();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.toString());
+                Toast.makeText(CardActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -44,11 +44,19 @@ public class TrainFragmentReservationForm extends Fragment {
 
     private static final String TAG = "MyTag";
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    private SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("EEEE, dd MMM yyyy");
     private TrainListener listener;
     private Spinner line, start, end, time;
     private TextView ticket, date;
     private RetroHelper helper;
     private Calendar calendar;
+
+    private String selectedDate;
+    private String selectedTime;
+    private String lineNumber;
+    private String startStation;
+    private String endStation;
+    private int quantity = 1;
 
     public TrainFragmentReservationForm() {
         super(R.layout.fragment_train_reservation_form);
@@ -93,7 +101,8 @@ public class TrainFragmentReservationForm extends Fragment {
                         calendar.set(Calendar.YEAR, year);
                         calendar.set(Calendar.MONTH, month);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        date.setText(simpleDateFormat.format(calendar.getTime()));
+                        date.setText(simpleDateFormat1.format(calendar.getTime()));
+                        selectedDate = simpleDateFormat.format(calendar.getTime());
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -101,6 +110,7 @@ public class TrainFragmentReservationForm extends Fragment {
         line.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                lineNumber = parent.getItemAtPosition(position).toString();
                 getStations(parent.getItemAtPosition(position).toString());
             }
 
@@ -112,6 +122,7 @@ public class TrainFragmentReservationForm extends Fragment {
         start.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                startStation = parent.getItemAtPosition(position).toString();
                 if (end.getSelectedItemPosition() != 0) {
                     checkAvailableTrains(parent.getItemAtPosition(position).toString(), end.getSelectedItem().toString());
                 }
@@ -125,9 +136,21 @@ public class TrainFragmentReservationForm extends Fragment {
         end.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                endStation = parent.getItemAtPosition(position).toString();
                 if (start.getSelectedItemPosition() != 0) {
                     checkAvailableTrains(start.getSelectedItem().toString(), parent.getItemAtPosition(position).toString());
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedTime = parent.getItemAtPosition(position).toString().split(" train number ")[0];
             }
 
             @Override
@@ -142,6 +165,7 @@ public class TrainFragmentReservationForm extends Fragment {
                 int i = Integer.parseInt(ticket.getText().toString().split(" ")[0]);
                 i++;
                 if (i <= 10) {
+                    quantity = i;
                     ticket.setText(i + " Ticket");
                 }
             }
@@ -153,6 +177,7 @@ public class TrainFragmentReservationForm extends Fragment {
                 int i = Integer.parseInt(ticket.getText().toString().split(" ")[0]);
                 i--;
                 if (i > 0) {
+                    quantity = i;
                     ticket.setText(i + " Ticket");
                 }
             }
@@ -162,13 +187,8 @@ public class TrainFragmentReservationForm extends Fragment {
         checkOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String from = start.getSelectedItem().toString();
-                String to = end.getSelectedItem().toString();
-                String da = date.getText().toString();
-                String ti = time.getSelectedItem().toString();
-                int qu = Integer.parseInt(ticket.getText().toString().split(" ")[0]);
-                if (check(from, to, da, ti)) {
-                    gotoCheck(from, to, da + " " + ti, qu);
+                if (check()) {
+                    gotoCheck();
                 }
             }
         });
@@ -218,8 +238,8 @@ public class TrainFragmentReservationForm extends Fragment {
         line.setAdapter(adapter);
     }
 
-    private void gotoCheck(String from, String to, String date, int qu) {
-        TrainTicketModel trainTicketModel = new TrainTicketModel(from, to, date, "", qu, 0, 0);
+    private void gotoCheck() {
+        TrainTicketModel trainTicketModel = new TrainTicketModel(startStation, endStation, selectedDate + " " + selectedTime, "", quantity, 0, 0);
         getActivity()
                 .getSharedPreferences(Constants.SHARED_PREFS, 0)
                 .edit()
@@ -249,7 +269,7 @@ public class TrainFragmentReservationForm extends Fragment {
         final List<String> strings = new ArrayList<>();
         strings.add(getResources().getString(R.string.select_time));
         for (AvailableTrainsModel availableTrainsModel : availableTrainsModelList) {
-            strings.add(availableTrainsModel.getTime() + "\t" + availableTrainsModel.getAvailableTrains() + " trains available");
+            strings.add(availableTrainsModel.getTime() + " train number " + availableTrainsModel.getTrainNumber());
         }
         final float dp = getResources().getDisplayMetrics().density;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, strings) {
@@ -289,20 +309,20 @@ public class TrainFragmentReservationForm extends Fragment {
         time.setAdapter(adapter);
     }
 
-    private boolean check(String from, String to, String da, String ti) {
-        if (from.equals(start.getItemAtPosition(0).toString())) {
+    private boolean check() {
+        if (startStation.equals(start.getItemAtPosition(0).toString())) {
             Toast.makeText(getContext(), "select start station", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (to.equals(end.getItemAtPosition(0).toString())) {
+        if (endStation.equals(end.getItemAtPosition(0).toString())) {
             Toast.makeText(getContext(), "select end station", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (da.isEmpty()) {
+        if (selectedDate.isEmpty()) {
             Toast.makeText(getContext(), "enter date", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (ti.equals(time.getItemAtPosition(0).toString())) {
+        if (selectedTime.equals(time.getItemAtPosition(0).toString())) {
             Toast.makeText(getContext(), "enter time", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -313,7 +333,6 @@ public class TrainFragmentReservationForm extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//TODO saveInstance
         initData();
     }
 

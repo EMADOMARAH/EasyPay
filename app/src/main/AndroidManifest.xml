@@ -23,24 +23,60 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         >
-        <activity android:name=".ui.card.CardActivity" />
-        <activity android:name=".ui.qrcode.QrActivity" />
-        <activity android:name=".ui.settings.SettingsActivity" />
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity
+            android:name=".ui.card.CardActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.qrcode.QrActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:launchMode="singleTask"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.history.HistoryActivity" />
-        <activity android:name=".ui.wizard.WizardActivity" />
-        <activity android:name=".ui.registration.SignInActivity" />
-        <activity android:name=".ui.registration.SignUpActivity" />
-        <activity android:name=".ui.services.bus.BusPaymentActivity" />
-        <activity android:name=".ui.services.metro.MetroPaymentActivity" />
-        <activity android:name=".ui.services.train.TrainPaymentActivity" />
-        <activity android:name=".ui.home.MainActivity" />
+        <activity
+            android:name=".ui.history.HistoryActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.wizard.WizardActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.registration.SignInActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.registration.SignUpActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.services.bus.BusPaymentActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.services.metro.MetroPaymentActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.services.train.TrainPaymentActivity"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".ui.home.MainActivity"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

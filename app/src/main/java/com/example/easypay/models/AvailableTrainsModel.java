@@ -3,23 +3,23 @@ package com.example.easypay.models;
 import com.google.gson.annotations.SerializedName;
 
 public class AvailableTrainsModel {
-    @SerializedName("Avilable_Trains")
-    private String availableTrains;
+    @SerializedName("Train_number")
+    private String trainNumber;
 
     @SerializedName("Time")
     private String time;
 
-    public AvailableTrainsModel(String availableTrains, String time) {
-        this.availableTrains = availableTrains;
+    public AvailableTrainsModel(String trainNumber, String time) {
+        this.trainNumber = trainNumber;
         this.time = time;
     }
 
-    public String getAvailableTrains() {
-        return availableTrains;
+    public String getTrainNumber() {
+        return trainNumber;
     }
 
-    public void setAvailableTrains(String availableTrains) {
-        this.availableTrains = availableTrains;
+    public void setTrainNumber(String trainNumber) {
+        this.trainNumber = trainNumber;
     }
 
     public String getTime() {

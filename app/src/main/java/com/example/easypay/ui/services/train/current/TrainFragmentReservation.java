@@ -26,30 +26,49 @@ public class TrainFragmentReservation extends Fragment {
     }
 
     public void loadFragment(int page) {
-        Fragment fragment = null;
         switch (page) {
             case 0:
                 if (reservation1 == null) {
                     reservation1 = new TrainFragmentReservationForm();
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.container_train, reservation1)
+                            .commit();
+                } else {
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container_train, reservation1)
+                            .commit();
                 }
-                fragment = reservation1;
                 break;
             case 1:
                 if (reservation2 == null) {
                     reservation2 = new TrainFragmentReservationCheck();
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.container_train, reservation2)
+                            .commit();
+                } else {
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container_train, reservation2)
+                            .commit();
                 }
-                fragment = reservation2;
                 break;
             case 2:
                 if (reservation3 == null) {
                     reservation3 = new TrainFragmentReservationSuccess();
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.container_train, reservation3)
+                            .commit();
+                } else {
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container_train, reservation3)
+                            .commit();
                 }
-                fragment = reservation3;
                 break;
         }
-        getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container_train, fragment)
-                .commit();
     }
 }

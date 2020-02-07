@@ -106,7 +106,7 @@ public class TrainFragmentReservationCheck extends Fragment {
         String s = "";
         try {
             simpleDateFormat.parse(ticketTime);
-            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("eeee, dd MMM yyyy");
+            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("EEEE, dd MMM yyyy");
             s = simpleDateFormat1.format(simpleDateFormat.getCalendar().getTime());
         } catch (ParseException e) {
             e.printStackTrace();

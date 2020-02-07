@@ -1,23 +1,41 @@
 package com.example.easypay.ui.history;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easypay.R;
+import com.example.easypay.models.ChargeHistoryModel;
+import com.example.easypay.network.MyRetroFitHelper;
 import com.example.easypay.ui.settings.SettingsActivity;
+import com.example.easypay.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 
-public class HistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class HistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, HistoryAdapter.ChargeHistoryListener {
+
+    private static final String TAG = "MyTag";
+    HistoryAdapter adapter;
+    RecyclerView recyclerView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
@@ -30,6 +48,35 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
 
         initToolbar();
         initDrawer();
+        initViews();
+        initRetro();
+    }
+
+    private void initRetro() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, 0);
+        int myId = sharedPreferences.getInt(Constants.TOKEN, 0);
+        MyRetroFitHelper.getInstance().getPaymentHistory(myId).enqueue(new Callback<List<ChargeHistoryModel>>() {
+            @Override
+            public void onResponse(Call<List<ChargeHistoryModel>> call, Response<List<ChargeHistoryModel>> response) {
+                if (response.isSuccessful()) {
+                    adapter.setChargeHistoryModelList(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ChargeHistoryModel>> call, Throwable t) {
+                Toast.makeText(HistoryActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: " + t.toString());
+            }
+        });
+    }
+
+    private void initViews() {
+        adapter = new HistoryAdapter(new ArrayList<ChargeHistoryModel>(), this);
+
+        recyclerView = findViewById(R.id.recycler_history);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(adapter);
     }
 
     private void initToolbar() {
@@ -84,5 +131,10 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onItemSelected(int position) {
+
     }
 }

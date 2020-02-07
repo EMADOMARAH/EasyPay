@@ -159,21 +159,7 @@
                 android:background="@drawable/ic_subtraction_2"
                 android:hint="@string/card_number"
                 android:inputType="number"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                tools:ignore="Autofill"
-                />
-
-            <EditText
-                android:id="@+id/cvvEdt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/ic_subtraction_2"
-                android:hint="@string/enter_cvv"
-                android:inputType="number"
+                android:maxLength="16"
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp"
                 tools:ignore="Autofill"
@@ -233,25 +219,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
                 >
 
-                <TextView
-                    android:id="@+id/addCard"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/cvvEdt"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/add_another_card"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_subtraction_2"
+                    android:gravity="center"
+                    android:hint="@string/enter_cvv"
+                    android:inputType="number"
+                    tools:ignore="Autofill"
                     />
 
                 <EditText
                     android:id="@+id/amountEdt"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
                     android:background="@drawable/ic_subtraction_2"
                     android:gravity="center"
                     android:hint="@string/amount"

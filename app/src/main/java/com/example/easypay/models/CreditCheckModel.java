@@ -2,10 +2,12 @@ package com.example.easypay.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigInteger;
+
 public class CreditCheckModel {
 
     @SerializedName("card_number")
-    private int cardNumber;
+    private BigInteger cardNumber;
 
     @SerializedName("cvv_key")
     private int cvvKey;
@@ -19,7 +21,7 @@ public class CreditCheckModel {
     @SerializedName("holder_name")
     private String holderName;
 
-    public CreditCheckModel(int cardNumber, int cvvKey, int expireMonth, int expireYear, String holderName) {
+    public CreditCheckModel(BigInteger cardNumber, int cvvKey, int expireMonth, int expireYear, String holderName) {
         this.cardNumber = cardNumber;
         this.cvvKey = cvvKey;
         this.expireMonth = expireMonth;
@@ -27,11 +29,11 @@ public class CreditCheckModel {
         this.holderName = holderName;
     }
 
-    public int getCardNumber() {
+    public BigInteger getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(BigInteger cardNumber) {
         this.cardNumber = cardNumber;
     }
 
