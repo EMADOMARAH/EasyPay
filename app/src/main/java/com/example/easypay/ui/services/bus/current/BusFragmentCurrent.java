@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.example.easypay.R;
 import com.example.easypay.models.BusTicketModel;
 import com.example.easypay.network.MyRetroFitHelper;
+import com.example.easypay.utils.Constants;
 
 import java.util.List;
 
@@ -33,8 +34,7 @@ public class BusFragmentCurrent extends Fragment {
     }
 
     private void initData() {
-        int myId = 102;
-//        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
         MyRetroFitHelper.getInstance().getBusTicket(myId).enqueue(new Callback<List<BusTicketModel>>() {
             @Override
             public void onResponse(Call<List<BusTicketModel>> call, Response<List<BusTicketModel>> response) {
