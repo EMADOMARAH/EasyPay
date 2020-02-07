@@ -3,10 +3,10 @@ package com.example.easypay.models;
 import com.google.gson.annotations.SerializedName;
 
 public class WalletModel {
-    @SerializedName("charge_date")
+    @SerializedName("charge_Date")
     private String chargeDate;
 
-    @SerializedName("last_charge")
+    @SerializedName("Last_Charge")
     private int lastCharge;
 
     @SerializedName("current_balance")
