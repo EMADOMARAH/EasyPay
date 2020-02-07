@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -25,6 +26,7 @@
             />
 
         <Spinner
+            android:id="@+id/startStation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_subtraction_2"
@@ -42,10 +44,10 @@
             />
 
         <Spinner
+            android:id="@+id/endStation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_subtraction_2"
-
             />
 
         <TextView
@@ -59,10 +61,19 @@
             android:textSize="15sp"
             />
 
-        <Spinner
+        <EditText
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_subtraction_2"
+            android:hint="@string/select_date"
+            android:inputType="date"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/greyish"
+            android:textSize="14sp"
+            tools:ignore="Autofill"
             />
 
         <TextView
@@ -76,9 +87,19 @@
             android:textSize="15sp"
             />
 
-        <Spinner
+        <EditText
+            android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_subtraction_2"
+            android:hint="@string/select_time"
+            android:inputType="time"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/greyish"
+            android:textSize="14sp"
+            tools:ignore="Autofill"
             />
 
         <TextView
@@ -100,32 +121,37 @@
             >
 
             <ImageButton
+                android:id="@+id/sub"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp"
                 android:src="@drawable/ic_group_67"
+                tools:ignore="ContentDescription"
                 />
 
             <TextView
+                android:id="@+id/quantity"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:lineSpacingExtra="5sp"
-                android:text="1 Ticket "
+                android:text="@string/_1_ticket"
                 android:textColor="@color/warm_grey"
                 android:textSize="15sp"
                 />
 
             <ImageButton
+                android:id="@+id/add"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp"
                 android:src="@drawable/ic_group_66"
+                tools:ignore="ContentDescription"
                 />
 
         </LinearLayout>

@@ -1,10 +1,17 @@
 package com.example.easypay.network;
 
 import com.example.easypay.models.BalanceModel;
+import com.example.easypay.models.BusHistoryModel;
+import com.example.easypay.models.BusTicketModel;
 import com.example.easypay.models.CreditCheckModel;
 import com.example.easypay.models.GetSettingModel;
+import com.example.easypay.models.MetroHistoryModel;
+import com.example.easypay.models.MetroTicketModel;
 import com.example.easypay.models.SetSettingModel;
+import com.example.easypay.models.StationModel;
 import com.example.easypay.models.TokenModel;
+import com.example.easypay.models.TrainHistoryModel;
+import com.example.easypay.models.TrainTicketModel;
 import com.example.easypay.models.WalletModel;
 
 import java.util.List;
@@ -71,4 +78,37 @@ public interface RetroHelper {
     Call<List<WalletModel>> getWallet(
             @Query("php_id") int id
     );
+
+    @POST("bus_history.php")
+    Call<List<BusHistoryModel>> getBusHistory(
+            @Query("php_id") int id
+    );
+
+    @POST("bus_ticket.php")
+    Call<List<BusTicketModel>> getBusTicket(
+            @Query("php_id") int id
+    );
+
+    @POST("metro_history.php")
+    Call<List<MetroHistoryModel>> getMetroHistory(
+            @Query("php_id") int id
+    );
+
+    @POST("metro_ticket.php")
+    Call<List<MetroTicketModel>> getMetroTicket(
+            @Query("php_id") int id
+    );
+
+    @POST("train_history.php")
+    Call<List<TrainHistoryModel>> getTrainHistory(
+            @Query("php_id") int id
+    );
+
+    @POST("train_ticket.php")
+    Call<List<TrainTicketModel>> getTrainTicket(
+            @Query("php_id") int id
+    );
+
+    @POST("Select_Station.php")
+    Call<List<StationModel>> getStations();
 }

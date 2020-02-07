@@ -90,10 +90,10 @@
                         />
 
                     <TextView
+                        android:id="@+id/startStation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="Cairo"
                         android:textColor="@color/warm_grey"
                         android:textSize="15sp"
                         />
@@ -122,10 +122,10 @@
                         />
 
                     <TextView
+                        android:id="@+id/endStation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="Aswan"
                         android:textColor="@color/warm_grey"
                         android:textSize="15sp"
                         />
@@ -154,10 +154,10 @@
                         />
 
                     <TextView
+                        android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="Monday, 12 Oct 2019"
                         android:textColor="@color/warm_grey"
                         android:textSize="15sp"
                         />
@@ -186,10 +186,10 @@
                         />
 
                     <TextView
+                        android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="2:30 PM"
                         android:textColor="@color/warm_grey"
                         android:textSize="15sp"
                         />
@@ -218,10 +218,10 @@
                         />
 
                     <TextView
+                        android:id="@+id/quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="1 Ticket"
                         android:textColor="@color/warm_grey"
                         android:textSize="15sp"
                         />
@@ -260,10 +260,10 @@
                         />
 
                     <TextView
+                        android:id="@+id/payDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="2:35 PM, 11 Oct 2019"
                         android:textColor="@color/warm_grey"
                         android:textSize="15sp"
                         />
@@ -291,10 +291,10 @@
                         />
 
                     <TextView
+                        android:id="@+id/cost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="200 EGP"
                         android:textColor="@color/warm_grey"
                         android:textSize="15sp"
                         />
@@ -333,12 +333,12 @@
                         />
 
                     <TextView
+                        android:id="@+id/chairNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_rectangle_20"
                         android:gravity="center"
                         android:lineSpacingExtra="7sp"
-                        android:text="35"
                         android:textColor="@color/tealish"
                         android:textSize="20sp"
                         />

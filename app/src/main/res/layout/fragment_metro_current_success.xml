@@ -68,12 +68,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/ticketNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="4253 8879"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     />
@@ -98,12 +98,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/startStation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="219"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     />
@@ -128,12 +128,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/endStation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="219"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     />
@@ -158,12 +158,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/payDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="2:35 PM, 16 Oct 2019"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     />
@@ -189,13 +189,13 @@
                     />
 
                 <TextView
+                    android:id="@+id/cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="36dp"
                     android:lineSpacingExtra="7sp"
-                    android:text="5 EGP"
                     android:textColor="@color/tealish"
                     android:textSize="20sp"
                     />

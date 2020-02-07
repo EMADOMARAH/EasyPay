@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.easypay.R;
 import com.example.easypay.ui.settings.SettingsActivity;
+import com.example.easypay.utils.Spacify;
 import com.google.android.material.navigation.NavigationView;
 
 public class CardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,14 +56,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() <= 16) {
-                    StringBuilder builder = new StringBuilder();
-                    for (int i = 0; i < s.length(); i++) {
-                        if (i % 4 == 0) {
-                            builder.append(" ");
-                        }
-                        builder.append(s.charAt(i));
-                    }
-                    cvvTxt.setText("Card Number: " + builder.toString().trim());
+                    cvvTxt.setText("Card Number: " + Spacify.take(s.toString()));
                 }
             }
 

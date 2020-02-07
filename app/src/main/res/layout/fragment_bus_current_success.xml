@@ -68,6 +68,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/ticketNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
@@ -98,6 +99,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/lineNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
@@ -128,6 +130,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/payDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
@@ -158,6 +161,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"

@@ -42,10 +42,10 @@
                     />
 
                 <TextView
+                    android:id="@+id/line"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="7sp"
-                    android:text="219"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     />
@@ -78,10 +78,10 @@
                     />
 
                 <TextView
+                    android:id="@+id/payDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5sp"
-                    android:text="2:35 PM, 16 Oct 2019"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     />

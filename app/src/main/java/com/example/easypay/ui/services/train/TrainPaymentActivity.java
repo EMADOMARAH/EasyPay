@@ -124,8 +124,8 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
     }
 
     @Override
-    public void gotoFragment(Fragment fragment) {
-        trainFragmentReservation.loadFragment(fragment);
+    public void gotoFragment(int page) {
+        trainFragmentReservation.loadFragment(page);
     }
 
     @Override

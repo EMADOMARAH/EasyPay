@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -12,18 +13,37 @@
         android:orientation="vertical"
         >
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="26dp"
-            android:drawableEnd="@drawable/ic_edit"
-            android:lineSpacingExtra="7sp"
-            android:text="@string/checkout"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            />
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/checkout"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                />
+
+            <ImageButton
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_edit"
+                tools:ignore="ContentDescription"
+                />
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
