@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,8 +30,9 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
 
-    EditText cvvEdt;
-    TextView cvvTxt;
+    EditText cvvEdt, name, mon, yr, amount;
+    TextView cvvTxt, mName, exDate, addCrd;
+    Button confirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,15 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
 
     private void initViews() {
         cvvEdt = findViewById(R.id.cvvEdt);
+        mName = findViewById(R.id.holderName);
+        exDate = findViewById(R.id.expiryDate);
+        mon = findViewById(R.id.monEdt);
+        yr = findViewById(R.id.yrEdt);
+        name = findViewById(R.id.nameEdt);
+        amount = findViewById(R.id.amountEdt);
+        addCrd = findViewById(R.id.addCard);
         cvvTxt = findViewById(R.id.cvvTxt);
+        confirm = findViewById(R.id.payNow);
 
         cvvEdt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,6 +73,74 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mName.setText(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mon.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String ys = yr.getText().toString().trim();
+                int y = 0;
+                if (!ys.isEmpty()) {
+                    y = Integer.parseInt(ys);
+                }
+                if (y > 2019 && y <= 2050) {
+                    exDate.setText(s + "/" + ys);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        yr.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String ms = mon.getText().toString().trim();
+                int m = 0;
+                if (!ms.isEmpty()) {
+                    m = Integer.parseInt(ms);
+                }
+                if (m >= 1 && m <= 12) {
+                    exDate.setText(ms + "/" + s);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO credits Api
             }
         });
     }
