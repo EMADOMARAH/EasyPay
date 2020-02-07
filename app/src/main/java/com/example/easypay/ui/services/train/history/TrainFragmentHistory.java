@@ -3,7 +3,6 @@ package com.example.easypay.ui.services.train.history;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easypay.R;
 import com.example.easypay.models.TrainHistoryModel;
 import com.example.easypay.network.MyRetroFitHelper;
+import com.example.easypay.ui.services.ErrorFragment;
 import com.example.easypay.utils.Constants;
 
 import java.util.ArrayList;
@@ -59,15 +59,29 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
                     public void onResponse(Call<List<TrainHistoryModel>> call, Response<List<TrainHistoryModel>> response) {
                         if (response.isSuccessful()) {
                             adapter.setTrainHistoryModelList(response.body());
+                            if (adapter.getTrainHistoryModelList().get(0).getStartStation().equals("NULL"))
+                                showError();
+                            if (adapter.getTrainHistoryModelList().isEmpty()) {
+                                showError();
+                            }
+                        } else {
+                            showError();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        showError();
                         Log.d(TAG, "onFailure: " + t.toString());
                     }
                 });
+    }
+
+    private void showError() {
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, new ErrorFragment())
+                .commit();
     }
 
     @Override

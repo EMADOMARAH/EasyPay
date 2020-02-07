@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easypay.R;
 import com.example.easypay.models.BusHistoryModel;
 import com.example.easypay.network.MyRetroFitHelper;
+import com.example.easypay.ui.services.ErrorFragment;
 import com.example.easypay.utils.Constants;
 
 import java.util.ArrayList;
@@ -66,17 +66,29 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
             public void onResponse(Call<List<BusHistoryModel>> call, Response<List<BusHistoryModel>> response) {
                 if (response.isSuccessful()) {
                     adapter.setBusHistoryModelList(response.body());
+                    if (adapter.getBusHistoryModelList().get(0).getTicketDate().equals("NULL"))
+                        showError();
+                    if (adapter.getBusHistoryModelList().isEmpty()) {
+                        showError();
+                    }
                 } else {
-                    Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                    showError();
                 }
             }
 
             @Override
             public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                showError();
             }
         });
+    }
+
+    private void showError() {
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, new ErrorFragment())
+                .commit();
     }
 
     @Override

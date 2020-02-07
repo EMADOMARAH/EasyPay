@@ -52,103 +52,166 @@
                 android:background="@color/greyish"
                 />
 
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/swipe_to_flip"
+                android:textColor="@color/greyish"
+                />
+
+            <FrameLayout
+                android:id="@+id/container_cards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
-                app:cardBackgroundColor="@color/tealish"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
+                android:clickable="true"
+                android:elevation="0dp"
+                android:focusable="true"
                 >
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/back"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_height="match_parent"
+                    android:elevation="0dp"
+                    android:visibility="invisible"
+                    app:cardBackgroundColor="@color/tealish"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
                     >
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/sim"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@android:color/transparent"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:elevation="0dp"
+                        android:padding="16dp"
                         >
 
-                        <ImageView
+                        <TextView
+                            android:id="@+id/cvv2"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_subtraction_2"
+                            android:elevation="0dp"
+                            android:gravity="center"
+                            android:hint="@string/cvv"
+                            android:textSize="22sp"
+                            />
+
+                    </FrameLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/front"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="0dp"
+                    app:cardBackgroundColor="@color/tealish"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="0dp"
+                        android:padding="16dp"
+                        >
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/sim"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/sim"
+                            android:elevation="0dp"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:elevation="0dp"
+                                android:src="@drawable/sim"
+                                tools:ignore="ContentDescription"
+                                />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <ImageView
+                            android:id="@+id/visa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:elevation="0dp"
+                            android:src="@drawable/ic_visa"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="ContentDescription"
                             />
 
-                    </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:id="@+id/cvvTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/ic_subtraction_a"
+                            android:elevation="0dp"
+                            android:gravity="center"
+                            android:hint="@string/card_number_0000_0000_0000_0000"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            app:layout_constraintBottom_toTopOf="@id/expiryDate"
+                            app:layout_constraintTop_toBottomOf="@id/sim"
+                            />
 
-                    <ImageView
-                        android:id="@+id/visa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_visa"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="ContentDescription"
-                        />
+                        <TextView
+                            android:id="@+id/expiryDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/ic_subtraction_2"
+                            android:elevation="0dp"
+                            android:gravity="center"
+                            android:hint="@string/expiry_date"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/holderName"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cvvTxt"
+                            />
 
-                    <TextView
-                        android:id="@+id/cvvTxt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:background="@drawable/ic_subtraction_a"
-                        android:gravity="center"
-                        android:hint="@string/card_number_0000_0000_0000_0000"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
-                        app:layout_constraintBottom_toTopOf="@id/expiryDate"
-                        app:layout_constraintTop_toBottomOf="@id/sim"
-                        />
+                        <TextView
+                            android:id="@+id/holderName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/ic_subtraction_2"
+                            android:elevation="0dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:hint="@string/holder_name"
+                            android:maxLines="2"
+                            android:padding="4dp"
+                            app:layout_constraintBottom_toBottomOf="@id/expiryDate"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/expiryDate"
+                            app:layout_constraintTop_toTopOf="@id/expiryDate"
+                            />
 
-                    <TextView
-                        android:id="@+id/expiryDate"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/ic_subtraction_2"
-                        android:gravity="center"
-                        android:text="@string/expiry_date"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/holderName"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cvvTxt"
-                        />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/holderName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/ic_subtraction_2"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="2"
-                        android:padding="4dp"
-                        android:text="@string/holder_name"
-                        app:layout_constraintBottom_toBottomOf="@id/expiryDate"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/expiryDate"
-                        app:layout_constraintTop_toTopOf="@id/expiryDate"
-                        />
+                </androidx.cardview.widget.CardView>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
             <EditText
                 android:id="@+id/cardNo"
@@ -157,60 +220,11 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_subtraction_2"
+                android:clickable="true"
+                android:focusable="true"
                 android:hint="@string/card_number"
                 android:inputType="number"
                 android:maxLength="16"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                tools:ignore="Autofill"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="horizontal"
-                >
-
-                <EditText
-                    android:id="@+id/monEdt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_subtraction_2"
-                    android:gravity="center"
-                    android:hint="@string/month_mm"
-                    android:inputType="number"
-                    tools:ignore="Autofill"
-                    />
-
-                <EditText
-                    android:id="@+id/yrEdt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_subtraction_2"
-                    android:gravity="center"
-                    android:hint="@string/year_yyyy"
-                    android:inputType="number"
-                    tools:ignore="Autofill"
-                    />
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/nameEdt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/ic_subtraction_2"
-                android:hint="@string/holder_name"
-                android:inputType="textNoSuggestions"
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp"
                 tools:ignore="Autofill"
@@ -231,6 +245,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/ic_subtraction_2"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:hint="@string/enter_cvv"
                     android:inputType="number"
@@ -244,6 +260,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/ic_subtraction_2"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:hint="@string/amount"
                     android:inputType="number"
@@ -251,6 +269,63 @@
                     />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                >
+
+                <EditText
+                    android:id="@+id/monEdt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_subtraction_2"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:hint="@string/month_mm"
+                    android:inputType="number"
+                    tools:ignore="Autofill"
+                    />
+
+                <EditText
+                    android:id="@+id/yrEdt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_subtraction_2"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:hint="@string/year_yyyy"
+                    android:inputType="number"
+                    tools:ignore="Autofill"
+                    />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/nameEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ic_subtraction_2"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/holder_name"
+                android:inputType="textNoSuggestions"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                tools:ignore="Autofill"
+                />
 
             <Button
                 android:id="@+id/payNow"

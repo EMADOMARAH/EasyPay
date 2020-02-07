@@ -133,7 +133,8 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
                         .remove(Constants.TOKEN)
                         .remove(Constants.EMAIL)
                         .remove(Constants.PASS).apply();
-                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
                 return true;
         }

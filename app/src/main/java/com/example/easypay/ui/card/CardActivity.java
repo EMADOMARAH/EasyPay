@@ -1,16 +1,22 @@
 package com.example.easypay.ui.card;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,15 +41,52 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static final float SCROLL_VEL = 125;
+    public static final long ANIM_DUR = 500;
     private static final String TAG = "MyTag";
+    private final Handler handler = new Handler();
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
     EditText cardNo, cvvEdt, name, mon, yr, amount;
-    TextView cvvTxt, mName, exDate;
+    TextView cardTxt, mName, exDate, cvvTxt;
     Button confirm;
+    FrameLayout front, back, cont;
+    AnimatorSet rightBack, rightFront, leftBack, leftFront;
+    boolean isFlipped = false;
+    View.OnTouchListener onTouchListener;
+    final Runnable runnable = new Runnable() {
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public void run() {
+            cont.setOnTouchListener(onTouchListener);
+        }
+    };
+    final Runnable runnableAnims = new Runnable() {
+        @Override
+        public void run() {
+            if (isFlipped) {
+                cont.setScaleX(1f);
+                front.setVisibility(View.VISIBLE);
+                back.setVisibility(View.INVISIBLE);
+                isFlipped = false;
+            } else {
+                cont.setScaleX(-1f);
+                front.setVisibility(View.INVISIBLE);
+                back.setVisibility(View.VISIBLE);
+                isFlipped = true;
+            }
+            handler.postDelayed(runnable, ANIM_DUR / 4);
+        }
+    };
+    View.OnTouchListener nullTouch = new View.OnTouchListener() {
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +98,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         initViews();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
         cardNo = findViewById(R.id.cardNo);
         cvvEdt = findViewById(R.id.cvvEdt);
@@ -64,9 +108,98 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         yr = findViewById(R.id.yrEdt);
         name = findViewById(R.id.nameEdt);
         amount = findViewById(R.id.amountEdt);
-        cvvTxt = findViewById(R.id.cvvTxt);
+        cardTxt = findViewById(R.id.cvvTxt);
         confirm = findViewById(R.id.payNow);
+        cvvTxt = findViewById(R.id.cvv2);
 
+        cont = findViewById(R.id.container_cards);
+        front = findViewById(R.id.front);
+        back = findViewById(R.id.back);
+
+        cont.setCameraDistance(8000 * getResources().getDisplayMetrics().density);
+
+        rightBack = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.rotate_right_back);
+        rightFront = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.rotate_right_front);
+        leftBack = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.rotate_left_back);
+        leftFront = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.rotate_left_front);
+
+        onTouchListener = new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                    if (Math.abs(velocityX) > SCROLL_VEL) {
+                        if (velocityX > 0) {
+                            flipTo(true);
+                        } else if (velocityX < 0) {
+                            flipTo(false);
+                        }
+                    }
+                    return super.onFling(e1, e2, velocityX, velocityY);
+                }
+            });
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return false;
+            }
+        };
+
+        cont.setOnTouchListener(onTouchListener);
+        cardNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    if (isFlipped) {
+                        flipTo(true);
+                    }
+            }
+        });
+        cvvEdt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    if (!isFlipped) {
+                        flipTo(true);
+                    }
+            }
+        });
+        amount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    if (isFlipped) {
+                        flipTo(true);
+                    }
+            }
+        });
+        mon.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    if (isFlipped) {
+                        flipTo(true);
+                    }
+            }
+        });
+        yr.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    if (isFlipped) {
+                        flipTo(true);
+                    }
+            }
+        });
+        name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    if (isFlipped) {
+                        flipTo(true);
+                    }
+            }
+        });
         cardNo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -76,7 +209,25 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                cvvTxt.setText("Card Number: " + Spacify.take(s.toString()));
+                cardTxt.setText("Card Number: " + Spacify.take(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        cvvEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count <= 3) {
+                    cvvTxt.setText(s);
+                }
             }
 
             @Override
@@ -149,8 +300,10 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!check())
+                    return;
                 BigInteger card = BigInteger.valueOf(Long.parseLong(cardNo.getText().toString().trim()));
-                int cvv = Integer.valueOf(cvvEdt.getText().toString().trim());
+                int cvv = Integer.valueOf(cvvTxt.getText().toString().trim());
                 String holderName = mName.getText().toString().trim();
                 int m = Integer.valueOf(exDate.getText().toString().trim().split("/")[0]);
                 int y = Integer.valueOf(exDate.getText().toString().trim().split("/")[1]);
@@ -158,6 +311,32 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                 setCredits(card, cvv, holderName, m, y, am);
             }
         });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void flipTo(boolean right) {
+        cont.setOnTouchListener(nullTouch);
+        if (right) {
+            cont.animate().rotationYBy(180).setDuration(ANIM_DUR).start();
+        } else {
+            cont.animate().rotationYBy(-180).setDuration(ANIM_DUR).start();
+        }
+        handler.postDelayed(runnableAnims, ANIM_DUR / 2);
+    }
+
+    private boolean check() {
+        if (cardNo.getText().toString().isEmpty())
+            return false;
+        if (cvvTxt.getText().toString().isEmpty())
+            return false;
+        if (mName.getText().toString().isEmpty())
+            return false;
+        if (exDate.getText().toString().isEmpty())
+            return false;
+        //noinspection RedundantIfStatement
+        if (amount.getText().toString().isEmpty())
+            return false;
+        return true;
     }
 
     private void setCredits(BigInteger card, int cvv, String holderName, int m, int y, int am) {
@@ -235,7 +414,8 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                         .remove(Constants.EMAIL)
                         .remove(Constants.PASS)
                         .apply();
-                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
                 return true;
         }

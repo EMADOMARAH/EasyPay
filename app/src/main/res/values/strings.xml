@@ -90,4 +90,7 @@
     <string name="select_line">Select Line</string>
     <string name="nan">____</string>
     <string name="working_on_it">Working on it</string>
+    <string name="cvv">CVV</string>
+    <string name="flip_card">Flip Card</string>
+    <string name="swipe_to_flip">Swipe to Flip</string>
 </resources>

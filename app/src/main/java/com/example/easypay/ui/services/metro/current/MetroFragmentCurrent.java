@@ -1,8 +1,7 @@
 package com.example.easypay.ui.services.metro.current;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.example.easypay.R;
 import com.example.easypay.models.MetroTicketModel;
 import com.example.easypay.network.MyRetroFitHelper;
+import com.example.easypay.ui.qrcode.QrActivity;
 import com.example.easypay.utils.Constants;
 
 import java.util.List;
@@ -19,8 +19,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MetroFragmentCurrent extends Fragment {
-
-    private static final String TAG = "MyTag";
 
     public MetroFragmentCurrent() {
         super(R.layout.fragment_metro_current);
@@ -50,8 +48,8 @@ public class MetroFragmentCurrent extends Fragment {
 
             @Override
             public void onFailure(Call<List<MetroTicketModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), QrActivity.class));
+                getActivity().finish();
             }
         });
     }

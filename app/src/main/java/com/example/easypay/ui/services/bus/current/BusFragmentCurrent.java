@@ -1,11 +1,10 @@
 package com.example.easypay.ui.services.bus.current;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.easypay.R;
 import com.example.easypay.models.BusTicketModel;
 import com.example.easypay.network.RetroHelper;
+import com.example.easypay.ui.qrcode.QrActivity;
 import com.example.easypay.utils.Constants;
 
 import java.util.List;
@@ -25,8 +25,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BusFragmentCurrent extends Fragment {
-
-    private static final String TAG = "MyTag";
 
     public static BusFragmentCurrent getInstance() {
         return new BusFragmentCurrent();
@@ -67,8 +65,8 @@ public class BusFragmentCurrent extends Fragment {
 
             @Override
             public void onFailure(Call<List<BusTicketModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), QrActivity.class));
+                getActivity().finish();
             }
         });
     }
