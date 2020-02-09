@@ -4,6 +4,7 @@ import com.olympics.easypay.models.AvailableTrainsModel;
 import com.olympics.easypay.models.BalanceModel;
 import com.olympics.easypay.models.BusHistoryModel;
 import com.olympics.easypay.models.BusTicketModel;
+import com.olympics.easypay.models.CardNumberModel;
 import com.olympics.easypay.models.ChargeHistoryModel;
 import com.olympics.easypay.models.CreditCheckModel;
 import com.olympics.easypay.models.GetSettingModel;
@@ -139,5 +140,16 @@ public interface RetroHelper {
             @Query("php_reserve_to") String to,
             @Query("php_ticket_time") String time,
             @Query("php_quantity") int quantity
+    );
+
+    @POST("show_credits.php")
+    Call<List<CardNumberModel>> getMyCardNumbers(
+            @Query("php_id") int id
+    );
+
+    @POST("delete_creidet_card.php")
+    Call<Void> deleteCard(
+            @Query("php_id") int id,
+            @Query("php_card_number") BigInteger cardNo
     );
 }

@@ -158,6 +158,7 @@
         android:layout_height="wrap_content"
         android:text="@string/remember_password"
         android:textColor="#FFF"
+        android:buttonTint="@color/selector"
         app:layout_constraintBottom_toTopOf="@id/confirm_signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

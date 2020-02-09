@@ -140,6 +140,7 @@
         android:layout_height="wrap_content"
         android:text="@string/remember_password"
         android:textColor="#FFF"
+        android:buttonTint="@color/selector"
         app:layout_constraintBottom_toTopOf="@id/confirm_signIn"
         app:layout_constraintEnd_toStartOf="@id/frgt"
         app:layout_constraintStart_toStartOf="parent"
