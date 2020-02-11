@@ -1,18 +1,27 @@
 package com.olympics.easypay.ui.qrcode.scan;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.zxing.Result;
 import com.olympics.easypay.R;
-import com.otaliastudios.cameraview.CameraView;
-import com.otaliastudios.cameraview.controls.Audio;
 
 public class ScanQrFragment extends Fragment {
-    private CameraView cameraView;
+    private Vibrator vibrator;
+    private CodeScanner codeScanner;
+    private CodeScannerView codeScannerView;
+    private AppCompatActivity activity;
 
     public ScanQrFragment() {
         super(R.layout.fragment_qr_scan);
@@ -22,14 +31,49 @@ public class ScanQrFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        cameraView = view.findViewById(R.id.qrCam);
-        cameraView.setLifecycleOwner(getViewLifecycleOwner());
-        cameraView.setAudio(Audio.OFF);
-        cameraView.open();
+        codeScannerView = view.findViewById(R.id.qrCam);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        codeScanner.startPreview();
+    }
+
+    @Override
+    public void onPause() {
+        codeScanner.releaseResources();
+        super.onPause();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        activity = (AppCompatActivity) getActivity();
+        vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+
+        initQR();
+    }
+
+    private void initQR() {
+        codeScanner = new CodeScanner(activity, codeScannerView);
+        codeScanner.startPreview();
+        codeScanner.setDecodeCallback(new DecodeCallback() {
+            @Override
+            public void onDecoded(@NonNull final Result result) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        vibrate();
+                        Toast.makeText(activity, result.getText(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void vibrate() {
+        vibrator.vibrate(100);
     }
 }

@@ -17,10 +17,12 @@ import com.olympics.easypay.models.TokenModel;
 import com.olympics.easypay.models.TrainHistoryModel;
 import com.olympics.easypay.models.TrainTicketModel;
 import com.olympics.easypay.models.WalletModel;
+import com.olympics.easypay.utils.Constants;
 
 import java.math.BigInteger;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -151,5 +153,35 @@ public interface RetroHelper {
     Call<Void> deleteCard(
             @Query("php_id") int id,
             @Query("php_card_number") BigInteger cardNo
+    );
+
+    @POST("add_credit.php")
+    Call<Void> addCredit(
+            @Query("php_id") int id,
+            @Query("php_card_number") BigInteger cardNo,
+            @Query("php_cvv") int cvvKey,
+            @Query("php_month") int month,
+            @Query("php_year") int year,
+            @Query("php_holder_name") String holderName
+    );
+
+    @POST(Constants.BASE_QR + "bus_qr.php")
+    Call<String> getBusQR(
+            @Query("php_id") int id
+    );
+
+    @POST(Constants.BASE_QR + "metro_qr.php")
+    Call<String> getMetroQR(
+            @Query("php_id") int id
+    );
+
+    @POST(Constants.BASE_QR + "train_qr.php")
+    Call<ResponseBody> getTrainQR(
+            @Query("php_id") int id
+    );
+
+    @POST(Constants.BASE_QR + "personal_qr.php")
+    Call<ResponseBody> getMyQR(
+            @Query("php_id") int id
     );
 }

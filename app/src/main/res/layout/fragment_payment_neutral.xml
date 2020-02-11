@@ -124,6 +124,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/lastBus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -172,6 +173,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/lastMetro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -221,6 +223,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/lastTrain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"

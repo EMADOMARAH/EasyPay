@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:lineSpacingExtra="5sp"
-        android:text="@string/mune"
+        android:text="@string/menu"
         android:textColor="@color/black"
         android:textSize="14sp"
         />

@@ -19,7 +19,7 @@ public class PaymentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loadFragment(new PaymentFragment1());
+        loadFragment(new PaymentFragmentNeutral());
     }
 
     void loadFragment(Fragment fragment){

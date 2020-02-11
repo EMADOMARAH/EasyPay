@@ -22,21 +22,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp"
-        app:contentPaddingBottom="64dp"
-        app:contentPaddingLeft="32dp"
-        app:contentPaddingRight="32dp"
-        app:contentPaddingTop="64dp"
         >
 
-        <com.otaliastudios.cameraview.CameraView
+        <com.budiyev.android.codescanner.CodeScannerView
             android:id="@+id/qrCam"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:autoFocusButtonColor="@color/tealish"
+            app:autoFocusButtonVisible="true"
+            app:flashButtonColor="@color/tealish"
+            app:flashButtonVisible="true"
+            app:frameAspectRatioHeight="1"
+            app:frameAspectRatioWidth="1"
+            app:frameColor="@color/tealish"
+            app:frameCornersRadius="20dp"
+            app:frameCornersSize="50dp"
+            app:frameSize="0.75"
+            app:frameThickness="5dp"
+            app:maskColor="@color/white"
             />
+
+        <!--        <com.otaliastudios.cameraview.CameraView-->
+        <!--            android:id="@+id/qrCam"-->
+        <!--            android:layout_width="200dp"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            />-->
 
     </androidx.cardview.widget.CardView>
 

@@ -4,19 +4,21 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.GestureDetector;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,40 +28,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
+import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
-import com.olympics.easypay.utils.Director;
 
 import java.math.BigInteger;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.olympics.easypay.utils.Constants.CARD;
+
 public class CardAddActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final long ANIM_DUR = 500;
+    public static final int ANIM_DUR = 250;
     static final String TAG = "MyTag";
-    final View.OnTouchListener nullTouch = new View.OnTouchListener() {
-        @SuppressLint("ClickableViewAccessibility")
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            return false;
-        }
-    };
     final Handler handler = new Handler();
-    GestureDetector gestureDetector;
-    final View.OnTouchListener onTouchListener = new View.OnTouchListener() {
-        @SuppressLint("ClickableViewAccessibility")
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            gestureDetector.onTouchEvent(event);
-            return false;
-        }
-    };
-    final Runnable runnable = new Runnable() {
-        @SuppressLint("ClickableViewAccessibility")
-        @Override
-        public void run() {
-            cont.setOnTouchListener(onTouchListener);
-        }
-    };
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
@@ -70,21 +55,20 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
     FrameLayout front, back, cont;
     AnimatorSet rightBack, rightFront, leftBack, leftFront;
     boolean isFlipped = false;
-    final Runnable runnableAnims = new Runnable() {
+    final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             if (isFlipped) {
-                cont.setScaleX(1f);
                 front.setVisibility(View.VISIBLE);
                 back.setVisibility(View.INVISIBLE);
+                cont.setScaleX(1f);
                 isFlipped = false;
             } else {
-                cont.setScaleX(-1f);
                 front.setVisibility(View.INVISIBLE);
                 back.setVisibility(View.VISIBLE);
+                cont.setScaleX(-1f);
                 isFlipped = true;
             }
-            handler.postDelayed(runnable, ANIM_DUR / 4);
         }
     };
 
@@ -118,31 +102,10 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
         leftBack = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.rotate_left_back);
         leftFront = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.rotate_left_front);
 
-        gestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                float x1 = e1.getX();
-                float y1 = e1.getY();
-                float x2 = e2.getX();
-                float y2 = e2.getY();
-
-                switch (Director.getSwipeDirection(x1, y1, x2, y2)) {
-                    case left:
-                        flipTo(false);
-                        break;
-                    case right:
-                        flipTo(true);
-                        break;
-                }
-                return super.onFling(e1, e2, velocityX, velocityY);
-            }
-        });
-        cont.setOnTouchListener(onTouchListener);
-
         swipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flipTo(true);
+                flipCard();
             }
         });
         cardTxt.addTextChangedListener(new TextWatcher() {
@@ -161,6 +124,32 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
 
             }
         });
+        cardTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0 && (s.length() % 5) == 0) {
+                    final char c = s.charAt(s.length() - 1);
+                    if (' ' == c) {
+                        s.delete(s.length() - 1, s.length());
+                    }
+                }
+                if (s.length() > 0 && (s.length() % 5) == 0) {
+                    char c = s.charAt(s.length() - 1);
+                    if (Character.isDigit(c) && TextUtils.split(s.toString(), String.valueOf(' ')).length <= 3) {
+                        s.insert(s.length() - 1, String.valueOf(' '));
+                    }
+                }
+            }
+        });
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,29 +160,33 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
                 String holderName = mName.getText().toString().trim();
                 int m = Integer.valueOf(exDate.getText().toString().trim().split("/")[0]);
                 int y = Integer.valueOf(exDate.getText().toString().trim().split("/")[1]);
-//                int am = Integer.valueOf(amount.getText().toString().trim());
                 setCredits(card, cvv, holderName, m, y);
             }
         });
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    void flipTo(boolean right) {
-        cont.setOnTouchListener(nullTouch);
-        if (right) {
-            cont.animate().rotationYBy(180).setDuration(ANIM_DUR).start();
+    void flipCard() {
+        if (isFlipped) {
+            cont.animate().rotationY(0).setDuration(ANIM_DUR).start();
         } else {
-            cont.animate().rotationYBy(-180).setDuration(ANIM_DUR).start();
+            cont.animate().rotationY(180).setDuration(ANIM_DUR).start();
         }
-        handler.postDelayed(runnableAnims, ANIM_DUR / 2);
+        handler.postDelayed(runnable, ANIM_DUR / 2);
     }
 
     boolean check() {
-        if (cardTxt.getText().toString().isEmpty())
+        if (cardTxt.getText().toString().length() != 19)
             return false;
         if (cvvTxt.getText().toString().isEmpty())
             return false;
         if (mName.getText().toString().isEmpty())
+            return false;
+        int m = Integer.valueOf(exDate.getText().toString().trim().split("/")[0]);
+        int y = Integer.valueOf(exDate.getText().toString().trim().split("/")[1]);
+        if (m <= 0 || m > 12)
+            return false;
+        if (y <= 2019)
             return false;
         //noinspection RedundantIfStatement
         if (exDate.getText().toString().isEmpty())
@@ -201,25 +194,29 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
-    //TODO
-    void setCredits(BigInteger card, int cvv, String holderName, int m, int y) {
-//        MyRetroFitHelper.getInstance().setCredits(
-//                getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0),
-//                card, cvv, m, y, holderName, am, "VISA"
-//        ).enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//                if (response.isSuccessful()) {
-//                    onBackPressed();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//                Log.d(TAG, "onFailure: " + t.toString());
-//                Toast.makeText(CardAddActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+    void setCredits(final BigInteger card, int cvv, String holderName, int m, int y) {
+        final SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, 0);
+        int id = sharedPreferences.getInt(Constants.TOKEN, 0);
+        MyRetroFitHelper.getInstance().addCredit(id, card, cvv, m, y, holderName).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(CardAddActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()) {
+                    sharedPreferences
+                            .edit()
+                            .putString(CARD, card.toString())
+                            .apply();
+                    onBackPressed();
+                    onBackPressed();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.toString());
+                Toast.makeText(CardAddActivity.this, "error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     void initToolbar() {
@@ -273,9 +270,7 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
                         .edit()
-                        .remove(Constants.TOKEN)
-                        .remove(Constants.EMAIL)
-                        .remove(Constants.PASS)
+                        .clear()
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -283,5 +278,11 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), CardActivity.class));
+        finish();
     }
 }

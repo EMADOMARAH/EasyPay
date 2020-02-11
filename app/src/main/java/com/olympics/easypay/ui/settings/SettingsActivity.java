@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.GetSettingModel;
 import com.olympics.easypay.models.SetSettingModel;
@@ -25,7 +26,6 @@ import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.utils.Constants;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -200,9 +200,8 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
                         .edit()
-                        .remove(Constants.TOKEN)
-                        .remove(Constants.EMAIL)
-                        .remove(Constants.PASS).apply();
+                        .clear()
+                        .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();

@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.BalanceModel;
+import com.olympics.easypay.models.BusHistoryModel;
+import com.olympics.easypay.models.MetroHistoryModel;
+import com.olympics.easypay.models.TrainHistoryModel;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.qrcode.QrActivity;
 import com.olympics.easypay.ui.services.bus.BusPaymentActivity;
@@ -31,16 +34,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PaymentFragment2 extends Fragment {
+public class PaymentFragmentNeutral extends Fragment {
     private static final String TAG = "MyTag";
-    private TextView myBalanceTxt;
+    private TextView myBalanceTxt, lastBus, lastMetro, lastTrain;
     private Retrofit retrofit;
     private RetroHelper helper;
     private SharedPreferences sharedPreferences;
     private int myId;
 
-    public PaymentFragment2() {
-        super(R.layout.fragment_payment_2);
+    public PaymentFragmentNeutral() {
+        super(R.layout.fragment_payment_neutral);
     }
 
     @Override
@@ -49,6 +52,9 @@ public class PaymentFragment2 extends Fragment {
 
         myBalanceTxt = view.findViewById(R.id.myBalance);
 
+        lastBus = view.findViewById(R.id.lastBus);
+        lastMetro = view.findViewById(R.id.lastMetro);
+        lastTrain = view.findViewById(R.id.lastTrain);
         CardView cardView1 = view.findViewById(R.id.bus_card);
         cardView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +95,55 @@ public class PaymentFragment2 extends Fragment {
         initSharedPrefs();
         initRetroFit();
         getBalance();
+        getLastTrips();
+    }
+
+    private void getLastTrips() {
+        helper.getBusHistory(myId).enqueue(new Callback<List<BusHistoryModel>>() {
+            @Override
+            public void onResponse(Call<List<BusHistoryModel>> call, Response<List<BusHistoryModel>> response) {
+                if (response.isSuccessful()) {
+                    lastBus.setText(response.body().get(response.body().size() - 1).getTicketDate());
+                } else {
+                    Log.d(TAG, "onResponse: Failure");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.toString());
+            }
+        });
+        helper.getMetroHistory(myId).enqueue(new Callback<List<MetroHistoryModel>>() {
+            @Override
+            public void onResponse(Call<List<MetroHistoryModel>> call, Response<List<MetroHistoryModel>> response) {
+                if (response.isSuccessful()) {
+                    lastMetro.setText(response.body().get(response.body().size() - 1).getTicketDate());
+                } else {
+                    Log.d(TAG, "onResponse: Failure");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.toString());
+            }
+        });
+        helper.getTrainHistory(myId).enqueue(new Callback<List<TrainHistoryModel>>() {
+            @Override
+            public void onResponse(Call<List<TrainHistoryModel>> call, Response<List<TrainHistoryModel>> response) {
+                if (response.isSuccessful()) {
+                    lastTrain.setText(response.body().get(response.body().size() - 1).getReserveTime());
+                } else {
+                    Log.d(TAG, "onResponse: Failure");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.toString());
+            }
+        });
     }
 
     private void initSharedPrefs() {

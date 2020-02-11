@@ -17,13 +17,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.ChargeHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,9 +131,8 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
                         .edit()
-                        .remove(Constants.TOKEN)
-                        .remove(Constants.EMAIL)
-                        .remove(Constants.PASS).apply();
+                        .clear()
+                        .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();

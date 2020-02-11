@@ -31,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PaymentFragment1 extends Fragment {
+public class PaymentFragmentPending extends Fragment {
     private static final String TAG = "MyTag";
     private TextView myBalanceTxt;
     private Retrofit retrofit;
@@ -39,8 +39,8 @@ public class PaymentFragment1 extends Fragment {
     private SharedPreferences sharedPreferences;
     private int myId;
 
-    public PaymentFragment1() {
-        super(R.layout.fragment_payment_1);
+    public PaymentFragmentPending() {
+        super(R.layout.fragment_payment_pending);
     }
 
     @Override

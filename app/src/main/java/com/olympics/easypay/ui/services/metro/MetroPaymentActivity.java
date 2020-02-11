@@ -16,14 +16,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.services.metro.current.MetroFragmentCurrent;
 import com.olympics.easypay.ui.services.metro.history.MetroFragmentHistory;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 public class MetroPaymentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -130,9 +130,8 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
                         .edit()
-                        .remove(Constants.TOKEN)
-                        .remove(Constants.EMAIL)
-                        .remove(Constants.PASS).apply();
+                        .clear()
+                        .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
