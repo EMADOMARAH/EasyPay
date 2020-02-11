@@ -37,6 +37,9 @@ dependencies {
 //    implementation 'com.otaliastudios:cameraview:2.6.1'
     implementation 'com.budiyev.android:code-scanner:2.1.0'
 
+    implementation 'com.google.android.gms:play-services-wallet:18.0.0'
+    implementation 'com.android.support:appcompat-v7:24.1.1'
+
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 

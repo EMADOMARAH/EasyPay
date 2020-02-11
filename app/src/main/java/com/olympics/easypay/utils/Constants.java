@@ -1,5 +1,12 @@
 package com.olympics.easypay.utils;
 
+import com.google.android.gms.wallet.WalletConstants;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 public class Constants {
     //Network
     public static final String BASE_URL = "http://196.221.197.51/";
@@ -16,4 +23,35 @@ public class Constants {
 
     //IntentKeys
     public static final String MODEL_KEY = "ModelKey";
+
+    //Google Pay
+    public static final int PAYMENTS_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
+
+    public static final List<String> SUPPORTED_NETWORKS = Collections.singletonList("VISA");
+
+    public static final List<String> SUPPORTED_METHODS = Arrays.asList("PAN_ONLY", "CRYPTOGRAM_3DS");
+
+    public static final String COUNTRY_CODE = "EG";
+
+    public static final String CURRENCY_CODE = "EGP";
+
+    public static final String PAYMENT_GATEWAY_TOKENIZATION_NAME = "example";
+
+    public static final HashMap<String, String> PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS =
+            new HashMap<String, String>() {
+                {
+                    put("gateway", PAYMENT_GATEWAY_TOKENIZATION_NAME);
+                    put("gatewayMerchantId", "exampleGatewayMerchantId");
+                }
+            };
+
+    public static final String DIRECT_TOKENIZATION_PUBLIC_KEY = "REPLACE_ME";
+
+    public static final HashMap<String, String> DIRECT_TOKENIZATION_PARAMETERS =
+            new HashMap<String, String>() {
+                {
+                    put("protocolVersion", "ECv2");
+                    put("publicKey", DIRECT_TOKENIZATION_PUBLIC_KEY);
+                }
+            };
 }

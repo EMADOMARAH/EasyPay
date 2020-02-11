@@ -100,4 +100,9 @@
     <string name="choose_card">Choose Card</string>
     <string name="click_here_to_flip">Click here to flip Card</string>
     <string name="menu">MENU</string>
+
+    <string name="store_name" translatable="false">My Online Store</string>
+    <string name="googlepay_status_unavailable" translatable="false">Unfortunately, Google Pay is not available on this phone.</string>
+    <string name="googlepay_status_checking" translatable="false">Checking if Google Pay is available...</string>
+    <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
 </resources>
