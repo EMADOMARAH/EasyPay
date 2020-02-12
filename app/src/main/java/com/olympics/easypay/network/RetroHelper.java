@@ -208,7 +208,7 @@ public interface RetroHelper {
 
     @POST("sign_check_phone.php")
     Call<List<PhoneCheckModel>> checkPhone(
-            @Query("php_phone_number ") String phone
+            @Query("php_phone_number") String phone
     );
 
     @POST("charge_with_amount.php")
