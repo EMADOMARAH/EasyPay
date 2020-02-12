@@ -67,7 +67,7 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             @Override
             public void onFailure(Call<List<ChargeHistoryModel>> call, Throwable t) {
                 Toast.makeText(HistoryActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailurePaymentHistory: " + t.toString());
             }
         });
     }

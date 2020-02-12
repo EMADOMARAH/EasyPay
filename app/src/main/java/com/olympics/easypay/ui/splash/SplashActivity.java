@@ -83,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<TokenModel>> call, Throwable t) {
                 Toast.makeText(SplashActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureLogin: " + t.toString());
             }
         });
     }

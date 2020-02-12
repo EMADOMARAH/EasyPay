@@ -70,7 +70,7 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
 
             @Override
             public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureMetroHistory: " + t.toString());
                 showError();
             }
         });

@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.olympics.easypay.R;
+import com.olympics.easypay.models.EmailCheckModel;
+import com.olympics.easypay.models.PhoneCheckModel;
 import com.olympics.easypay.models.TokenModel;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.home.MainActivity;
@@ -28,10 +30,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.olympics.easypay.utils.Constants.EMAIL;
+import static com.olympics.easypay.utils.Constants.PASS;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";
-    EditText nameEdt, emailEdt, passEdt;
+    EditText nameEdt, emailEdt, passEdt, phoneEdt;
     TextView gotoSignInBtn;
     Button confirmSignUp;
     CheckBox checkBox;
@@ -74,21 +79,26 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = nameEdt.getText().toString().trim();
                 String email = emailEdt.getText().toString().trim();
+                String phone = phoneEdt.getText().toString().trim();
                 String pass = passEdt.getText().toString().trim();
-                if (check(name, email, pass)) {
-                    signUp(name, email, pass);
+                if (check(name, email, phone, pass)) {
+                    checkEmail(name, email, phone, pass);
                 }
             }
         });
     }
 
-    private boolean check(String name, String email, String pass) {
+    private boolean check(String name, String email, String phone, String pass) {
         if (name.isEmpty()) {
             Toast.makeText(getApplicationContext(), "enter your name", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(getApplicationContext(), "enter your email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (phone.isEmpty() || !Patterns.PHONE.matcher(phone).matches()) {
+            Toast.makeText(getApplicationContext(), "enter your phone", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (pass.length() < 8) {
@@ -98,8 +108,52 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    private void signUp(String name, final String email, final String pass) {
-        helper.signup(name, email, pass).enqueue(new Callback<List<TokenModel>>() {
+    private void checkEmail(final String name, final String email, final String phone, final String pass) {
+        helper.checkEmailForSignUp(email).enqueue(new Callback<List<EmailCheckModel>>() {
+            @Override
+            public void onResponse(Call<List<EmailCheckModel>> call, Response<List<EmailCheckModel>> response) {
+                if (response.isSuccessful()) {
+                    String s = response.body().get(0).getEmail();
+                    if (s.equals("Email Available")) {
+                        checkPhone(name, email, phone, pass);
+                    } else {
+                        Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EmailCheckModel>> call, Throwable t) {
+                Log.d(TAG, "onFailureEmail: " + t.toString());
+                Toast.makeText(SignUpActivity.this, "invalid email", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void checkPhone(final String name, final String email, final String phone, final String pass) {
+        helper.checkPhone(phone).enqueue(new Callback<List<PhoneCheckModel>>() {
+            @Override
+            public void onResponse(Call<List<PhoneCheckModel>> call, Response<List<PhoneCheckModel>> response) {
+                if (response.isSuccessful()) {
+                    String s = response.body().get(0).getResult();
+                    if (s.equals("possible signup")) {
+                        signup(name, email, phone, pass);
+                    } else {
+                        Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PhoneCheckModel>> call, Throwable t) {
+                Log.d(TAG, "onFailurePhone: " + t.toString());
+                Toast.makeText(SignUpActivity.this, "invalid phone", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void signup(String name, final String email, String phone, final String pass) {
+        helper.signup(name, email, pass, phone).enqueue(new Callback<List<TokenModel>>() {
             @Override
             public void onResponse(Call<List<TokenModel>> call, Response<List<TokenModel>> response) {
                 if (response.isSuccessful()) {
@@ -113,8 +167,8 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<TokenModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
-                Toast.makeText(SignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureSignUp: " + t.toString());
+                Toast.makeText(SignUpActivity.this, "error sign up", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -131,6 +185,12 @@ public class SignUpActivity extends AppCompatActivity {
                                 .putString(Constants.EMAIL, email)
                                 .putString(Constants.PASS, pass)
                                 .apply();
+                    } else {
+                        sharedPreferences
+                                .edit()
+                                .remove(EMAIL)
+                                .remove(PASS)
+                                .apply();
                     }
                     sharedPreferences
                             .edit()
@@ -142,8 +202,8 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<TokenModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
-                Toast.makeText(SignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureLogin: " + t.toString());
+                Toast.makeText(SignUpActivity.this, "error login", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -163,6 +223,7 @@ public class SignUpActivity extends AppCompatActivity {
         confirmSignUp = findViewById(R.id.confirm_signUp);
         nameEdt = findViewById(R.id.name_signup);
         emailEdt = findViewById(R.id.email_signup);
+        phoneEdt = findViewById(R.id.phone_signup);
         passEdt = findViewById(R.id.pass_signup);
         checkBox = findViewById(R.id.chk);
     }

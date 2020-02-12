@@ -78,7 +78,7 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
 
             @Override
             public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureBusHistory: " + t.toString());
                 showError();
             }
         });

@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.AvailableTrainsModel;
 import com.olympics.easypay.models.LineModel;
@@ -29,7 +30,6 @@ import com.olympics.easypay.models.TrainTicketModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.utils.Constants;
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -259,7 +259,7 @@ public class TrainFragmentReservationForm extends Fragment {
 
             @Override
             public void onFailure(Call<List<AvailableTrainsModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureAvailableTrains: " + t.toString());
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -348,7 +348,7 @@ public class TrainFragmentReservationForm extends Fragment {
 
             @Override
             public void onFailure(Call<List<LineModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureGetLines: " + t.toString());
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -365,7 +365,7 @@ public class TrainFragmentReservationForm extends Fragment {
 
             @Override
             public void onFailure(Call<List<StationModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureGetStations: " + t.toString());
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

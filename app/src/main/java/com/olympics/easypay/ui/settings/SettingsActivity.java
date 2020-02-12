@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.settings;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,11 +23,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.GetSettingModel;
+import com.olympics.easypay.models.PasswordCheckModel;
 import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.utils.Constants;
 
 import java.util.List;
 
@@ -33,10 +35,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.olympics.easypay.utils.Constants.PASS;
+import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
+import static com.olympics.easypay.utils.Constants.TOKEN;
+
 public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MyTag";
-    EditText nameEdt, emailEdt, passEdt;
+    EditText nameEdt, emailEdt, passEdt, phonEdt;
     Button editBtn;
     RetroHelper helper;
     SharedPreferences sharedPreferences;
@@ -102,6 +108,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         nameEdt = findViewById(R.id.name_setting);
         emailEdt = findViewById(R.id.email_setting);
         passEdt = findViewById(R.id.pass_setting);
+        phonEdt = findViewById(R.id.phone_setting);
 
         emailEdt.setEnabled(false);
         emailEdt.setClickable(false);
@@ -112,20 +119,25 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 String name = nameEdt.getText().toString().trim();
                 String email = emailEdt.getText().toString().trim();
                 String pass = passEdt.getText().toString().trim();
-                if (check(name, email, pass)) {
-                    setSettings(name, email, pass);
+                String phone = phonEdt.getText().toString().trim();
+                if (check(name, email, phone, pass)) {
+                    setSettings(name, email, phone, pass);
                 }
             }
         });
     }
 
-    private boolean check(String name, String email, String pass) {
+    private boolean check(String name, String email, String phone, String pass) {
         if (name.isEmpty()) {
             Toast.makeText(this, "enter your name", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "enter your email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (phone.isEmpty() || !Patterns.PHONE.matcher(phone).matches()) {
+            Toast.makeText(this, "enter your phone", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (pass.length() < 8) {
@@ -135,20 +147,54 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
-    private void setSettings(String name, String email, String pass) {
-        helper.setSetting(myId, pass, name).enqueue(new Callback<List<SetSettingModel>>() {
+    private void setSettings(final String name, final String email, final String phone, final String pass) {
+        final Dialog dialog = new Dialog(getApplicationContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm);
+        dialog.findViewById(R.id.conf).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<List<SetSettingModel>> call, Response<List<SetSettingModel>> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(SettingsActivity.this, response.body().get(0).getUpdate(), Toast.LENGTH_SHORT).show();
-                    finish();
+            public void onClick(View v) {
+                String s = ((EditText) dialog.findViewById(R.id.pass)).getText().toString().trim();
+                if (s.isEmpty()) {
+                    return;
                 }
-            }
+                helper.checkPassword(email, s).enqueue(new Callback<List<PasswordCheckModel>>() {
+                    @Override
+                    public void onResponse(Call<List<PasswordCheckModel>> call, Response<List<PasswordCheckModel>> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().get(0).getPassword().equals("password successful")) {
+                                helper.setSetting(myId, pass, name, phone).enqueue(new Callback<List<SetSettingModel>>() {
+                                    @Override
+                                    public void onResponse(Call<List<SetSettingModel>> call, Response<List<SetSettingModel>> response) {
+                                        if (response.isSuccessful()) {
+                                            Toast.makeText(SettingsActivity.this, response.body().get(0).getUpdate(), Toast.LENGTH_SHORT).show();
+                                            if (sharedPreferences.contains(PASS)) {
+                                                if (!sharedPreferences.getString(PASS, "").isEmpty()) {
+                                                    sharedPreferences.edit().putString(PASS, pass).apply();
+                                                }
+                                            }
+                                            finish();
+                                        }
+                                    }
 
-            @Override
-            public void onFailure(Call<List<SetSettingModel>> call, Throwable t) {
-                Toast.makeText(SettingsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: " + t.toString());
+                                    @Override
+                                    public void onFailure(Call<List<SetSettingModel>> call, Throwable t) {
+                                        Toast.makeText(SettingsActivity.this, "error", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "onFailureSetSetting: " + t.toString());
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(SettingsActivity.this, response.body().get(0).getPassword(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<PasswordCheckModel>> call, Throwable t) {
+                        Log.d(TAG, "onFailureCheckPass: " + t.toString());
+                        Toast.makeText(SettingsActivity.this, "error", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
@@ -170,15 +216,15 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
             @Override
             public void onFailure(Call<List<GetSettingModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureGetSetting: " + t.toString());
                 Toast.makeText(SettingsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void initSharedPrefs() {
-        sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS, 0);
-        myId = sharedPreferences.getInt(Constants.TOKEN, 0);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, 0);
+        myId = sharedPreferences.getInt(TOKEN, 0);
     }
 
     private void initRetroFit() {
@@ -198,7 +244,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             case R.id.help:
                 return true;
             case R.id.logout:
-                getSharedPreferences(Constants.SHARED_PREFS, 0)
+                getSharedPreferences(SHARED_PREFS, 0)
                         .edit()
                         .clear()
                         .apply();

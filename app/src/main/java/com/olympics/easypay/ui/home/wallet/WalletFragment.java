@@ -94,7 +94,7 @@ public class WalletFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<WalletModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureWallet: " + t.toString());
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

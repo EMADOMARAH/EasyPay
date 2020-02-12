@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +48,8 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = "MyTag";
     Spinner spinner;
-    Button add, del;
+    EditText editText;
+    Button add, del, charge;
     float dp;
     int col;
     BigInteger selectedCardNumber;
@@ -59,6 +61,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +115,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initData() {
-        int id = getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+        id = getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
         MyRetroFitHelper.getInstance()
                 .getMyCardNumbers(id)
                 .enqueue(new Callback<List<CardNumberModel>>() {
@@ -126,7 +129,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onFailure(Call<List<CardNumberModel>> call, Throwable t) {
                         initSpinner(new ArrayList<CardNumberModel>());
-                        Log.d(TAG, "onFailure: " + t.toString());
+                        Log.d(TAG, "onFailureMyCards: " + t.toString());
                     }
                 });
     }
@@ -206,11 +209,30 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         dp = getResources().getDisplayMetrics().density;
         col = getResources().getColor(R.color.greyish);
 
+        charge = findViewById(R.id.charge);
+        editText = findViewById(R.id.amount);
         spinner = findViewById(R.id.spinner);
         add = findViewById(R.id.add);
         del = findViewById(R.id.delete);
         conf = findViewById(R.id.conf);
 
+        charge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getText().toString().isEmpty()) {
+                    return;
+                }
+                int am = Integer.parseInt(editText.getText().toString().trim());
+                if (am % 10 != 0) {
+                    Toast.makeText(CardActivity.this, "Charge with divisible by tens only", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (selectedCardNumber == null) {
+                    return;
+                }
+                chargeNow(selectedCardNumber, am);
+            }
+        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,6 +260,23 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    private void chargeNow(BigInteger card, int amount) {
+        MyRetroFitHelper.getInstance().charge(id, card, amount).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(CardActivity.this, "Charged Successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d(TAG, "onFailureCharge: " + t.toString());
+                Toast.makeText(CardActivity.this, "error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void addCard() {
         startActivity(new Intent(getApplicationContext(), CardAddActivity.class));
         finish();
@@ -261,7 +300,6 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void deleteCard(BigInteger cardNo) {
-        int id = getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
         MyRetroFitHelper.getInstance().deleteCard(id, cardNo).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -275,7 +313,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureDeleteCard: " + t.toString());
                 Toast.makeText(CardActivity.this, "failed", Toast.LENGTH_SHORT).show();
             }
         });

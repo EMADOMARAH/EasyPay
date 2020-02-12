@@ -72,7 +72,7 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
                     @Override
                     public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
                         showError();
-                        Log.d(TAG, "onFailure: " + t.toString());
+                        Log.d(TAG, "onFailureTrainHistory: " + t.toString());
                     }
                 });
     }

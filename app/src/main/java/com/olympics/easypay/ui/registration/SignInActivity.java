@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.olympics.easypay.R;
+import com.olympics.easypay.models.EmailCheckModel;
+import com.olympics.easypay.models.PasswordCheckModel;
 import com.olympics.easypay.models.TokenModel;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.home.MainActivity;
@@ -80,7 +82,7 @@ public class SignInActivity extends AppCompatActivity {
                 String email = emailEdt.getText().toString().trim();
                 String pass = passEdt.getText().toString().trim();
                 if (check(email, pass)) {
-                    login(email, pass);
+                    checkEmail(email, pass);
                 }
             }
         });
@@ -98,6 +100,55 @@ public class SignInActivity extends AppCompatActivity {
         return true;
     }
 
+    private void checkEmail(final String email, final String pass) {
+        helper.checkEmailForLogin(email).enqueue(new Callback<List<EmailCheckModel>>() {
+            @Override
+            public void onResponse(Call<List<EmailCheckModel>> call, Response<List<EmailCheckModel>> response) {
+                if (response.isSuccessful()) {
+                    String s = response.body().get(0).getEmail();
+                    if (s.equals("Email Exist")) {
+                        checkPass(email, pass);
+                    } else {
+                        Toast.makeText(SignInActivity.this, s, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EmailCheckModel>> call, Throwable t) {
+                Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureEmail: " + t.toString());
+            }
+        });
+    }
+
+    private void checkPass(final String email, final String pass) {
+        helper.checkPassword(email, pass).enqueue(new Callback<List<PasswordCheckModel>>() {
+            @Override
+            public void onResponse(Call<List<PasswordCheckModel>> call, Response<List<PasswordCheckModel>> response) {
+                if (response.isSuccessful()) {
+                    String s = response.body().get(0).getEmail();
+                    String s1 = response.body().get(0).getPassword();
+                    if (s1.equals("password successful")) {
+                        login(email, pass);
+                    } else {
+                        Toast.makeText(SignInActivity.this, s, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PasswordCheckModel>> call, Throwable t) {
+                Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailurePass: " + t.toString());
+            }
+        });
+    }
+
     private void login(final String email, final String pass) {
         helper.login(email, pass).enqueue(new Callback<List<TokenModel>>() {
             @Override
@@ -110,6 +161,12 @@ public class SignInActivity extends AppCompatActivity {
                                 .putString(EMAIL, email)
                                 .putString(PASS, pass)
                                 .apply();
+                    } else {
+                        sharedPreferences
+                                .edit()
+                                .remove(EMAIL)
+                                .remove(PASS)
+                                .apply();
                     }
                     sharedPreferences
                             .edit()
@@ -121,7 +178,7 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<TokenModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureLogin: " + t.toString());
                 Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -142,6 +199,6 @@ public class SignInActivity extends AppCompatActivity {
         passEdt = findViewById(R.id.pass_signin);
         gotoSignUpBtn = findViewById(R.id.goto_signUp);
         confirmSignIn = findViewById(R.id.confirm_signIn);
-        checkBox=findViewById(R.id.chk);
+        checkBox = findViewById(R.id.chk);
     }
 }

@@ -7,10 +7,13 @@ import com.olympics.easypay.models.BusTicketModel;
 import com.olympics.easypay.models.CardNumberModel;
 import com.olympics.easypay.models.ChargeHistoryModel;
 import com.olympics.easypay.models.CreditCheckModel;
+import com.olympics.easypay.models.EmailCheckModel;
 import com.olympics.easypay.models.GetSettingModel;
 import com.olympics.easypay.models.LineModel;
 import com.olympics.easypay.models.MetroHistoryModel;
 import com.olympics.easypay.models.MetroTicketModel;
+import com.olympics.easypay.models.PasswordCheckModel;
+import com.olympics.easypay.models.PhoneCheckModel;
 import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.models.StationModel;
 import com.olympics.easypay.models.TokenModel;
@@ -33,7 +36,8 @@ public interface RetroHelper {
     Call<List<TokenModel>> signup(
             @Query("php_name") String name,
             @Query("php_email") String email,
-            @Query("php_password") String pass
+            @Query("php_password") String pass,
+            @Query("php_phone_number") String phone
     );
 
     @POST("login.php")
@@ -73,7 +77,8 @@ public interface RetroHelper {
     Call<List<SetSettingModel>> setSetting(
             @Query("php_id") int id,
             @Query("php_password") String password,
-            @Query("php_name") String name
+            @Query("php_name") String name,
+            @Query("php_phone_number") String phone
     );
 
     @POST("show.php")
@@ -183,5 +188,33 @@ public interface RetroHelper {
     @POST(Constants.BASE_QR + "personal_qr.php")
     Call<ResponseBody> getMyQR(
             @Query("php_id") int id
+    );
+
+    @POST("login_check_email.php")
+    Call<List<EmailCheckModel>> checkEmailForLogin(
+            @Query("php_email") String email
+    );
+
+    @POST("sign_check_email.php")
+    Call<List<EmailCheckModel>> checkEmailForSignUp(
+            @Query("php_email") String email
+    );
+
+    @POST("login_check_email_password.php")
+    Call<List<PasswordCheckModel>> checkPassword(
+            @Query("php_email") String email,
+            @Query("php_password") String pass
+    );
+
+    @POST("sign_check_phone.php")
+    Call<List<PhoneCheckModel>> checkPhone(
+            @Query("php_phone_number ") String phone
+    );
+
+    @POST("charge_with_amount.php")
+    Call<Void> charge(
+            @Query("php_id") int id,
+            @Query("php_card_number") BigInteger cardNo,
+            @Query("php_amount") int amount
     );
 }

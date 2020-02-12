@@ -108,7 +108,7 @@ public class PaymentFragmentPending extends Fragment {
 
             @Override
             public void onFailure(Call<List<BalanceModel>> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureBalance: " + t.toString());
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

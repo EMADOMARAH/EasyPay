@@ -14,11 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.TrainTicketModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.utils.Constants;
-import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -139,7 +139,7 @@ public class TrainFragmentReservationCheck extends Fragment {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: " + t.toString());
+                Log.d(TAG, "onFailureSaveTrainTicket: " + t.toString());
             }
         });
     }
