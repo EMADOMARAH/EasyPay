@@ -236,4 +236,16 @@ public interface RetroHelper {
             @Query("php_password") String pass,
             @Query("php_password_retype") String rePass
     );
+
+    @POST("bus_reservation_by_qr.php")
+    Call<ResponseBody> reserveBus(
+            @Query("php_id") int id,
+            @Query("php_bus_number") int line
+    );
+
+    @POST("metro_reservation_by_qr.php")
+    Call<ResponseBody> reserveMetro(
+            @Query("php_id") int id,
+            @Query("php_metro_station") String station
+    );
 }
