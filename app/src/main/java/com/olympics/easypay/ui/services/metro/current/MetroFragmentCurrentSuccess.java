@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.services.metro.current;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,8 +11,16 @@ import androidx.fragment.app.Fragment;
 
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.MetroTicketModel;
+import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.ui.qrcode.QrActivity;
 import com.olympics.easypay.utils.Constants;
 import com.olympics.easypay.utils.Spacify;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MetroFragmentCurrentSuccess extends Fragment {
 
@@ -19,16 +28,6 @@ public class MetroFragmentCurrentSuccess extends Fragment {
 
     public MetroFragmentCurrentSuccess() {
         super(R.layout.fragment_metro_current_success);
-    }
-
-    public static MetroFragmentCurrentSuccess getInstance(MetroTicketModel metroTicketModel) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.MODEL_KEY, metroTicketModel);
-
-        MetroFragmentCurrentSuccess metroFragmentCurrentSuccess = new MetroFragmentCurrentSuccess();
-        metroFragmentCurrentSuccess.setArguments(bundle);
-
-        return metroFragmentCurrentSuccess;
     }
 
     @Override
@@ -46,7 +45,26 @@ public class MetroFragmentCurrentSuccess extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        updateData((MetroTicketModel) getArguments().getParcelable(Constants.MODEL_KEY));
+        initData();
+    }
+
+    private void initData() {
+        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+        MyRetroFitHelper.getInstance().getMetroTicket(myId).enqueue(new Callback<List<MetroTicketModel>>() {
+            @Override
+            public void onResponse(Call<List<MetroTicketModel>> call, Response<List<MetroTicketModel>> response) {
+                if (response.isSuccessful()) {
+                    MetroTicketModel metroTicketModel = response.body().get(0);
+                    updateData(metroTicketModel);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MetroTicketModel>> call, Throwable t) {
+                startActivity(new Intent(getContext(), QrActivity.class));
+                getActivity().finish();
+            }
+        });
     }
 
     private void updateData(MetroTicketModel metroTicketModel) {

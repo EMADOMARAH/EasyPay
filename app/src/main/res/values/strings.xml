@@ -107,4 +107,7 @@
     <string name="charge_now">Charge Now</string>
     <string name="your_phone_number">Your Phone Number</string>
     <string name="enter_old_password_to_confirm">Enter old Password to confirm</string>
+    <string name="enter_your_email_and_phone">Enter your email and phone</string>
+    <string name="confirm_your_password">Confirm your Password</string>
+    <string name="enter_your_new_password">Enter your new Password</string>
 </resources>

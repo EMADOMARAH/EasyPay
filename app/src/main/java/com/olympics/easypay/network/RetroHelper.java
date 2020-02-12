@@ -14,6 +14,7 @@ import com.olympics.easypay.models.MetroHistoryModel;
 import com.olympics.easypay.models.MetroTicketModel;
 import com.olympics.easypay.models.PasswordCheckModel;
 import com.olympics.easypay.models.PhoneCheckModel;
+import com.olympics.easypay.models.RetrievePasswordModel;
 import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.models.StationModel;
 import com.olympics.easypay.models.TokenModel;
@@ -216,5 +217,23 @@ public interface RetroHelper {
             @Query("php_id") int id,
             @Query("php_card_number") BigInteger cardNo,
             @Query("php_amount") int amount
+    );
+
+    @POST("metro_pending.php")
+    Call<ResponseBody> isMetroPending(
+            @Query("php_id") int id
+    );
+
+    @POST("forget_pass_signin.php")
+    Call<List<RetrievePasswordModel>> retrievePassword(
+            @Query("php_email") String email,
+            @Query("php_phone_number") String phone
+    );
+
+    @POST("forget_pass_editpass.php")
+    Call<ResponseBody> changePassword(
+            @Query("php_id") int id,
+            @Query("php_password") String pass,
+            @Query("php_password_retype") String rePass
     );
 }
