@@ -171,12 +171,12 @@ public interface RetroHelper {
     );
 
     @POST(Constants.BASE_QR + "bus_qr.php")
-    Call<String> getBusQR(
+    Call<ResponseBody> getBusQR(
             @Query("php_id") int id
     );
 
     @POST(Constants.BASE_QR + "metro_qr.php")
-    Call<String> getMetroQR(
+    Call<ResponseBody> getMetroQR(
             @Query("php_id") int id
     );
 
