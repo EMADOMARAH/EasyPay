@@ -35,6 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.olympics.easypay.utils.Constants.CARD;
+import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
@@ -168,11 +170,15 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                                     public void onResponse(Call<List<SetSettingModel>> call, Response<List<SetSettingModel>> response) {
                                         if (response.isSuccessful()) {
                                             Toast.makeText(SettingsActivity.this, response.body().get(0).getUpdate(), Toast.LENGTH_SHORT).show();
-                                            if (sharedPreferences.contains(PASS)) {
-                                                if (!sharedPreferences.getString(PASS, "").isEmpty()) {
-                                                    sharedPreferences.edit().putString(PASS, pass).apply();
-                                                }
-                                            }
+                                            getSharedPreferences(SHARED_PREFS, 0)
+                                                    .edit()
+                                                    .remove(TOKEN)
+                                                    .remove(EMAIL)
+                                                    .remove(PASS)
+                                                    .remove(CARD)
+                                                    .apply();
+                                            startActivity(new Intent(getApplicationContext(), SignInActivity.class)
+                                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                             finish();
                                         }
                                     }
@@ -249,7 +255,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             case R.id.logout:
                 getSharedPreferences(SHARED_PREFS, 0)
                         .edit()
-                        .clear()
+                        .remove(TOKEN)
+                        .remove(EMAIL)
+                        .remove(PASS)
+                        .remove(CARD)
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));

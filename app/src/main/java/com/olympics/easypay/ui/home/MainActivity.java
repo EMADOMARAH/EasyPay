@@ -29,6 +29,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.olympics.easypay.utils.Constants.CARD;
+import static com.olympics.easypay.utils.Constants.EMAIL;
+import static com.olympics.easypay.utils.Constants.PASS;
+import static com.olympics.easypay.utils.Constants.TOKEN;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ViewPager viewPager;
@@ -134,7 +139,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
                         .edit()
-                        .clear()
+                        .remove(TOKEN)
+                        .remove(EMAIL)
+                        .remove(PASS)
+                        .remove(CARD)
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));

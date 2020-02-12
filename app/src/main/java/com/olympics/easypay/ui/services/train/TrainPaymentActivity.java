@@ -27,6 +27,11 @@ import com.olympics.easypay.ui.services.train.history.TrainFragmentHistory;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
 
+import static com.olympics.easypay.utils.Constants.CARD;
+import static com.olympics.easypay.utils.Constants.EMAIL;
+import static com.olympics.easypay.utils.Constants.PASS;
+import static com.olympics.easypay.utils.Constants.TOKEN;
+
 public class TrainPaymentActivity extends AppCompatActivity implements TrainFragmentReservationForm.TrainListener, TrainFragmentReservationCheck.TrainListener, NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
@@ -138,7 +143,10 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
                         .edit()
-                        .clear()
+                        .remove(TOKEN)
+                        .remove(EMAIL)
+                        .remove(PASS)
+                        .remove(CARD)
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
