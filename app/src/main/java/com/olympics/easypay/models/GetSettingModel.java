@@ -13,10 +13,22 @@ public class GetSettingModel {
     @SerializedName("user_password")
     private String password;
 
-    public GetSettingModel(String name, String email, String password) {
+    @SerializedName("phone_number")
+    private String phoneNumber;
+
+    public GetSettingModel(String name, String email, String password, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {

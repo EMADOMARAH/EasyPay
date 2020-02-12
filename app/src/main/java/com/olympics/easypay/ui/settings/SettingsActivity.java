@@ -148,7 +148,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void setSettings(final String name, final String email, final String phone, final String pass) {
-        final Dialog dialog = new Dialog(getApplicationContext());
+        final Dialog dialog = new Dialog(SettingsActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm);
         dialog.findViewById(R.id.conf).setOnClickListener(new View.OnClickListener() {
@@ -197,6 +197,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 });
             }
         });
+        dialog.show();
     }
 
     private void getSettings() {
@@ -207,10 +208,12 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                     String name = response.body().get(0).getName();
                     String email = response.body().get(0).getEmail();
                     String pass = response.body().get(0).getPassword();
+                    String phone = response.body().get(0).getPhoneNumber();
 
                     nameEdt.setText(name);
                     emailEdt.setText(email);
                     passEdt.setText(pass);
+                    phonEdt.setText(phone);
                 }
             }
 
