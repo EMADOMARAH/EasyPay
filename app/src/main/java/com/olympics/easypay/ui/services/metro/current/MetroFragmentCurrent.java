@@ -1,6 +1,8 @@
 package com.olympics.easypay.ui.services.metro.current;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MetroFragmentCurrent extends Fragment {
+
+    private static final String TAG = "MyTag";
 
     public MetroFragmentCurrent() {
         super(R.layout.fragment_metro_current);
@@ -49,7 +53,8 @@ public class MetroFragmentCurrent extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                Log.d(TAG, "onFailureMetroPending: " + t.toString());
+                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
             }
         });
     }

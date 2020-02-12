@@ -1,10 +1,11 @@
 package com.olympics.easypay.ui.services.bus.current;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.BusTicketModel;
 import com.olympics.easypay.network.RetroHelper;
-import com.olympics.easypay.ui.qrcode.QrActivity;
 import com.olympics.easypay.utils.Constants;
 
 import java.util.List;
@@ -25,6 +25,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BusFragmentCurrent extends Fragment {
+
+    private static final String TAG = "MyTag";
 
     public static BusFragmentCurrent getInstance() {
         return new BusFragmentCurrent();
@@ -65,8 +67,8 @@ public class BusFragmentCurrent extends Fragment {
 
             @Override
             public void onFailure(Call<List<BusTicketModel>> call, Throwable t) {
-                startActivity(new Intent(getContext(), QrActivity.class));
-                getActivity().finish();
+                Log.d(TAG, "onFailureBusTicket: " + t.toString());
+                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
             }
         });
     }

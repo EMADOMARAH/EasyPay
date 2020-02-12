@@ -50,7 +50,9 @@ public class ScanQrFragment extends Fragment {
 
     @Override
     public void onPause() {
-        codeScanner.releaseResources();
+        if (codeScanner != null) {
+            codeScanner.releaseResources();
+        }
         super.onPause();
     }
 
