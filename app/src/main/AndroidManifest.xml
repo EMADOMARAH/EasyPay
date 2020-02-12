@@ -27,8 +27,10 @@
             android:value="true"
             />
 
-        <activity android:name=".ui.CheckoutActivity">
+        <activity android:name=".ui.CheckoutActivityJava">
 
+        </activity>
+        <activity android:name=".ui.CheckoutActivity">
         </activity>
         <activity
             android:name=".ui.card.CardActivity"
