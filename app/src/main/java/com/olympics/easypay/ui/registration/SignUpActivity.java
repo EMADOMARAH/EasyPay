@@ -32,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
+import static com.olympics.easypay.utils.Constants.PASSWORD_PATTERN;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -90,19 +91,40 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean check(String name, String email, String phone, String pass) {
         if (name.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "enter your name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter your name", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(getApplicationContext(), "enter your email", Toast.LENGTH_SHORT).show();
+
+        if (email.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter email", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (phone.isEmpty() || !Patterns.PHONE.matcher(phone).matches()) {
-            Toast.makeText(getApplicationContext(), "enter your phone", Toast.LENGTH_SHORT).show();
+        if (!email.endsWith("@gmail.com") && !email.endsWith("@Gmail.com") && !email.endsWith("@outlook.com") && !email.endsWith("@Outlook.com")) {
+            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (phone.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter your phone", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!Patterns.PHONE.matcher(phone).matches()) {
+            Toast.makeText(getApplicationContext(), "Phone badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (pass.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter password", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (pass.length() < 8) {
-            Toast.makeText(getApplicationContext(), "enter your password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!PASSWORD_PATTERN.matcher(pass).matches()) {
+            Toast.makeText(getApplicationContext(), "Weak password", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

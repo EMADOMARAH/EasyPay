@@ -28,6 +28,7 @@ import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.registration.SignInActivity;
+import com.olympics.easypay.utils.Constants;
 
 import java.util.List;
 
@@ -158,6 +159,15 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             public void onClick(View v) {
                 String s = ((EditText) dialog.findViewById(R.id.pass)).getText().toString().trim();
                 if (s.isEmpty()) {
+                    Toast.makeText(SettingsActivity.this, "Enter new password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (s.length() < 8) {
+                    Toast.makeText(SettingsActivity.this, "Password must be 8 characters at least", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!Constants.PASSWORD_PATTERN.matcher(s).matches()) {
+                    Toast.makeText(SettingsActivity.this, "Weak password", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 helper.checkPassword(email, s).enqueue(new Callback<List<PasswordCheckModel>>() {

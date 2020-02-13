@@ -24,7 +24,6 @@ import com.olympics.easypay.models.TokenModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.home.MainActivity;
-import com.olympics.easypay.utils.Constants;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,12 +38,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.olympics.easypay.utils.Constants.BASE_URL;
 import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
+import static com.olympics.easypay.utils.Constants.PASSWORD_PATTERN;
 import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
 public class SignInActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";
+
     EditText emailEdt, passEdt;
     TextView gotoSignUpBtn, forgetBtn;
     Button confirmSignIn;
@@ -176,12 +177,28 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private boolean check(String email, String pass) {
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(getApplicationContext(), "enter email", Toast.LENGTH_SHORT).show();
+        if (email.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!email.endsWith("@gmail.com") && !email.endsWith("@Gmail.com") && !email.endsWith("@outlook.com") && !email.endsWith("@Outlook.com")) {
+            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (pass.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter password", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (pass.length() < 8) {
-            Toast.makeText(getApplicationContext(), "enter pass", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!PASSWORD_PATTERN.matcher(pass).matches()) {
+            Toast.makeText(getApplicationContext(), "Weak password", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -257,7 +274,7 @@ public class SignInActivity extends AppCompatActivity {
                     }
                     sharedPreferences
                             .edit()
-                            .putInt(Constants.TOKEN, token)
+                            .putInt(TOKEN, token)
                             .apply();
                     gotoMain();
                 }

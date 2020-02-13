@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Constants {
     //Network
@@ -23,6 +24,18 @@ public class Constants {
 
     //IntentKeys
     public static final String MODEL_KEY = "ModelKey";
+
+    //Patterns
+    public static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
 
     //Google Pay
     public static final int PAYMENTS_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
