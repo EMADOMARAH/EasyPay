@@ -145,7 +145,7 @@ public class ScanQrFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(activity, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailureBus: " + t.toString());
             }
         });
@@ -167,7 +167,7 @@ public class ScanQrFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(activity, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailureMetro: " + t.toString());
             }
         });

@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.EmailCheckModel;
 import com.olympics.easypay.models.PhoneCheckModel;
@@ -21,6 +20,7 @@ import com.olympics.easypay.models.TokenModel;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.utils.Constants;
+import com.olympics.easypay.utils.FieldValidator;
 
 import java.util.List;
 
@@ -30,12 +30,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.olympics.easypay.utils.Constants.PASSWORD_PATTERN;
-
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";
-    EditText nameEdt, emailEdt, passEdt, phoneEdt;
+    TextInputLayout nameEdt, emailEdt, passEdt, phoneEdt;
     TextView gotoSignInBtn;
     Button confirmSignUp;
     CheckBox checkBox;
@@ -76,59 +74,31 @@ public class SignUpActivity extends AppCompatActivity {
         confirmSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameEdt.getText().toString().trim();
-                String email = emailEdt.getText().toString().trim();
-                String phone = phoneEdt.getText().toString().trim();
-                String pass = passEdt.getText().toString().trim();
-                if (check(name, email, phone, pass)) {
+                String name = nameEdt.getEditText().getText().toString().trim();
+                String email = emailEdt.getEditText().getText().toString().trim();
+                String phone = phoneEdt.getEditText().getText().toString().trim();
+                String pass = passEdt.getEditText().getText().toString().trim();
+                if (validateName() & validateEmail() & validatePhone() & validatePass()) {
                     checkEmail(name, email, phone, pass);
                 }
             }
         });
     }
 
-    private boolean check(String name, String email, String phone, String pass) {
-        if (name.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter your name", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (email.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter email", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!email.endsWith("@gmail.com") && !email.endsWith("@Gmail.com") && !email.endsWith("@outlook.com") && !email.endsWith("@Outlook.com")) {
-            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (phone.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter your phone", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!phone.startsWith("01")) {
-            Toast.makeText(getApplicationContext(), "Phone badly formatted", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!Patterns.PHONE.matcher(phone).matches()) {
-            Toast.makeText(getApplicationContext(), "Phone badly formatted", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (pass.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter password", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (pass.length() < 8) {
-            Toast.makeText(getApplicationContext(), "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!PASSWORD_PATTERN.matcher(pass).matches()) {
-            Toast.makeText(getApplicationContext(), "Weak password", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+    private boolean validateName() {
+        return FieldValidator.checkName(nameEdt);
+    }
+
+    private boolean validateEmail() {
+        return FieldValidator.checkEmail(emailEdt);
+    }
+
+    private boolean validatePhone() {
+        return FieldValidator.checkPhone(phoneEdt);
+    }
+
+    private boolean validatePass() {
+        return FieldValidator.checkPassword(passEdt);
     }
 
     private void checkEmail(final String name, final String email, final String phone, final String pass) {
@@ -139,8 +109,9 @@ public class SignUpActivity extends AppCompatActivity {
                     String s = response.body().get(0).getEmail();
                     if (s.equals("Email Available")) {
                         checkPhone(name, email, phone, pass);
+                        emailEdt.setError(null);
                     } else {
-                        Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_SHORT).show();
+                        emailEdt.setError("Email already exists");
                     }
                 }
             }
@@ -148,7 +119,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<EmailCheckModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureEmail: " + t.toString());
-                Toast.makeText(SignUpActivity.this, "invalid email", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -161,8 +132,9 @@ public class SignUpActivity extends AppCompatActivity {
                     String s = response.body().get(0).getResult();
                     if (s.equals("possible signup")) {
                         signup(name, email, phone, pass);
+                        phoneEdt.setError(null);
                     } else {
-                        Toast.makeText(SignUpActivity.this, s, Toast.LENGTH_SHORT).show();
+                        phoneEdt.setError("Phone number used before");
                     }
                 }
             }
@@ -170,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<PhoneCheckModel>> call, Throwable t) {
                 Log.d(TAG, "onFailurePhone: " + t.toString());
-                Toast.makeText(SignUpActivity.this, "invalid phone", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -181,8 +153,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(Call<List<TokenModel>> call, Response<List<TokenModel>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().get(0).getId().equals("Exist")) {
-                        Toast.makeText(SignUpActivity.this, "user already exits", Toast.LENGTH_SHORT).show();
+                        emailEdt.setError("Email already exists");
                     } else {
+                        emailEdt.setError(null);
                         gotoSignIn();
                     }
                 }
@@ -191,7 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<TokenModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureSignUp: " + t.toString());
-                Toast.makeText(SignUpActivity.this, "error sign up", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -76,9 +76,9 @@
         android:padding="8dp"
         android:text="@string/sign_in"
         android:textColor="@color/tealish"
+        app:layout_constraintBottom_toBottomOf="@id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintBottom_toBottomOf="@id/textView2"
         app:layout_constraintTop_toTopOf="@id/textView2"
         />
 
@@ -91,85 +91,124 @@
         app:layout_constraintTop_toBottomOf="@id/background"
         >
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name_signup"
-            style="@style/TextStyle3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/text_back_sign"
-            android:gravity="center_vertical"
-            android:hint="@string/your_name"
-            android:inputType="textNoSuggestions"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:textAllCaps="false"
-            android:textColor="#FFF"
             android:textColorHint="@color/white_three"
-            tools:ignore="Autofill"
-            />
+            app:errorEnabled="true"
+            app:hintTextColor="@color/white_three"
+            >
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextStyle3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_back_sign"
+                android:gravity="center_vertical"
+                android:hint="@string/your_name"
+                android:inputType="textNoSuggestions"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:textColorHint="@color/white_three"
+                tools:ignore="Autofill"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_signup"
-            style="@style/TextStyle3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/text_back_sign"
-            android:gravity="center_vertical"
-            android:hint="@string/your_email"
-            android:inputType="textEmailAddress"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:textAllCaps="false"
-            android:textColor="#FFF"
             android:textColorHint="@color/white_three"
-            tools:ignore="Autofill"
-            />
+            app:errorEnabled="true"
+            app:hintTextColor="@color/white_three"
+            >
 
-        <EditText
+            <EditText
+                style="@style/TextStyle3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_back_sign"
+                android:gravity="center_vertical"
+                android:hint="@string/your_email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:textColorHint="@color/white_three"
+                tools:ignore="Autofill"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phone_signup"
-            style="@style/TextStyle3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/text_back_sign"
-            android:gravity="center_vertical"
-            android:hint="@string/your_phone_number"
-            android:inputType="phone"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:textAllCaps="false"
-            android:maxLength="11"
-            android:textColor="#FFF"
             android:textColorHint="@color/white_three"
-            tools:ignore="Autofill"
-            />
+            app:errorEnabled="true"
+            app:hintTextColor="@color/white_three"
+            >
 
-        <EditText
+            <EditText
+                style="@style/TextStyle3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_back_sign"
+                android:gravity="center_vertical"
+                android:hint="@string/your_phone_number"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:textColorHint="@color/white_three"
+                tools:ignore="Autofill"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pass_signup"
-            style="@style/TextStyle3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:background="@drawable/text_back_sign"
-            android:gravity="center_vertical"
-            android:hint="@string/your_password"
-            android:inputType="textPassword"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:textAllCaps="false"
-            android:textColor="#FFF"
             android:textColorHint="@color/white_three"
-            tools:ignore="Autofill"
-            />
+            app:errorEnabled="true"
+            app:hintTextColor="@color/white_three"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white_three"
+            >
+
+            <EditText
+                style="@style/TextStyle3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_back_sign"
+                android:gravity="center_vertical"
+                android:hint="@string/your_password"
+                android:inputType="textPassword"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:textColorHint="@color/white_three"
+                tools:ignore="Autofill"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
@@ -177,9 +216,9 @@
         android:id="@+id/chk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="@color/selector"
         android:text="@string/remember_password"
         android:textColor="#FFF"
-        android:buttonTint="@color/selector"
         app:layout_constraintBottom_toTopOf="@id/confirm_signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

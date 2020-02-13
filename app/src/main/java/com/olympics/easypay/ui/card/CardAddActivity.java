@@ -217,7 +217,7 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.d(TAG, "onFailureAddCredit: " + t.toString());
-                Toast.makeText(CardAddActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CardAddActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

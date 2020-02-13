@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.EmailCheckModel;
 import com.olympics.easypay.models.PasswordCheckModel;
@@ -24,6 +25,7 @@ import com.olympics.easypay.models.TokenModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.home.MainActivity;
+import com.olympics.easypay.utils.FieldValidator;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +40,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.olympics.easypay.utils.Constants.BASE_URL;
 import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
-import static com.olympics.easypay.utils.Constants.PASSWORD_PATTERN;
 import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
@@ -46,7 +47,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";
 
-    EditText emailEdt, passEdt;
+    TextInputLayout emailEdt, passEdt;
     TextView gotoSignUpBtn, forgetBtn;
     Button confirmSignIn;
     CheckBox checkBox;
@@ -87,9 +88,9 @@ public class SignInActivity extends AppCompatActivity {
         confirmSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailEdt.getText().toString().trim();
-                String pass = passEdt.getText().toString().trim();
-                if (check(email, pass)) {
+                String email = emailEdt.getEditText().getText().toString().trim();
+                String pass = passEdt.getEditText().getText().toString().trim();
+                if (validateEmail() & validatePass()) {
                     checkEmail(email, pass);
                 }
             }
@@ -122,7 +123,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onResponse(Call<List<RetrievePasswordModel>> call, Response<List<RetrievePasswordModel>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().get(0).getId() == null || response.body().get(0).getId().equals("NULL")) {
-                        Toast.makeText(SignInActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignInActivity.this, "User doesn't exist", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     final int id = Integer.parseInt(response.body().get(0).getId());
@@ -132,12 +133,13 @@ public class SignInActivity extends AppCompatActivity {
                     dialog.findViewById(R.id.conf).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String pass = ((EditText) dialog.findViewById(R.id.pass)).getText().toString().trim();
-                            String repass = ((EditText) dialog.findViewById(R.id.repass)).getText().toString().trim();
-                            if (pass.length() < 8 || !repass.equals(pass)) {
-                                return;
+                            TextInputLayout txtLayout = dialog.findViewById(R.id.pass);
+                            TextInputLayout txtLayout2 = dialog.findViewById(R.id.repass);
+                            String pass = txtLayout.getEditText().getText().toString().trim();
+                            String repass = txtLayout2.getEditText().getText().toString().trim();
+                            if (FieldValidator.checkPassword(txtLayout) & FieldValidator.checkRePassword(txtLayout2, txtLayout)) {
+                                loginWithNewPass(id, pass, repass);
                             }
-                            loginWithNewPass(id, pass, repass);
                         }
                     });
                     dialog.show();
@@ -148,7 +150,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<RetrievePasswordModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureRetrieveToken: " + t.toString());
-                Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -171,37 +173,17 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailureChangePassword: " + t.toString());
-                Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private boolean check(String email, String pass) {
-        if (email.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter email", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!email.endsWith("@gmail.com") && !email.endsWith("@Gmail.com") && !email.endsWith("@outlook.com") && !email.endsWith("@Outlook.com")) {
-            Toast.makeText(getApplicationContext(), "Email badly formatted\nemail must be(xxx@xxx.com)", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(getApplicationContext(), "Email badly formatted\nemail must be(xxx@xxx.com)", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (pass.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter password", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (pass.length() < 8) {
-            Toast.makeText(getApplicationContext(), "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!PASSWORD_PATTERN.matcher(pass).matches()) {
-            Toast.makeText(getApplicationContext(), "Weak password", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+    private boolean validateEmail() {
+        return FieldValidator.checkEmail(emailEdt);
+    }
+
+    private boolean validatePass() {
+        return FieldValidator.checkPassword(passEdt);
     }
 
     private void checkEmail(final String email, final String pass) {
@@ -212,8 +194,9 @@ public class SignInActivity extends AppCompatActivity {
                     String s = response.body().get(0).getEmail();
                     if (s.equals("Email Exist")) {
                         checkPass(email, pass);
+                        emailEdt.setError(null);
                     } else {
-                        Toast.makeText(SignInActivity.this, s, Toast.LENGTH_SHORT).show();
+                        emailEdt.setError("Email doesn't exist");
                     }
                 } else {
                     Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
@@ -222,7 +205,7 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<EmailCheckModel>> call, Throwable t) {
-                Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailureEmail: " + t.toString());
             }
         });
@@ -237,17 +220,16 @@ public class SignInActivity extends AppCompatActivity {
                     String s1 = response.body().get(0).getPassword();
                     if (s1.equals("password successful")) {
                         login(email, pass);
+                        passEdt.setError(null);
                     } else {
-                        Toast.makeText(SignInActivity.this, s, Toast.LENGTH_SHORT).show();
+                        passEdt.setError("Wrong password");
                     }
-                } else {
-                    Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<PasswordCheckModel>> call, Throwable t) {
-                Toast.makeText(SignInActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailurePass: " + t.toString());
             }
         });
@@ -283,7 +265,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<TokenModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureLogin: " + t.toString());
-                Toast.makeText(SignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

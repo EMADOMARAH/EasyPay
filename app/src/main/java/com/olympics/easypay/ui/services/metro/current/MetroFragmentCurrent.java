@@ -54,7 +54,7 @@ public class MetroFragmentCurrent extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailureMetroPending: " + t.toString());
-                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

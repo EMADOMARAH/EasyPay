@@ -68,7 +68,7 @@ public class BusFragmentCurrent extends Fragment {
             @Override
             public void onFailure(Call<List<BusTicketModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureBusTicket: " + t.toString());
-                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

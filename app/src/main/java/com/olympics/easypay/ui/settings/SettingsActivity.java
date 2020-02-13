@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.GetSettingModel;
 import com.olympics.easypay.models.PasswordCheckModel;
@@ -28,7 +28,7 @@ import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.utils.Constants;
+import com.olympics.easypay.utils.FieldValidator;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ import static com.olympics.easypay.utils.Constants.TOKEN;
 public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MyTag";
-    EditText nameEdt, emailEdt, passEdt, phonEdt;
+    TextInputLayout nameEdt, emailEdt, passEdt, phoneEdt;
     Button editBtn;
     RetroHelper helper;
     SharedPreferences sharedPreferences;
@@ -111,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         nameEdt = findViewById(R.id.name_setting);
         emailEdt = findViewById(R.id.email_setting);
         passEdt = findViewById(R.id.pass_setting);
-        phonEdt = findViewById(R.id.phone_setting);
+        phoneEdt = findViewById(R.id.phone_setting);
 
         emailEdt.setEnabled(false);
         emailEdt.setClickable(false);
@@ -119,55 +119,31 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameEdt.getText().toString().trim();
-                String email = emailEdt.getText().toString().trim();
-                String pass = passEdt.getText().toString().trim();
-                String phone = phonEdt.getText().toString().trim();
-                if (check(name, email, phone, pass)) {
+                String name = nameEdt.getEditText().getText().toString().trim();
+                String email = emailEdt.getEditText().getText().toString().trim();
+                String pass = passEdt.getEditText().getText().toString().trim();
+                String phone = phoneEdt.getEditText().getText().toString().trim();
+                if (validateName() && validateEmail() && validatePhone() && validatePass()) {
                     setSettings(name, email, phone, pass);
                 }
             }
         });
     }
 
-    private boolean check(String name, String email, String phone, String pass) {
-        if (name.isEmpty()) {
-            Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (email.isEmpty()) {
-            Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Email badly formatted", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (phone.isEmpty()) {
-            Toast.makeText(this, "Enter your phone", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!phone.startsWith("01")) {
-            Toast.makeText(getApplicationContext(), "Phone badly formatted", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!Patterns.PHONE.matcher(phone).matches()) {
-            Toast.makeText(this, "Phone badly formatted", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (pass.isEmpty()) {
-            Toast.makeText(SettingsActivity.this, "Enter new password", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (pass.length() < 8) {
-            Toast.makeText(SettingsActivity.this, "Password must be 8 characters at least", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!Constants.PASSWORD_PATTERN.matcher(pass).matches()) {
-            Toast.makeText(SettingsActivity.this, "Weak password", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+    private boolean validateName() {
+        return FieldValidator.checkName(nameEdt);
+    }
+
+    private boolean validateEmail() {
+        return FieldValidator.checkEmail(emailEdt);
+    }
+
+    private boolean validatePhone() {
+        return FieldValidator.checkPhone(phoneEdt);
+    }
+
+    private boolean validatePass() {
+        return FieldValidator.checkPassword(passEdt);
     }
 
     private void setSettings(final String name, final String email, final String phone, final String pass) {
@@ -207,7 +183,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
                                     @Override
                                     public void onFailure(Call<List<SetSettingModel>> call, Throwable t) {
-                                        Toast.makeText(SettingsActivity.this, "error", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SettingsActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                                         Log.d(TAG, "onFailureSetSetting: " + t.toString());
                                     }
                                 });
@@ -220,7 +196,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                     @Override
                     public void onFailure(Call<List<PasswordCheckModel>> call, Throwable t) {
                         Log.d(TAG, "onFailureCheckPass: " + t.toString());
-                        Toast.makeText(SettingsActivity.this, "error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SettingsActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -238,17 +214,17 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                     String pass = response.body().get(0).getPassword();
                     String phone = response.body().get(0).getPhoneNumber();
 
-                    nameEdt.setText(name);
-                    emailEdt.setText(email);
-                    passEdt.setText(pass);
-                    phonEdt.setText(phone);
+                    nameEdt.getEditText().setText(name);
+                    emailEdt.getEditText().setText(email);
+                    passEdt.getEditText().setText(pass);
+                    phoneEdt.getEditText().setText(phone);
                 }
             }
 
             @Override
             public void onFailure(Call<List<GetSettingModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureGetSetting: " + t.toString());
-                Toast.makeText(SettingsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

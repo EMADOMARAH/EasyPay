@@ -112,6 +112,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureLastTrips: " + t.toString());
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
         helper.getMetroHistory(myId).enqueue(new Callback<List<MetroHistoryModel>>() {
@@ -127,6 +128,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureMetroHistory: " + t.toString());
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
         helper.getTrainHistory(myId).enqueue(new Callback<List<TrainHistoryModel>>() {
@@ -142,6 +144,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureTrainHistory: " + t.toString());
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -164,7 +167,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<List<BalanceModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureBalance: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -133,6 +133,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                     public void onFailure(Call<List<CardNumberModel>> call, Throwable t) {
                         initSpinner(new ArrayList<CardNumberModel>());
                         Log.d(TAG, "onFailureMyCards: " + t.toString());
+                        Toast.makeText(CardActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -275,7 +276,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.d(TAG, "onFailureCharge: " + t.toString());
-                Toast.makeText(CardActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CardActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -317,7 +318,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.d(TAG, "onFailureDeleteCard: " + t.toString());
-                Toast.makeText(CardActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CardActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

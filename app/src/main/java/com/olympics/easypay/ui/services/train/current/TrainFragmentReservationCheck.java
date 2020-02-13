@@ -138,7 +138,7 @@ public class TrainFragmentReservationCheck extends Fragment {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailureSaveTrainTicket: " + t.toString());
             }
         });

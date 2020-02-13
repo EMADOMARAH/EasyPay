@@ -3,6 +3,7 @@ package com.olympics.easypay.ui.services.train.history;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,6 +73,7 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
                     @Override
                     public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
                         showError();
+                        Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onFailureTrainHistory: " + t.toString());
                     }
                 });

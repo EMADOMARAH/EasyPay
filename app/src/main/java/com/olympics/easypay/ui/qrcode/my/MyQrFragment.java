@@ -67,7 +67,7 @@ public class MyQrFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailureMyQR: " + t.toString());
             }
         });

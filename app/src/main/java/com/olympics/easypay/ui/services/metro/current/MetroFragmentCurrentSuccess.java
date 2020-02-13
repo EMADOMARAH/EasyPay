@@ -63,7 +63,7 @@ public class MetroFragmentCurrentSuccess extends Fragment {
             @Override
             public void onFailure(Call<List<MetroTicketModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureMetroTicket: " + t.toString());
-                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -260,7 +260,7 @@ public class TrainFragmentReservationForm extends Fragment {
             @Override
             public void onFailure(Call<List<AvailableTrainsModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureAvailableTrains: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -349,7 +349,7 @@ public class TrainFragmentReservationForm extends Fragment {
             @Override
             public void onFailure(Call<List<LineModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureGetLines: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -366,7 +366,7 @@ public class TrainFragmentReservationForm extends Fragment {
             @Override
             public void onFailure(Call<List<StationModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureGetStations: " + t.toString());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

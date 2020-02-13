@@ -3,6 +3,7 @@ package com.olympics.easypay.ui.services.metro.history;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,6 +73,7 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
             public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureMetroHistory: " + t.toString());
                 showError();
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
