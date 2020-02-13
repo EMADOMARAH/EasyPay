@@ -30,8 +30,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.olympics.easypay.utils.Constants.EMAIL;
-import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.PASSWORD_PATTERN;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -186,7 +184,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (response.body().get(0).getId().equals("Exist")) {
                         Toast.makeText(SignUpActivity.this, "user already exits", Toast.LENGTH_SHORT).show();
                     } else {
-                        login(email, pass);
+                        gotoSignIn();
                     }
                 }
             }
@@ -199,40 +197,40 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void login(final String email, final String pass) {
-        helper.login(email, pass).enqueue(new Callback<List<TokenModel>>() {
-            @Override
-            public void onResponse(Call<List<TokenModel>> call, Response<List<TokenModel>> response) {
-                if (response.isSuccessful()) {
-                    int token = Integer.parseInt(response.body().get(0).getId());
-                    if (checkBox.isChecked()) {
-                        sharedPreferences
-                                .edit()
-                                .putString(Constants.EMAIL, email)
-                                .putString(Constants.PASS, pass)
-                                .apply();
-                    } else {
-                        sharedPreferences
-                                .edit()
-                                .remove(EMAIL)
-                                .remove(PASS)
-                                .apply();
-                    }
-                    sharedPreferences
-                            .edit()
-                            .putInt(Constants.TOKEN, token)
-                            .apply();
-                    gotoMain();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<TokenModel>> call, Throwable t) {
-                Log.d(TAG, "onFailureLogin: " + t.toString());
-                Toast.makeText(SignUpActivity.this, "error login", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void login(final String email, final String pass) {
+//        helper.login(email, pass).enqueue(new Callback<List<TokenModel>>() {
+//            @Override
+//            public void onResponse(Call<List<TokenModel>> call, Response<List<TokenModel>> response) {
+//                if (response.isSuccessful()) {
+//                    int token = Integer.parseInt(response.body().get(0).getId());
+//                    if (checkBox.isChecked()) {
+//                        sharedPreferences
+//                                .edit()
+//                                .putString(Constants.EMAIL, email)
+//                                .putString(Constants.PASS, pass)
+//                                .apply();
+//                    } else {
+//                        sharedPreferences
+//                                .edit()
+//                                .remove(EMAIL)
+//                                .remove(PASS)
+//                                .apply();
+//                    }
+//                    sharedPreferences
+//                            .edit()
+//                            .putInt(Constants.TOKEN, token)
+//                            .apply();
+//                    gotoMain();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<TokenModel>> call, Throwable t) {
+//                Log.d(TAG, "onFailureLogin: " + t.toString());
+//                Toast.makeText(SignUpActivity.this, "error login", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void gotoSignIn() {
         startActivity(new Intent(getApplicationContext(), SignInActivity.class));
