@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,14 +22,29 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 import com.olympics.easypay.R;
+import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.utils.Constants;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
 public class ScanQrFragment extends Fragment {
+    private static final String TAG = "MyTag";
     private Vibrator vibrator;
     private CodeScanner codeScanner;
     private CodeScannerView codeScannerView;
     private AppCompatActivity activity;
+    private int id;
 
     public ScanQrFragment() {
         super(R.layout.fragment_qr_scan);
@@ -63,6 +79,8 @@ public class ScanQrFragment extends Fragment {
         activity = (AppCompatActivity) getActivity();
         vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
 
+        id = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+
         initQR();
     }
 
@@ -87,12 +105,72 @@ public class ScanQrFragment extends Fragment {
                         @Override
                         public void run() {
                             vibrate();
-                            Toast.makeText(activity, result.getText(), Toast.LENGTH_LONG).show();
+                            jsonParse(result.getText());
                         }
                     });
                 }
             });
         }
+    }
+
+    private void jsonParse(String json) {
+        try {
+            JSONObject root = new JSONArray(json).getJSONObject(0);
+            switch (root.getString("Type")) {
+                case "bus":
+                    initBus(root.getInt("line_number"));
+                    break;
+                case "metro":
+                    initMetro(root.getInt("ticket_number"));
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initBus(int lineNumber) {
+        MyRetroFitHelper.getInstance().reserveBus(id, lineNumber).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                        activity.finish();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(activity, "error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureBus: " + t.toString());
+            }
+        });
+    }
+
+    private void initMetro(int ticketNumber) {
+        MyRetroFitHelper.getInstance().reserveMetro(id, ticketNumber).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                        activity.finish();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(activity, "error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureMetro: " + t.toString());
+            }
+        });
     }
 
     private void vibrate() {

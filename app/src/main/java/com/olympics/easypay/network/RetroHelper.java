@@ -246,6 +246,6 @@ public interface RetroHelper {
     @POST("metro_reservation_by_qr.php")
     Call<ResponseBody> reserveMetro(
             @Query("php_id") int id,
-            @Query("php_metro_station") String station
+            @Query("php_ticket_number") int ticketNumber
     );
 }
