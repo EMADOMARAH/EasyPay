@@ -146,6 +146,7 @@
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
             android:textAllCaps="false"
+            android:maxLength="11"
             android:textColor="#FFF"
             android:textColorHint="@color/white_three"
             tools:ignore="Autofill"

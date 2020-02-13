@@ -132,19 +132,39 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
     private boolean check(String name, String email, String phone, String pass) {
         if (name.isEmpty()) {
-            Toast.makeText(this, "enter your name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "enter your email", Toast.LENGTH_SHORT).show();
+        if (email.isEmpty()) {
+            Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (phone.isEmpty() || !Patterns.PHONE.matcher(phone).matches()) {
-            Toast.makeText(this, "enter your phone", Toast.LENGTH_SHORT).show();
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Email badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (phone.isEmpty()) {
+            Toast.makeText(this, "Enter your phone", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!phone.startsWith("01")) {
+            Toast.makeText(getApplicationContext(), "Phone badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!Patterns.PHONE.matcher(phone).matches()) {
+            Toast.makeText(this, "Phone badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (pass.isEmpty()) {
+            Toast.makeText(SettingsActivity.this, "Enter new password", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (pass.length() < 8) {
-            Toast.makeText(this, "enter your password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SettingsActivity.this, "Password must be 8 characters at least", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!Constants.PASSWORD_PATTERN.matcher(pass).matches()) {
+            Toast.makeText(SettingsActivity.this, "Weak password", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -159,15 +179,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             public void onClick(View v) {
                 String s = ((EditText) dialog.findViewById(R.id.pass)).getText().toString().trim();
                 if (s.isEmpty()) {
-                    Toast.makeText(SettingsActivity.this, "Enter new password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (s.length() < 8) {
-                    Toast.makeText(SettingsActivity.this, "Password must be 8 characters at least", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!Constants.PASSWORD_PATTERN.matcher(s).matches()) {
-                    Toast.makeText(SettingsActivity.this, "Weak password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, "Enter old password", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 helper.checkPassword(email, s).enqueue(new Callback<List<PasswordCheckModel>>() {

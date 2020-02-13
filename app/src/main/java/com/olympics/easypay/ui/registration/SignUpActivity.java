@@ -111,6 +111,10 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Enter your phone", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (!phone.startsWith("01")) {
+            Toast.makeText(getApplicationContext(), "Phone badly formatted", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (!Patterns.PHONE.matcher(phone).matches()) {
             Toast.makeText(getApplicationContext(), "Phone badly formatted", Toast.LENGTH_SHORT).show();
             return false;
