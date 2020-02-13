@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/ic_rectangle_8"
-                    android:text="@string/add_card"
+                    android:text="@string/add_new_card"
                     android:textColor="@color/tealish"
                     android:textStyle="bold"
                     tools:ignore="ButtonStyle"

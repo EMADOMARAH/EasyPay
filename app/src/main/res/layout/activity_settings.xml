@@ -58,7 +58,7 @@
             android:textStyle="bold"
             />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,11 +66,21 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="26dp"
             android:background="@drawable/ic_subtraction_2"
-            android:inputType="textNoSuggestions"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            tools:ignore="Autofill,LabelFor"
-            />
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:inputType="textNoSuggestions"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                tools:ignore="Autofill,LabelFor"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,7 +93,7 @@
             android:textStyle="bold"
             />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,11 +101,21 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="26dp"
             android:background="@drawable/ic_subtraction_2"
-            android:inputType="textEmailAddress"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            tools:ignore="Autofill,LabelFor"
-            />
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:inputType="textEmailAddress"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                tools:ignore="Autofill,LabelFor"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -108,7 +128,7 @@
             android:textStyle="bold"
             />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phone_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,11 +136,21 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="26dp"
             android:background="@drawable/ic_subtraction_2"
-            android:inputType="phone"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            tools:ignore="Autofill,LabelFor"
-            />
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:inputType="phone"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                tools:ignore="Autofill,LabelFor"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -133,7 +163,7 @@
             android:textStyle="bold"
             />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pass_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,11 +171,21 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="26dp"
             android:background="@drawable/ic_subtraction_2"
-            android:inputType="textPassword"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
-            tools:ignore="Autofill,LabelFor"
-            />
+            app:errorEnabled="true"
+            app:hintEnabled="false"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:inputType="textPassword"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                tools:ignore="Autofill,LabelFor"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/editButton"

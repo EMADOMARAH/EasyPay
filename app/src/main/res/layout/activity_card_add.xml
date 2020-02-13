@@ -251,7 +251,7 @@
                 android:layout_marginTop="64dp"
                 android:layout_marginBottom="64dp"
                 android:background="@drawable/ic_rectangle_8"
-                android:text="@string/add_card"
+                android:text="@string/add_new_card"
                 android:textColor="@color/tealish"
                 android:textStyle="bold"
                 />

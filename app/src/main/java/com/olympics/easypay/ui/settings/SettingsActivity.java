@@ -123,7 +123,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 String email = emailEdt.getEditText().getText().toString().trim();
                 String pass = passEdt.getEditText().getText().toString().trim();
                 String phone = phoneEdt.getEditText().getText().toString().trim();
-                if (validateName() && validateEmail() && validatePhone() && validatePass()) {
+                if (validateName() & validateEmail() & validatePhone() & validatePass()) {
                     setSettings(name, email, phone, pass);
                 }
             }
@@ -225,6 +225,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             public void onFailure(Call<List<GetSettingModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureGetSetting: " + t.toString());
                 Toast.makeText(SettingsActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
