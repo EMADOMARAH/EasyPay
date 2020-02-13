@@ -92,7 +92,6 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Enter your name", Toast.LENGTH_SHORT).show();
             return false;
         }
-
         if (email.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Enter email", Toast.LENGTH_SHORT).show();
             return false;

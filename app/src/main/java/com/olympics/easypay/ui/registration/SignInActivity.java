@@ -182,11 +182,11 @@ public class SignInActivity extends AppCompatActivity {
             return false;
         }
         if (!email.endsWith("@gmail.com") && !email.endsWith("@Gmail.com") && !email.endsWith("@outlook.com") && !email.endsWith("@Outlook.com")) {
-            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Email badly formatted\nemail must be(xxx@xxx.com)", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(getApplicationContext(), "Email badly formatted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Email badly formatted\nemail must be(xxx@xxx.com)", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (pass.isEmpty()) {

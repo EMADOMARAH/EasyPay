@@ -7,9 +7,7 @@
     <string name="payments_show_name">Successfully received payment data for %s!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_for_everyone_to_pay_easily">App for everyone to\npay easily</string>
-
     <string name="forget"><u>Forget Password</u></string>
     <string name="something_wrong_get_help">Something Wrong, Get Help</string>
     <string name="successful_payment">Successful Payment</string>
