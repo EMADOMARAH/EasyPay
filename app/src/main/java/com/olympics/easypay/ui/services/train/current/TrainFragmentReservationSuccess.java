@@ -73,7 +73,9 @@ public class TrainFragmentReservationSuccess extends Fragment {
                                 try {
                                     String s = response.body().string();
                                     Log.d(TAG, "onResponse: " + s);
-                                    Glide.with(getContext()).load(BASE_URL + s).into(qr);
+                                    if (!s.isEmpty()) {
+                                        Glide.with(getContext()).load(BASE_URL + s).into(qr);
+                                    }
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

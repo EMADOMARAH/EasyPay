@@ -56,8 +56,8 @@ public class MyQrFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         String s = response.body().string();
+                        s = s.subSequence(s.indexOf("\"") + 1, s.lastIndexOf("\"")).toString();
                         Log.d(TAG, "onResponse: " + s);
-                        s = s.subSequence(s.indexOf("\""), s.lastIndexOf("\"")).toString();
                         Glide.with(getContext()).load(BASE_URL + BASE_QR + s).into(imageView);
                     } catch (IOException e) {
                         e.printStackTrace();
