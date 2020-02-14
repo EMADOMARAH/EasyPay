@@ -52,6 +52,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), HistoryActivity.class));
+                getActivity().finish();
             }
         });
 
@@ -64,6 +65,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CardActivity.class));
+                getActivity().finish();
             }
         });
     }

@@ -28,6 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.CardNumberModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
@@ -63,6 +64,12 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
     private int id;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
