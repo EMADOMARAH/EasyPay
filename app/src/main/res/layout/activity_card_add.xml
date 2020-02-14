@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             android:background="@color/white_three"
             android:orientation="vertical"
+            android:layoutDirection="ltr"
             >
 
             <FrameLayout
@@ -97,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:elevation="0dp"
-                            android:src="@drawable/ic_visa"
+                            android:src="@drawable/ic_my_visa"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="ContentDescription"
@@ -120,7 +121,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/visa2"
-                            tools:ignore="Autofill"
+                            tools:ignore="Autofill,RtlHardcoded,RtlSymmetry"
                             />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -171,7 +172,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:elevation="0dp"
-                            android:src="@drawable/ic_visa"
+                            android:src="@drawable/ic_my_visa"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="ContentDescription"
@@ -212,6 +213,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/holderName"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintHorizontal_weight="1.25"
                             app:layout_constraintTop_toBottomOf="@id/cvvTxt"
                             tools:ignore="Autofill"
                             />
@@ -230,6 +232,7 @@
                             android:maxLines="2"
                             android:padding="4dp"
                             android:textSize="14sp"
+                            app:layout_constraintHorizontal_weight="2"
                             app:layout_constraintBottom_toBottomOf="@id/expiryDate"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/expiryDate"

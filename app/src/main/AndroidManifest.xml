@@ -32,29 +32,44 @@
         <!--           -->
         <!--        </activity>-->
 
-        <activity android:name=".ui.CheckoutActivityJava">
+        <activity
+            android:name=".ui.CheckoutActivityJava"
+            android:screenOrientation="portrait"
+            >
 
         </activity>
-        <activity android:name=".ui.CheckoutActivity">
+        <activity
+            android:name=".ui.CheckoutActivity"
+            android:screenOrientation="portrait"
+            >
+
         </activity>
         <activity
             android:name=".ui.card.CardActivity"
-            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
-        <!--        <activity android:name=".ui.card.CardDeleteActivity" />-->
+        <activity
+            android:name=".ui.card.CardDeleteActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.card.CardAddActivity"
-            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.qrcode.QrActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,34 +79,42 @@
         <activity
             android:name=".ui.history.HistoryActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.wizard.WizardActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.registration.SignInActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.registration.SignUpActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.services.bus.BusPaymentActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.services.metro.MetroPaymentActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.services.train.TrainPaymentActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.home.MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             />
     </application>
 

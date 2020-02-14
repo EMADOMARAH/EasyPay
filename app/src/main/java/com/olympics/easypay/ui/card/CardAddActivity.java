@@ -111,20 +111,26 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
                 flipCard();
             }
         });
-        cardTxt.addTextChangedListener(new TextWatcher() {
+        exDate.addTextChangedListener(new TextWatcher() {
+            int countBefore, countAfter;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                countBefore = count;
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                countAfter = count;
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if (countAfter > countBefore) {
+                    if (s.length() == 2) {
+                        s.append("/");
+                    }
+                }
             }
         });
         cardTxt.addTextChangedListener(new TextWatcher() {
@@ -158,7 +164,7 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
             public void onClick(View v) {
                 if (!check())
                     return;
-                BigInteger card = BigInteger.valueOf(Long.parseLong(cardTxt.getText().toString().replace(" ", "").trim()));
+                BigInteger card = BigInteger.valueOf(Long.valueOf(cardTxt.getText().toString().replace(" ", "").trim()));
                 int cvv = Integer.valueOf(cvvTxt.getText().toString().trim());
                 String holderName = mName.getText().toString().trim();
                 int m = Integer.valueOf(exDate.getText().toString().trim().split("/")[0]);
@@ -179,21 +185,50 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
     }
 
     boolean check() {
-        if (cardTxt.getText().toString().length() != 19)
+        if (cardTxt.getText().toString().length() != 19) {
+            Toast.makeText(this, "Enter card number", Toast.LENGTH_SHORT).show();
+            if (isFlipped) {
+                flipCard();
+            }
             return false;
-        if (cvvTxt.getText().toString().isEmpty())
+        }
+        if (cvvTxt.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Enter cvv", Toast.LENGTH_SHORT).show();
+            if (!isFlipped) {
+                flipCard();
+            }
             return false;
-        if (mName.getText().toString().isEmpty())
+        }
+        if (mName.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show();
+            if (isFlipped) {
+                flipCard();
+            }
             return false;
+        }
+        if (exDate.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Enter expiry date", Toast.LENGTH_SHORT).show();
+            if (isFlipped) {
+                flipCard();
+            }
+            return false;
+        }
         int m = Integer.valueOf(exDate.getText().toString().trim().split("/")[0]);
         int y = Integer.valueOf(exDate.getText().toString().trim().split("/")[1]);
-        if (m <= 0 || m > 12)
+        if (m <= 0 || m > 12) {
+            Toast.makeText(this, "Month must be from 1 to 12", Toast.LENGTH_SHORT).show();
+            if (isFlipped) {
+                flipCard();
+            }
             return false;
-        if (y <= 2019)
+        }
+        if (y <= 2019) {
+            Toast.makeText(this, "Year must be from 2019 onwards", Toast.LENGTH_SHORT).show();
+            if (isFlipped) {
+                flipCard();
+            }
             return false;
-        //noinspection RedundantIfStatement
-        if (exDate.getText().toString().isEmpty())
-            return false;
+        }
         return true;
     }
 

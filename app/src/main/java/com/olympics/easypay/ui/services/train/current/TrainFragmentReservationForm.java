@@ -31,6 +31,7 @@ import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.utils.Constants;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -311,19 +312,27 @@ public class TrainFragmentReservationForm extends Fragment {
 
     private boolean check() {
         if (startStation.equals(start.getItemAtPosition(0).toString())) {
-            Toast.makeText(getContext(), "select start station", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Select start station", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (endStation.equals(end.getItemAtPosition(0).toString())) {
-            Toast.makeText(getContext(), "select end station", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Select end station", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (selectedDate.isEmpty()) {
-            Toast.makeText(getContext(), "enter date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter date", Toast.LENGTH_SHORT).show();
             return false;
         }
+        try {
+            if (simpleDateFormat.parse(selectedDate).before(Calendar.getInstance().getTime())) {
+                Toast.makeText(getContext(), "Enter a future date", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (selectedTime.equals(time.getItemAtPosition(0).toString())) {
-            Toast.makeText(getContext(), "enter time", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter time", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

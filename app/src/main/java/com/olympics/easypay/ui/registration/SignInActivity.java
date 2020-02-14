@@ -254,6 +254,7 @@ public class SignInActivity extends AppCompatActivity {
                                 .remove(PASS)
                                 .apply();
                     }
+                    Log.d(TAG, "onResponse: " + token);
                     sharedPreferences
                             .edit()
                             .putInt(TOKEN, token)

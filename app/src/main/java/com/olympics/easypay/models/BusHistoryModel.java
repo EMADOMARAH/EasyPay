@@ -4,21 +4,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class BusHistoryModel {
     @SerializedName("ticket_number")
-    private int ticketNumber;
+    private String ticketNumber;
 
     @SerializedName("ticket_date")
     private String ticketDate;
 
-    public BusHistoryModel(int ticketNumber, String ticketDate) {
+    public BusHistoryModel(String ticketNumber, String ticketDate) {
         this.ticketNumber = ticketNumber;
         this.ticketDate = ticketDate;
     }
 
-    public int getTicketNumber() {
+    public String getTicketNumber() {
         return ticketNumber;
     }
 
-    public void setTicketNumber(int ticketNumber) {
+    public void setTicketNumber(String ticketNumber) {
         this.ticketNumber = ticketNumber;
     }
 

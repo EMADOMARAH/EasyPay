@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
+import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.services.metro.current.MetroFragmentCurrent;
 import com.olympics.easypay.ui.services.metro.history.MetroFragmentHistory;
@@ -39,6 +40,12 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
 
     ViewPager viewPager;
     TabLayout tabLayout;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

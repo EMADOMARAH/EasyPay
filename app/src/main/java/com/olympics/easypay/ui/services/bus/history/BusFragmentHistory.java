@@ -66,12 +66,28 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
             @Override
             public void onResponse(Call<List<BusHistoryModel>> call, Response<List<BusHistoryModel>> response) {
                 if (response.isSuccessful()) {
-                    adapter.setBusHistoryModelList(response.body());
-                    if (adapter.getBusHistoryModelList().get(0).getTicketDate().equals("NULL"))
+                    List<BusHistoryModel> list = response.body();
+                    if (list == null) {
                         showError();
-                    if (adapter.getBusHistoryModelList().isEmpty()) {
-                        showError();
+                        return;
                     }
+                    if (list.get(0) == null) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0).getTicketNumber() == null) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0).getTicketNumber().equals("NULL")) {
+                        showError();
+                        return;
+                    }
+                    if (list.isEmpty()) {
+                        showError();
+                        return;
+                    }
+                    adapter.setBusHistoryModelList(list);
                 } else {
                     showError();
                 }
@@ -87,7 +103,7 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
     }
 
     private void showError() {
-        getFragmentManager()
+        getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, new ErrorFragment())
                 .commit();

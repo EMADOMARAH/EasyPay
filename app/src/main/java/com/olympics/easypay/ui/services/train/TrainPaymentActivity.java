@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
+import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.services.train.current.TrainFragmentReservation;
 import com.olympics.easypay.ui.services.train.current.TrainFragmentReservationCheck;
@@ -44,6 +45,12 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
 
     TrainFragmentReservation trainFragmentReservation;
     TrainFragmentHistory trainFragmentHistory;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

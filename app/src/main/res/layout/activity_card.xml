@@ -17,7 +17,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
             android:orientation="vertical"
             >
 
@@ -52,22 +51,42 @@
                 android:background="@color/greyish"
                 />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/select_card"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                />
+
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="64dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_subtraction_2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/amount"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 />
 
             <EditText
                 android:id="@+id/amount"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_subtraction_2"
                 android:gravity="center"
@@ -76,61 +95,44 @@
                 tools:ignore="Autofill"
                 />
 
-            <Button
-                android:id="@+id/charge"
+            <TextView
+                android:id="@+id/add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/ic_rectangle_8"
-                android:text="@string/charge_now"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:drawableStart="@drawable/ic_dot"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/add_new_card"
                 android:textColor="@color/tealish"
                 android:textStyle="bold"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:orientation="horizontal"
-                >
-
-                <Button
-                    android:id="@+id/add"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_rectangle_8"
-                    android:text="@string/add_new_card"
-                    android:textColor="@color/tealish"
-                    android:textStyle="bold"
-                    tools:ignore="ButtonStyle"
-                    />
-
-                <Button
-                    android:id="@+id/delete"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_rectangle_8"
-                    android:text="@string/delete_card"
-                    android:textColor="@color/tealish"
-                    android:textStyle="bold"
-                    tools:ignore="ButtonStyle"
-                    />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/conf"
+            <TextView
+                android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/ic_dot"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/delete_card"
+                android:textColor="@color/tealish"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/ic_rectangle_8"
-                android:text="@string/choose_card"
+                android:backgroundTint="@color/white"
+                android:text="@string/charge_now"
                 android:textColor="@color/tealish"
                 android:textStyle="bold"
                 />

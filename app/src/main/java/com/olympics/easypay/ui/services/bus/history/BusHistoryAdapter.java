@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.services.bus.history;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class BusHistoryAdapter extends RecyclerView.Adapter<BusHistoryAdapter.VH
         return new VH(LayoutInflater.from(context).inflate(R.layout.item_bus_history, parent, false), listener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         BusHistoryModel busHistoryModel = busHistoryModelList.get(position);

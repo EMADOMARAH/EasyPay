@@ -96,7 +96,7 @@
     <string name="swipe_to_flip">Swipe to Flip</string>
     <string name="cvv_key">CVV Key</string>
     <string name="swipe_card_or_click_here_to_flip">Swipe card or Click here to flip</string>
-    <string name="add_new_card">Add Card</string>
+    <string name="add_new_card">Add New Card</string>
     <string name="delete">Delete</string>
     <string name="delete_card">Delete Card</string>
     <string name="choose_card">Choose Card</string>
@@ -108,4 +108,5 @@
     <string name="enter_your_email_and_phone">Enter your email and phone</string>
     <string name="confirm_your_password">Confirm your Password</string>
     <string name="enter_your_new_password">Enter your new Password</string>
+    <string name="select_card">Select Card</string>
 </resources>

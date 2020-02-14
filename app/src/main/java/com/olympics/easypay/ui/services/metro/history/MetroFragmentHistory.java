@@ -58,12 +58,28 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
             @Override
             public void onResponse(Call<List<MetroHistoryModel>> call, Response<List<MetroHistoryModel>> response) {
                 if (response.isSuccessful()) {
-                    adapter.setMetroHistoryModelList(response.body());
-                    if (adapter.getMetroHistoryModelList().get(0).getStartStation().equals("NULL"))
+                    List<MetroHistoryModel> list = response.body();
+                    if (list == null) {
                         showError();
-                    if (adapter.getMetroHistoryModelList().isEmpty()) {
-                        showError();
+                        return;
                     }
+                    if (list.get(0) == null) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0).getStartStation() == null) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0).getStartStation().equals("NULL")) {
+                        showError();
+                        return;
+                    }
+                    if (list.isEmpty()) {
+                        showError();
+                        return;
+                    }
+                    adapter.setMetroHistoryModelList(list);
                 } else {
                     showError();
                 }
@@ -79,7 +95,7 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
     }
 
     private void showError() {
-        getFragmentManager()
+        getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, new ErrorFragment())
                 .commit();

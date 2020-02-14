@@ -16,14 +16,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_rectangle_13"
                 android:gravity="center"
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/ic_rectangle_26"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -90,11 +90,11 @@
             android:id="@+id/bus_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="10dp"
             >
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/ic_bus_1"
                     tools:ignore="ContentDescription"
                     />
@@ -128,8 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="Last trip: 2 May 2019"
+                    android:layout_marginBottom="16dp"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     />
@@ -140,11 +139,11 @@
             android:id="@+id/metro_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="10dp"
             >
 
@@ -158,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/ic_train_1"
                     />
 
@@ -177,8 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="Last trip: 4 May 2019"
+                    android:layout_marginBottom="16dp"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     />
@@ -189,12 +187,12 @@
             android:id="@+id/train_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="10dp"
             >
 
@@ -208,7 +206,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/ic_train"
                     />
 
@@ -227,8 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="Last trip: 6 April 2019"
+                    android:layout_marginBottom="16dp"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     />

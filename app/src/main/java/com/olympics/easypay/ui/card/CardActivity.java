@@ -1,6 +1,5 @@
 package com.olympics.easypay.ui.card;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -52,13 +50,13 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MyTag";
     Spinner spinner;
     EditText editText;
-    Button add, del, charge;
+    TextView add, del;
+    Button charge;
     float dp;
     int col;
     BigInteger selectedCardNumber;
     SharedPreferences sharedPreferences;
     List<BigInteger> cardNumbers;
-    Button conf;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -218,12 +216,12 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         spinner = findViewById(R.id.spinner);
         add = findViewById(R.id.add);
         del = findViewById(R.id.delete);
-        conf = findViewById(R.id.conf);
 
         charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editText.getText().toString().isEmpty()) {
+                    Toast.makeText(CardActivity.this, "Enter amount to charge", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 int am = Integer.parseInt(editText.getText().toString().trim());
@@ -232,6 +230,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                     return;
                 }
                 if (selectedCardNumber == null) {
+                    Toast.makeText(CardActivity.this, "Select a card", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 chargeNow(selectedCardNumber, am);
@@ -249,19 +248,19 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                 delCard();
             }
         });
-        conf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = spinner.getSelectedItemPosition();
-                if (position > 0) {
-                    sharedPreferences
-                            .edit()
-                            .putString(CARD, cardNumbers.get(position - 1).toString())
-                            .apply();
-                    onBackPressed();
-                }
-            }
-        });
+//        conf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int position = spinner.getSelectedItemPosition();
+//                if (position > 0) {
+//                    sharedPreferences
+//                            .edit()
+//                            .putString(CARD, cardNumbers.get(position - 1).toString())
+//                            .apply();
+//                    onBackPressed();
+//                }
+//            }
+//        });
     }
 
     private void chargeNow(BigInteger card, int amount) {
@@ -287,41 +286,29 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void delCard() {
-        new AlertDialog.Builder(CardActivity.this, R.style.AppTheme)
-                .setNegativeButton("No", null)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (selectedCardNumber != null) {
-                            deleteCard(selectedCardNumber);
-                        }
-                    }
-                })
-                .setMessage("Are you sure you want to delete this Card")
-                .setTitle("Card Removal")
-                .create()
-                .show();
+        startActivity(new Intent(getApplicationContext(), CardDeleteActivity.class));
+        finish();
     }
 
-    private void deleteCard(BigInteger cardNo) {
-        MyRetroFitHelper.getInstance().deleteCard(id, cardNo).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(CardActivity.this, "Card Deleted", Toast.LENGTH_SHORT).show();
-                    initData();
-                } else {
-                    Toast.makeText(CardActivity.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.d(TAG, "onFailureDeleteCard: " + t.toString());
-                Toast.makeText(CardActivity.this, "Server error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void deleteCard(BigInteger cardNo) {
+//        MyRetroFitHelper.getInstance().deleteCard(id, cardNo).enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                if (response.isSuccessful()) {
+//                    Toast.makeText(CardActivity.this, "Card Deleted", Toast.LENGTH_SHORT).show();
+//                    initData();
+//                } else {
+//                    Toast.makeText(CardActivity.this, "failed", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                Log.d(TAG, "onFailureDeleteCard: " + t.toString());
+//                Toast.makeText(CardActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

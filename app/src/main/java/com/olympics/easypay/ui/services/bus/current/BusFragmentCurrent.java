@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.BusTicketModel;
 import com.olympics.easypay.network.RetroHelper;
+import com.olympics.easypay.ui.services.ErrorFragment;
 import com.olympics.easypay.utils.Constants;
 
 import java.util.List;
@@ -69,6 +70,7 @@ public class BusFragmentCurrent extends Fragment {
             public void onFailure(Call<List<BusTicketModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureBusTicket: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                showError();
             }
         });
     }
@@ -76,7 +78,14 @@ public class BusFragmentCurrent extends Fragment {
     private void loadFragment(Fragment fragment) {
         getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_bus, fragment)
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    private void showError() {
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, new ErrorFragment())
                 .commit();
     }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.olympics.easypay.R;
 import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.ui.services.ErrorFragment;
 import com.olympics.easypay.utils.Constants;
 
 import java.io.IOException;
@@ -55,14 +56,22 @@ public class MetroFragmentCurrent extends Fragment {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailureMetroPending: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                showError();
             }
         });
+    }
+
+    private void showError() {
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, new ErrorFragment())
+                .commit();
     }
 
     private void loadFragment(Fragment fragment) {
         getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_metro, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 }

@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
+import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.services.bus.current.BusFragmentCurrent;
 import com.olympics.easypay.ui.services.bus.history.BusFragmentHistory;
@@ -48,6 +49,12 @@ public class BusPaymentActivity extends AppCompatActivity implements NavigationV
         initToolbar();
         initDrawer();
         initViews();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
     }
 
     private void initToolbar() {

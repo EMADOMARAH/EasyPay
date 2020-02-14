@@ -59,12 +59,28 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
                     @Override
                     public void onResponse(Call<List<TrainHistoryModel>> call, Response<List<TrainHistoryModel>> response) {
                         if (response.isSuccessful()) {
-                            adapter.setTrainHistoryModelList(response.body());
-                            if (adapter.getTrainHistoryModelList().get(0).getStartStation().equals("NULL"))
+                            List<TrainHistoryModel> list = response.body();
+                            if (list == null) {
                                 showError();
-                            if (adapter.getTrainHistoryModelList().isEmpty()) {
-                                showError();
+                                return;
                             }
+                            if (list.get(0) == null) {
+                                showError();
+                                return;
+                            }
+                            if (list.get(0).getStartStation() == null) {
+                                showError();
+                                return;
+                            }
+                            if (list.get(0).getStartStation().equals("NULL")) {
+                                showError();
+                                return;
+                            }
+                            if (list.isEmpty()) {
+                                showError();
+                                return;
+                            }
+                            adapter.setTrainHistoryModelList(list);
                         } else {
                             showError();
                         }
@@ -80,7 +96,7 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     }
 
     private void showError() {
-        getFragmentManager()
+        getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, new ErrorFragment())
                 .commit();

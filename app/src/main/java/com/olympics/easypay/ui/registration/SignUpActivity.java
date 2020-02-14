@@ -156,6 +156,7 @@ public class SignUpActivity extends AppCompatActivity {
                         emailEdt.setError("Email already exists");
                     } else {
                         emailEdt.setError(null);
+                        Toast.makeText(SignUpActivity.this, "Account created successfully!\n...please sign in", Toast.LENGTH_SHORT).show();
                         gotoSignIn();
                     }
                 }

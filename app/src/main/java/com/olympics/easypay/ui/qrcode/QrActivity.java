@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
+import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.qrcode.my.MyQrFragment;
 import com.olympics.easypay.ui.qrcode.scan.ScanQrFragment;
 import com.olympics.easypay.ui.registration.SignInActivity;
@@ -39,6 +40,12 @@ public class QrActivity extends AppCompatActivity implements NavigationView.OnNa
 
     ViewPager viewPager;
     TabLayout tabLayout;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
