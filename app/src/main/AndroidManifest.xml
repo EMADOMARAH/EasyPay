@@ -4,10 +4,10 @@
     package="com.olympics.easypay"
     android:targetSandboxVersion="1"
     >
-    <!--     <uses-feature-->
-    <!--     android:name="android.hardware.camera2"-->
-    <!--     android:required="true"-->
-    <!--     /> -->
+    <!-- <uses-feature -->
+    <!-- android:name="android.hardware.camera2" -->
+    <!-- android:required="true" -->
+    <!-- /> -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -23,27 +23,31 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         >
+        <activity
+            android:name=".ui.help.HelpActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".ui.about.AboutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
+
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true"
-            />
-
-        <!--        <activity android:name=".ui.StripeActivity">-->
-        <!--           -->
-        <!--        </activity>-->
-
+            /> <!-- <activity android:name=".ui.StripeActivity"> -->
+        <!--  -->
+        <!-- </activity> -->
         <activity
             android:name=".ui.CheckoutActivityJava"
             android:screenOrientation="portrait"
-            >
-
-        </activity>
+            />
         <activity
             android:name=".ui.CheckoutActivity"
             android:screenOrientation="portrait"
-            >
-
-        </activity>
+            />
         <activity
             android:name=".ui.card.CardActivity"
             android:screenOrientation="portrait"

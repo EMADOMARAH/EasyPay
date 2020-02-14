@@ -28,6 +28,8 @@ import com.olympics.easypay.R;
 import com.olympics.easypay.models.CardNumberModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
+import com.olympics.easypay.ui.about.AboutActivity;
+import com.olympics.easypay.ui.help.HelpActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
@@ -119,8 +121,10 @@ public class CardDeleteActivity extends AppCompatActivity implements NavigationV
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.info:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             case R.id.help:
+                startActivity(new Intent(getApplicationContext(), HelpActivity.class));
                 return true;
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)

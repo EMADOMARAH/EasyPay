@@ -1,29 +1,27 @@
-package com.olympics.easypay.ui.qrcode;
+package com.olympics.easypay.ui.help;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
 import com.olympics.easypay.ui.about.AboutActivity;
-import com.olympics.easypay.ui.help.HelpActivity;
-import com.olympics.easypay.ui.home.MainActivity;
-import com.olympics.easypay.ui.qrcode.my.MyQrFragment;
-import com.olympics.easypay.ui.qrcode.scan.ScanQrFragment;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
@@ -33,30 +31,44 @@ import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
-public class QrActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HelpActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr);
+        setContentView(R.layout.activity_help);
 
         initToolbar();
         initDrawer();
-        initViews();
+
+        TextView textView = findViewById(R.id.txt);
+
+        final String base = getResources().getString(R.string.help);
+        final String link = Constants.BASE_LINK;
+
+        final int baseCount = base.length();
+        final int linkCount = link.length() + baseCount;
+
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.tealish));
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(browserIntent);
+            }
+        };
+
+        SpannableString spannableString = new SpannableString(base + link);
+        spannableString.setSpan(colorSpan, baseCount, linkCount, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan, baseCount, linkCount, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void initToolbar() {
@@ -95,41 +107,6 @@ public class QrActivity extends AppCompatActivity implements NavigationView.OnNa
                 drawerLayout.closeDrawers();
             }
         });
-    }
-
-    private void initViews() {
-        viewPager = findViewById(R.id.viewPager_qr);
-        tabLayout = findViewById(R.id.tabLayout_qr);
-
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            Fragment[] fragments = new Fragment[]{
-                    new ScanQrFragment(),
-                    new MyQrFragment()
-            };
-
-            String[] strings = new String[]{
-                    "Scan code", "My code"
-            };
-
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                return fragments[position];
-            }
-
-            @Override
-            public int getCount() {
-                return fragments.length;
-            }
-
-            @Nullable
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return strings[position];
-            }
-        });
-
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

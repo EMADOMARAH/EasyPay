@@ -12,6 +12,7 @@ public class Constants {
     //Network
     public static final String BASE_URL = "http://196.221.197.51/";
     public static final String BASE_QR = "EasyPayQr/";
+    public static final String BASE_LINK = "http://196.221.197.51/EasyPay/";
 
     //Prefs
     public static final String SHARED_PREFS = "EasyPaySharedPrefs";

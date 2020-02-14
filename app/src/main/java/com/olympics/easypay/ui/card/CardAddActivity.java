@@ -301,10 +301,7 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
             case R.id.settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
-            case R.id.info:
-                return true;
-            case R.id.help:
-                return true;
+
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
                         .edit()

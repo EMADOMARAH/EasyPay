@@ -21,6 +21,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.ChargeHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.ui.about.AboutActivity;
+import com.olympics.easypay.ui.help.HelpActivity;
 import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.services.ErrorHistoryFragment;
@@ -170,8 +172,10 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.info:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             case R.id.help:
+                startActivity(new Intent(getApplicationContext(), HelpActivity.class));
                 return true;
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)

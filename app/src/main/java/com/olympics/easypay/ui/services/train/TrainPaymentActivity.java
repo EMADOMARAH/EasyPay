@@ -19,6 +19,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
+import com.olympics.easypay.ui.about.AboutActivity;
+import com.olympics.easypay.ui.help.HelpActivity;
 import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.ui.services.train.current.TrainFragmentReservation;
@@ -144,8 +146,10 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.info:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             case R.id.help:
+                startActivity(new Intent(getApplicationContext(), HelpActivity.class));
                 return true;
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)

@@ -27,6 +27,8 @@ import com.olympics.easypay.models.PasswordCheckModel;
 import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
+import com.olympics.easypay.ui.about.AboutActivity;
+import com.olympics.easypay.ui.help.HelpActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.utils.FieldValidator;
 
@@ -248,8 +250,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.info:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             case R.id.help:
+                startActivity(new Intent(getApplicationContext(), HelpActivity.class));
                 return true;
             case R.id.logout:
                 getSharedPreferences(SHARED_PREFS, 0)
