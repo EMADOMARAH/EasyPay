@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.TrainHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.services.ErrorFragment;
+import com.olympics.easypay.ui.services.ErrorHistoryFragment;
 import com.olympics.easypay.utils.Constants;
 
 import java.util.ArrayList;
@@ -72,6 +72,10 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
                                 showError();
                                 return;
                             }
+                            if (list.get(0).getStartStation().equals("null")) {
+                                showError();
+                                return;
+                            }
                             if (list.get(0).getStartStation().equals("NULL")) {
                                 showError();
                                 return;
@@ -98,7 +102,7 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     private void showError() {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, new ErrorFragment())
+                .add(R.id.container, new ErrorHistoryFragment())
                 .commit();
     }
 

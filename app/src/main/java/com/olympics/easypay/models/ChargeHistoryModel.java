@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ChargeHistoryModel {
     @SerializedName("charge_amount")
-    private int chargeAmount;
+    private String chargeAmount;
 
     @SerializedName("charge_date")
     private String chargeDate;
@@ -12,17 +12,17 @@ public class ChargeHistoryModel {
     @SerializedName("charge_method")
     private String chargeMethod;
 
-    public ChargeHistoryModel(int chargeAmount, String chargeDate, String chargeMethod) {
+    public ChargeHistoryModel(String chargeAmount, String chargeDate, String chargeMethod) {
         this.chargeAmount = chargeAmount;
         this.chargeDate = chargeDate;
         this.chargeMethod = chargeMethod;
     }
 
-    public int getChargeAmount() {
+    public String getChargeAmount() {
         return chargeAmount;
     }
 
-    public void setChargeAmount(int chargeAmount) {
+    public void setChargeAmount(String chargeAmount) {
         this.chargeAmount = chargeAmount;
     }
 

@@ -23,6 +23,7 @@ import com.olympics.easypay.models.ChargeHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
+import com.olympics.easypay.ui.services.ErrorHistoryFragment;
 import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
 
@@ -72,6 +73,31 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             @Override
             public void onResponse(Call<List<ChargeHistoryModel>> call, Response<List<ChargeHistoryModel>> response) {
                 if (response.isSuccessful()) {
+                    List<ChargeHistoryModel> list = response.body();
+                    if (list == null) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0) == null) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0).getChargeDate() == null) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0).getChargeDate().equals("null")) {
+                        showError();
+                        return;
+                    }
+                    if (list.get(0).getChargeDate().equals("NULL")) {
+                        showError();
+                        return;
+                    }
+                    if (list.isEmpty()) {
+                        showError();
+                        return;
+                    }
                     adapter.setChargeHistoryModelList(response.body());
                 }
             }
@@ -82,6 +108,13 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
                 Log.d(TAG, "onFailurePaymentHistory: " + t.toString());
             }
         });
+    }
+
+    private void showError() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, new ErrorHistoryFragment())
+                .commit();
     }
 
     private void initViews() {

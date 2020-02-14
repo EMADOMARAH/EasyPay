@@ -16,15 +16,15 @@ public class TrainTicketModel {
     private String reserveTime;
 
     @SerializedName("quantity")
-    private int quantity;
+    private String quantity;
 
     @SerializedName("cost")
-    private int cost;
+    private String cost;
 
     @SerializedName("chair_number")
-    private int chairNumber;
+    private String chairNumber;
 
-    public TrainTicketModel(String startStation, String endStation, String ticketTime, String reserveTime, int quantity, int cost, int chairNumber) {
+    public TrainTicketModel(String startStation, String endStation, String ticketTime, String reserveTime, String quantity, String cost, String chairNumber) {
         this.startStation = startStation;
         this.endStation = endStation;
         this.ticketTime = ticketTime;
@@ -66,27 +66,27 @@ public class TrainTicketModel {
         this.reserveTime = reserveTime;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    public int getCost() {
+    public String getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(String cost) {
         this.cost = cost;
     }
 
-    public int getChairNumber() {
+    public String getChairNumber() {
         return chairNumber;
     }
 
-    public void setChairNumber(int chairNumber) {
+    public void setChairNumber(String chairNumber) {
         this.chairNumber = chairNumber;
     }
 }

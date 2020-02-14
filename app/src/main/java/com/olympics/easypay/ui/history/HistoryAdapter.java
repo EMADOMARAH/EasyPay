@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.history;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.VH> {
         return new VH(LayoutInflater.from(context).inflate(R.layout.item_payment_history, parent, false), listener);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         ChargeHistoryModel chargeHistoryModel = chargeHistoryModelList.get(position);

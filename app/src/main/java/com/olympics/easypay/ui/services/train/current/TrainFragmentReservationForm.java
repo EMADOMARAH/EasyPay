@@ -240,7 +240,7 @@ public class TrainFragmentReservationForm extends Fragment {
     }
 
     private void gotoCheck() {
-        TrainTicketModel trainTicketModel = new TrainTicketModel(startStation, endStation, selectedDate + " " + selectedTime, "", quantity, 0, 0);
+        TrainTicketModel trainTicketModel = new TrainTicketModel(startStation, endStation, selectedDate + " " + selectedTime, "", quantity + "", "0", "0");
         getActivity()
                 .getSharedPreferences(Constants.SHARED_PREFS, 0)
                 .edit()

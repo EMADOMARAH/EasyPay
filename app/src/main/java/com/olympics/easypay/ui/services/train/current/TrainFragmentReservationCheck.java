@@ -128,7 +128,7 @@ public class TrainFragmentReservationCheck extends Fragment {
 
     private void saveTicket() {
         int myId = sharedPreferences.getInt(Constants.TOKEN, 0);
-        MyRetroFitHelper.getInstance().saveTrainTicket(myId, trainTicketModel.getStartStation(), trainTicketModel.getEndStation(), trainTicketModel.getTicketTime(), trainTicketModel.getQuantity()).enqueue(new Callback<Void>() {
+        MyRetroFitHelper.getInstance().saveTrainTicket(myId, trainTicketModel.getStartStation(), trainTicketModel.getEndStation(), trainTicketModel.getTicketTime(), Integer.parseInt(trainTicketModel.getQuantity())).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {

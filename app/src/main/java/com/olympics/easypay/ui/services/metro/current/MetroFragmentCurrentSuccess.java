@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.MetroTicketModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.ui.services.metro.ErrorMetroFragment;
 import com.olympics.easypay.utils.Constants;
 import com.olympics.easypay.utils.Spacify;
 
@@ -56,6 +57,22 @@ public class MetroFragmentCurrentSuccess extends Fragment {
             public void onResponse(Call<List<MetroTicketModel>> call, Response<List<MetroTicketModel>> response) {
                 if (response.isSuccessful()) {
                     MetroTicketModel metroTicketModel = response.body().get(0);
+                    if (metroTicketModel == null) {
+                        showError();
+                        return;
+                    }
+                    if (metroTicketModel.getTicketNumber() == null) {
+                        showError();
+                        return;
+                    }
+                    if (metroTicketModel.getTicketNumber().equals("null")) {
+                        showError();
+                        return;
+                    }
+                    if (metroTicketModel.getTicketNumber().equals("NULL")) {
+                        showError();
+                        return;
+                    }
                     updateData(metroTicketModel);
                 }
             }
@@ -66,6 +83,13 @@ public class MetroFragmentCurrentSuccess extends Fragment {
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showError() {
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, new ErrorMetroFragment())
+                .commit();
     }
 
     private void updateData(MetroTicketModel metroTicketModel) {
