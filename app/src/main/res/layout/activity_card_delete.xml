@@ -161,6 +161,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:background="@drawable/green_border"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     />
 
             </LinearLayout>
@@ -180,8 +183,9 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="64dp"
                 android:layout_marginBottom="64dp"
-                android:background="@drawable/ic_rectangle_8"
-                android:backgroundTint="@color/white"
+                android:background="@drawable/green_border"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
                 android:text="@string/delete_card"
                 android:textColor="@color/tealish"
                 android:textStyle="bold"

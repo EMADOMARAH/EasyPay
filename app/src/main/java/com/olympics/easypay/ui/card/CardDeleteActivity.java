@@ -190,7 +190,7 @@ public class CardDeleteActivity extends AppCompatActivity implements NavigationV
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView textView = new TextView(parent.getContext());
                 textView.setText(strings.get(position));
-                textView.setPadding((int) (32 * dp), 0, (int) (32 * dp), 0);
+                textView.setPadding((int) (16 * dp), (int) (16 * dp), (int) (16 * dp), (int) (16 * dp));
                 if (position == 0) {
                     textView.setTextColor(getResources().getColor(R.color.greyish));
                 } else {
@@ -203,7 +203,7 @@ public class CardDeleteActivity extends AppCompatActivity implements NavigationV
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView textView = new TextView(parent.getContext());
                 textView.setText(strings.get(position));
-                textView.setPadding((int) (8 * dp), (int) (8 * dp), (int) (8 * dp), (int) (8 * dp));
+                textView.setPadding((int) (16 * dp), (int) (16 * dp), (int) (16 * dp), (int) (16 * dp));
                 if (position == 0) {
                     textView.setTextColor(getResources().getColor(R.color.greyish));
                 } else {
@@ -236,19 +236,12 @@ public class CardDeleteActivity extends AppCompatActivity implements NavigationV
     }
 
     private void flip(final CardNumberModel cardNumberModel) {
-        cardView.animate().rotationY(180).setDuration(ANIM_DUR).start();
+        cardView.animate().rotationYBy(180).setDuration(ANIM_DUR).start();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 cardNo.setText(Spacify.take(cardNumberModel.getCardNumber().toString()));
-                cardView.setScaleX(-1f);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        cardView.setScaleX(1f);
-                        cardView.setRotationY(0);
-                    }
-                }, ANIM_DUR / 2);
+                cardView.setScaleX(cardView.getScaleX() * -1f);
             }
         }, ANIM_DUR / 2);
     }

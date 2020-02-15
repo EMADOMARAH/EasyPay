@@ -12,7 +12,7 @@ public class FieldValidator {
             emailEdt.setError("Enter your email");
             b = false;
         } else {
-            if (!email.endsWith("@gmail.com") && !email.endsWith("@Gmail.com") && !email.endsWith("@outlook.com") && !email.endsWith("@Outlook.com")) {
+            if (!email.endsWith("@gmail.com") && !email.endsWith("@Gmail.com") && !email.endsWith("@outlook.com") && !email.endsWith("@Outlook.com") && !email.endsWith("@yahoo.com") && !email.endsWith("@Yahoo.com")) {
                 emailEdt.setError("Email must follow this format\n(example@extension.com)");
                 b = false;
             }

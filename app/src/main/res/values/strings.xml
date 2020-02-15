@@ -73,7 +73,7 @@
     <string name="my_code">My code</string>
     <string name="go_back">Go Back</string>
     <string name="qr_code">QR Code</string>
-    <string name="expiry_date">Expiry Date\n(eg. 12/2020)</string>
+    <string name="expiry_date">Expiry Date\n(eg. MM/YY)</string>
     <string name="holder_name">Holder Name</string>
     <string name="enter_cvv">Enter CVV</string>
     <string name="pay_now">Pay Now</string>

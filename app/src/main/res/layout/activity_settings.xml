@@ -173,7 +173,7 @@
             android:background="@drawable/ic_subtraction_2"
             app:errorEnabled="true"
             app:hintEnabled="false"
-            app:passwordToggleEnabled="true"
+            app:passwordToggleEnabled="false"
             >
 
             <EditText

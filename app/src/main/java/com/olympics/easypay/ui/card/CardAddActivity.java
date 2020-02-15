@@ -222,7 +222,7 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
             }
             return false;
         }
-        if (y <= 2019) {
+        if (y <= 19) {
             Toast.makeText(this, "Year must be from 2019 onwards", Toast.LENGTH_SHORT).show();
             if (isFlipped) {
                 flipCard();

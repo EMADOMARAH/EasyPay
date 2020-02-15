@@ -169,7 +169,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView textView = new TextView(parent.getContext());
                 textView.setText(strings.get(position));
-                textView.setPadding((int) (8 * dp), (int) (8 * dp), (int) (8 * dp), (int) (8 * dp));
+                textView.setPadding((int) (16 * dp), (int) (16 * dp), (int) (16 * dp), (int) (16 * dp));
                 if (position == 0) {
                     textView.setTextColor(col);
                 } else {
