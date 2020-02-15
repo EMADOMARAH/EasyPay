@@ -60,7 +60,8 @@
                 android:layout_gravity="center"
                 android:padding="16dp"
                 android:text="@string/click_here_to_flip"
-                android:textColor="@color/greyish"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 />
 
             <FrameLayout
