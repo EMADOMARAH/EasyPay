@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -61,40 +59,13 @@ public class SignInActivity extends AppCompatActivity {
     Retrofit retrofit;
     RetroHelper helper;
     SharedPreferences sharedPreferences;
-    View view;
     ImageView imageView;
     boolean isPendingFinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getIntent().getBundleExtra("coordinates");
-
-        if (bundle != null) {
-            overridePendingTransition(R.anim.do_none, R.anim.do_none);
-            setContentView(R.layout.activity_sign_in);
-
-            view = findViewById(android.R.id.content);
-
-            final int x = bundle.getInt("x");
-            final int y = bundle.getInt("y");
-            if (savedInstanceState == null) {
-                view.setVisibility(View.INVISIBLE);
-                view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        int w = view.getWidth();
-                        int h = view.getHeight();
-                        float r = (float) Math.hypot(w, h);
-                        ViewAnimationUtils.createCircularReveal(view, x, y, 0, r).setDuration(1000).start();
-                        view.setVisibility(View.VISIBLE);
-                        view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-                });
-            }
-        } else {
-            setContentView(R.layout.activity_sign_in);
-        }
+        setContentView(R.layout.activity_sign_in);
 
         initViews();
         initListeners();
@@ -307,13 +278,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void gotoSignUp() {
-        int x = (gotoSignUpBtn.getRight() + gotoSignUpBtn.getLeft()) / 2;
-        int y = (gotoSignUpBtn.getTop() + gotoSignUpBtn.getBottom()) / 2;
-        Bundle bundle = new Bundle();
-        bundle.putInt("x", x);
-        bundle.putInt("y", y);
-        startActivity(new Intent(getApplicationContext(), SignUpActivity.class).putExtra("coordinates", bundle));
-        finish();
+        startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+        overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+        finishAfterTransition();
     }
 
     private void gotoMain() {

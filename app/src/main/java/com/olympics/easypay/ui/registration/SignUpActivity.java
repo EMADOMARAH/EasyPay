@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -38,34 +36,11 @@ public class SignUpActivity extends AppCompatActivity {
     TextView gotoSignInBtn;
     Button confirmSignUp;
     CheckBox checkBox;
-    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.do_none, R.anim.do_none);
         setContentView(R.layout.activity_sign_up);
-
-        view = findViewById(android.R.id.content);
-
-        Bundle bundle = getIntent().getBundleExtra("coordinates");
-        final int x = bundle.getInt("x");
-        final int y = bundle.getInt("y");
-
-        if (savedInstanceState == null) {
-            view.setVisibility(View.INVISIBLE);
-            view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    int w = view.getWidth();
-                    int h = view.getHeight();
-                    float r = (float) Math.hypot(w, h);
-                    ViewAnimationUtils.createCircularReveal(view, x, y, 0, r).setDuration(1000).start();
-                    view.setVisibility(View.VISIBLE);
-                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            });
-        }
 
         initViews();
     }
@@ -145,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                gotoSignIn(confirmSignUp);
+                                gotoSignIn();
                             }
                         }, 2000);
                     }
@@ -195,14 +170,10 @@ public class SignUpActivity extends AppCompatActivity {
 //        });
 //    }
 
-    private void gotoSignIn(View view) {
-        int x = (view.getRight() + view.getLeft()) / 2;
-        int y = (view.getTop() + view.getBottom()) / 2;
-        Bundle bundle = new Bundle();
-        bundle.putInt("x", x);
-        bundle.putInt("y", y);
-        startActivity(new Intent(getApplicationContext(), SignInActivity.class).putExtra("coordinates", bundle));
-        finish();
+    private void gotoSignIn() {
+        startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+        finishAfterTransition();
     }
 
 //    private void gotoMain() {
@@ -222,7 +193,7 @@ public class SignUpActivity extends AppCompatActivity {
         gotoSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoSignIn(gotoSignInBtn);
+                gotoSignIn();
             }
         });
         confirmSignUp.setOnClickListener(new View.OnClickListener() {
