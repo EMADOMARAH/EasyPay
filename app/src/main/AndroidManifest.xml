@@ -24,6 +24,11 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         >
         <activity
+            android:name=".ui.card.ErrorActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
+        <activity
             android:name=".ui.menu.help.HelpActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -34,10 +39,10 @@
             android:screenOrientation="portrait"
             />
 
-        <meta-data
-            android:name="com.google.android.gms.wallet.api.enabled"
-            android:value="true"
-            /> <!-- <activity android:name=".ui.StripeActivity"> -->
+        <!--        <meta-data-->
+        <!--            android:name="com.google.android.gms.wallet.api.enabled"-->
+        <!--            android:value="true"-->
+        <!--            /> &lt;!&ndash; <activity android:name=".ui.StripeActivity"> &ndash;&gt;-->
         <!--  -->
         <!-- </activity> -->
         <activity

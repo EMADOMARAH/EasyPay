@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -66,6 +67,10 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getWindow().getDecorView().setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS);
+        }
 
         initViews();
         initListeners();

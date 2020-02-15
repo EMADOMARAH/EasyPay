@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_three"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_smartphone_with_sad_face_on_screen"
+        tools:ignore="ContentDescription"
+        />
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/working_in_progress_nplease_use_pay_with_card_for_now"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        />
+
+</LinearLayout>

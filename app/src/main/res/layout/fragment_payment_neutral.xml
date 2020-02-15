@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/your_balance"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     />
 
                 <TextView
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     />
 
@@ -61,12 +61,10 @@
                 >
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginStart="10dp"
                     android:src="@drawable/ic_blackberry_qr_code_variant"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
                     tools:ignore="ContentDescription"
                     />
 
@@ -119,7 +117,7 @@
                     android:layout_marginStart="30dp"
                     android:text="@string/bus_payment"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     />
 
@@ -167,7 +165,7 @@
                     android:layout_marginStart="30dp"
                     android:text="@string/metro_payment"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     />
 
@@ -216,7 +214,7 @@
                     android:layout_marginStart="30dp"
                     android:text="@string/train_payment"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     />
 
@@ -229,6 +227,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

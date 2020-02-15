@@ -18,6 +18,7 @@ import com.olympics.easypay.R;
 import com.olympics.easypay.models.WalletModel;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.card.CardActivity;
+import com.olympics.easypay.ui.card.ErrorActivity;
 import com.olympics.easypay.ui.history.HistoryActivity;
 import com.olympics.easypay.utils.Constants;
 
@@ -66,6 +67,16 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CardActivity.class));
+                getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+                getActivity().finishAfterTransition();
+            }
+        });
+
+        LinearLayout payFawryBtn = view.findViewById(R.id.payWithFawry);
+        payFawryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ErrorActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 getActivity().finishAfterTransition();
             }
