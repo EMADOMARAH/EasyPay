@@ -138,7 +138,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
         setContentView(R.layout.activity_splash);
 
         imageView = findViewById(R.id.imageView);

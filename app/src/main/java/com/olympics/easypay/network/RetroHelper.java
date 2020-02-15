@@ -18,6 +18,7 @@ import com.olympics.easypay.models.RetrievePasswordModel;
 import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.models.StationModel;
 import com.olympics.easypay.models.TokenModel;
+import com.olympics.easypay.models.TrainCostModel;
 import com.olympics.easypay.models.TrainHistoryModel;
 import com.olympics.easypay.models.TrainTicketModel;
 import com.olympics.easypay.models.WalletModel;
@@ -186,7 +187,7 @@ public interface RetroHelper {
             @Query("php_id") int id
     );
 
-    @POST(Constants.BASE_QR + "personal_qr.php")
+    @POST(Constants.BASE_QR + "static_personal_qr.php")
     Call<ResponseBody> getMyQR(
             @Query("php_id") int id
     );
@@ -247,5 +248,11 @@ public interface RetroHelper {
     Call<ResponseBody> reserveMetro(
             @Query("php_id") int id,
             @Query("php_metro_station") int stationNumber
+    );
+
+    @POST("train_cost.php")
+    Call<List<TrainCostModel>> getTrainCost(
+            @Query("php_id") int id,
+            @Query("php_train_number") int trainNumber
     );
 }

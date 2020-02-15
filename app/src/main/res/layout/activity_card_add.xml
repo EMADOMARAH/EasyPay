@@ -18,8 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layoutDirection="ltr"
+            android:orientation="vertical"
             >
 
             <FrameLayout
@@ -213,8 +213,8 @@
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/holderName"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintHorizontal_weight="1.25"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/cvvTxt"
                             tools:ignore="Autofill"
                             />
@@ -230,12 +230,13 @@
                             android:gravity="center"
                             android:hint="@string/holder_name"
                             android:inputType="textNoSuggestions"
-                            android:maxLines="2"
+                            android:maxLength="15"
+                            android:maxLines="1"
                             android:padding="4dp"
                             android:textSize="14sp"
-                            app:layout_constraintHorizontal_weight="2"
                             app:layout_constraintBottom_toBottomOf="@id/expiryDate"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_weight="2"
                             app:layout_constraintStart_toEndOf="@id/expiryDate"
                             app:layout_constraintTop_toTopOf="@id/expiryDate"
                             tools:ignore="Autofill"
@@ -268,8 +269,8 @@
         android:id="@+id/side_nav"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:layout_gravity="start"
+        android:background="@color/white"
         app:headerLayout="@layout/header_nav_main"
         app:menu="@menu/main_nav"
         />

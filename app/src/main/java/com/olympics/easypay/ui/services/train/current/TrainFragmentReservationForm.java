@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.services.train.current;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -41,10 +42,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class TrainFragmentReservationForm extends Fragment {
 
     private static final String TAG = "MyTag";
+    @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("EEEE, dd MMM yyyy");
     private TrainListener listener;
     private Spinner line, start, end, time;
@@ -54,7 +58,6 @@ public class TrainFragmentReservationForm extends Fragment {
 
     private String selectedDate;
     private String selectedTime;
-    private String lineNumber;
     private String startStation;
     private String endStation;
     private int quantity = 1;
@@ -111,7 +114,6 @@ public class TrainFragmentReservationForm extends Fragment {
         line.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                lineNumber = parent.getItemAtPosition(position).toString();
                 getStations(parent.getItemAtPosition(position).toString());
             }
 
@@ -161,6 +163,7 @@ public class TrainFragmentReservationForm extends Fragment {
         });
         ImageButton add = view.findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 int i = Integer.parseInt(ticket.getText().toString().split(" ")[0]);
@@ -173,6 +176,7 @@ public class TrainFragmentReservationForm extends Fragment {
         });
         ImageButton sub = view.findViewById(R.id.sub);
         sub.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 int i = Integer.parseInt(ticket.getText().toString().split(" ")[0]);
@@ -208,6 +212,7 @@ public class TrainFragmentReservationForm extends Fragment {
                 return position != 0;
             }
 
+            @SuppressLint("RtlHardcoded")
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView textView = new TextView(parent.getContext());
@@ -240,7 +245,7 @@ public class TrainFragmentReservationForm extends Fragment {
     }
 
     private void gotoCheck() {
-        TrainTicketModel trainTicketModel = new TrainTicketModel(startStation, endStation, selectedDate + " " + selectedTime, "", quantity + "", "0", "0");
+        TrainTicketModel trainTicketModel = new TrainTicketModel(startStation, endStation, selectedDate + " " + selectedTime, "", quantity + "", "0", String.valueOf(time.getSelectedItemPosition() - 1));
         getActivity()
                 .getSharedPreferences(Constants.SHARED_PREFS, 0)
                 .edit()
@@ -279,6 +284,7 @@ public class TrainFragmentReservationForm extends Fragment {
                 return position != 0;
             }
 
+            @SuppressLint("RtlHardcoded")
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView textView = new TextView(parent.getContext());
@@ -393,6 +399,7 @@ public class TrainFragmentReservationForm extends Fragment {
                 return position != 0;
             }
 
+            @SuppressLint("RtlHardcoded")
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView textView = new TextView(parent.getContext());

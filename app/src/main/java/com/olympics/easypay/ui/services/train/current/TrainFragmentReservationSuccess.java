@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.services.train.current;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import retrofit2.Response;
 
 import static com.olympics.easypay.utils.Constants.BASE_URL;
 
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class TrainFragmentReservationSuccess extends Fragment {
 
     private static final String TAG = "MyTag";
@@ -64,6 +66,7 @@ public class TrainFragmentReservationSuccess extends Fragment {
         MyRetroFitHelper.getInstance().getTrainTicket(myId).enqueue(new Callback<List<TrainTicketModel>>() {
             @Override
             public void onResponse(Call<List<TrainTicketModel>> call, Response<List<TrainTicketModel>> response) {
+                Log.d(TAG, "onResponse: " + response.body().get(0).toString());
                 if (response.isSuccessful()) {
                     updateViews(response.body().get(0));
                     MyRetroFitHelper.getInstance().getTrainQR(myId).enqueue(new Callback<ResponseBody>() {
@@ -99,6 +102,7 @@ public class TrainFragmentReservationSuccess extends Fragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateViews(TrainTicketModel trainTicketModel) {
         start.setText(trainTicketModel.getStartStation());
         end.setText(trainTicketModel.getEndStation());

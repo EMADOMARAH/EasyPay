@@ -102,6 +102,8 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
                         return;
                     }
                     adapter.setChargeHistoryModelList(response.body());
+                } else {
+                    showError();
                 }
             }
 

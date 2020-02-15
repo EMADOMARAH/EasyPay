@@ -72,7 +72,6 @@
             />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             >
             <intent-filter>
@@ -93,13 +92,11 @@
             />
         <activity
             android:name=".ui.registration.SignInActivity"
-            android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />
         <activity
             android:name=".ui.registration.SignUpActivity"
-            android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />

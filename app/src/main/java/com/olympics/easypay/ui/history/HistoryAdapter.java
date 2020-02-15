@@ -32,6 +32,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.VH> {
 
     public void setChargeHistoryModelList(List<ChargeHistoryModel> chargeHistoryModelList) {
         this.chargeHistoryModelList = chargeHistoryModelList;
+        notifyDataSetChanged();
     }
 
     @NonNull

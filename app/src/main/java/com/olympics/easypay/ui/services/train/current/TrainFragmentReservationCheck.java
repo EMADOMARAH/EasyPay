@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.services.train.current;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,23 +17,29 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.olympics.easypay.R;
+import com.olympics.easypay.models.TrainCostModel;
 import com.olympics.easypay.models.TrainTicketModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.utils.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.olympics.easypay.utils.Constants.TOKEN;
+
+@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class TrainFragmentReservationCheck extends Fragment {
 
     private static final String TAG = "MyTag";
     private TextView from, to, date, time, quantity, cost;
     private TrainListener listener;
     private SharedPreferences sharedPreferences;
+    @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
     private TrainTicketModel trainTicketModel;
 
@@ -84,15 +91,68 @@ public class TrainFragmentReservationCheck extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initPrefs();
+        initData();
     }
 
-    private void initPrefs() {
+    private void initData() {
         sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0);
+        int id = sharedPreferences.getInt(TOKEN, 0);
         trainTicketModel = new Gson().fromJson(sharedPreferences.getString(Constants.TRAIN_TICKET, ""), TrainTicketModel.class);
-        updateViews(trainTicketModel);
+        MyRetroFitHelper.getInstance().getTrainCost(id, Integer.parseInt(trainTicketModel.getChairNumber())).enqueue(new Callback<List<TrainCostModel>>() {
+            @Override
+            public void onResponse(Call<List<TrainCostModel>> call, Response<List<TrainCostModel>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() == null) {
+                        Log.d(TAG, "onResponse: " + response.body().toString());
+                        return;
+                    }
+                    if (response.body().get(0) == null) {
+                        Log.d(TAG, "onResponse: " + response.body().get(0).toString());
+                        return;
+                    }
+                    if (response.body().get(0).getMyBalance() == null) {
+                        Log.d(TAG, "onResponse: " + response.body().get(0).getMyBalance());
+                        return;
+                    }
+                    if (response.body().get(0).getMyBalance().equals("null")) {
+                        Log.d(TAG, "onResponse: " + response.body().get(0).getMyBalance());
+                        return;
+                    }
+                    if (response.body().get(0).getMyBalance().equals("NULL")) {
+                        Log.d(TAG, "onResponse: " + response.body().get(0).getMyBalance());
+                        return;
+                    }
+                    if (response.body().get(0).getTrainCost() == null) {
+                        Log.d(TAG, "onResponse: " + response.body().get(0).getTrainCost());
+                        return;
+                    }
+                    if (response.body().get(0).getTrainCost().equals("null")) {
+                        Log.d(TAG, "onResponse: " + response.body().get(0).getTrainCost());
+                        return;
+                    }
+                    if (response.body().get(0).getTrainCost().equals("NULL")) {
+                        Log.d(TAG, "onResponse: " + response.body().get(0).getTrainCost());
+                        return;
+                    }
+                    TrainCostModel trainCostModel = response.body().get(0);
+                    if (Integer.valueOf(trainCostModel.getTrainCost()) > Integer.valueOf(trainCostModel.getMyBalance())) {
+                        Toast.makeText(getContext(), "You don't have enough credits please charge your balance", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    trainTicketModel.setCost(trainCostModel.getTrainCost());
+                    updateViews(trainTicketModel);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TrainCostModel>> call, Throwable t) {
+                Log.d(TAG, "onFailureTrainCost: " + t.toString());
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateViews(TrainTicketModel trainTicketModel) {
         from.setText(trainTicketModel.getStartStation());
         to.setText(trainTicketModel.getEndStation());
@@ -106,7 +166,7 @@ public class TrainFragmentReservationCheck extends Fragment {
         String s = "";
         try {
             simpleDateFormat.parse(ticketTime);
-            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("EEEE, dd MMM yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("EEEE, dd MMM yyyy");
             s = simpleDateFormat1.format(simpleDateFormat.getCalendar().getTime());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -118,7 +178,7 @@ public class TrainFragmentReservationCheck extends Fragment {
         String s = "";
         try {
             simpleDateFormat.parse(ticketTime);
-            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm a");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm a");
             s = simpleDateFormat1.format(simpleDateFormat.getCalendar().getTime());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -127,7 +187,8 @@ public class TrainFragmentReservationCheck extends Fragment {
     }
 
     private void saveTicket() {
-        int myId = sharedPreferences.getInt(Constants.TOKEN, 0);
+        int myId = sharedPreferences.getInt(TOKEN, 0);
+        Log.d(TAG, "saveTicket: " + myId + " " + trainTicketModel.getStartStation() + " " + trainTicketModel.getEndStation() + " " + trainTicketModel.getTicketTime() + " " + trainTicketModel.getQuantity());
         MyRetroFitHelper.getInstance().saveTrainTicket(myId, trainTicketModel.getStartStation(), trainTicketModel.getEndStation(), trainTicketModel.getTicketTime(), Integer.parseInt(trainTicketModel.getQuantity())).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
