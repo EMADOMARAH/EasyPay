@@ -27,7 +27,6 @@ import com.olympics.easypay.R;
 import com.olympics.easypay.models.AvailableTrainsModel;
 import com.olympics.easypay.models.LineModel;
 import com.olympics.easypay.models.StationModel;
-import com.olympics.easypay.models.TrainTicketModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.utils.Constants;
@@ -36,7 +35,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -245,11 +246,16 @@ public class TrainFragmentReservationForm extends Fragment {
     }
 
     private void gotoCheck() {
-        TrainTicketModel trainTicketModel = new TrainTicketModel(startStation, endStation, selectedDate + " " + selectedTime, "", quantity + "", "0", String.valueOf(time.getSelectedItemPosition() - 1));
+        Map<String, String> map = new HashMap<>();
+        map.put("start", startStation);
+        map.put("end", endStation);
+        map.put("time", selectedDate + " " + selectedTime);
+        map.put("quantity", quantity + "");
+        map.put("train", (time.getSelectedItemPosition() - 1) + "");
         getActivity()
                 .getSharedPreferences(Constants.SHARED_PREFS, 0)
                 .edit()
-                .putString(Constants.TRAIN_TICKET, new Gson().toJson(trainTicketModel))
+                .putString("map", new Gson().toJson(map))
                 .apply();
         listener.gotoFragment(1);
     }

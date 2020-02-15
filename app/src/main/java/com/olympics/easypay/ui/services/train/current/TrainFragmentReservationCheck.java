@@ -18,13 +18,13 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.TrainCostModel;
-import com.olympics.easypay.models.TrainTicketModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.utils.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +41,7 @@ public class TrainFragmentReservationCheck extends Fragment {
     private SharedPreferences sharedPreferences;
     @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-    private TrainTicketModel trainTicketModel;
+    private Map<String, String> map;
 
     public TrainFragmentReservationCheck() {
         super(R.layout.fragment_train_reservation_check);
@@ -94,11 +94,12 @@ public class TrainFragmentReservationCheck extends Fragment {
         initData();
     }
 
+    @SuppressWarnings("unchecked")
     private void initData() {
         sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0);
+        map = new Gson().fromJson(sharedPreferences.getString("map", ""), Map.class);
         int id = sharedPreferences.getInt(TOKEN, 0);
-        trainTicketModel = new Gson().fromJson(sharedPreferences.getString(Constants.TRAIN_TICKET, ""), TrainTicketModel.class);
-        MyRetroFitHelper.getInstance().getTrainCost(id, Integer.parseInt(trainTicketModel.getChairNumber())).enqueue(new Callback<List<TrainCostModel>>() {
+        MyRetroFitHelper.getInstance().getTrainCost(id, Integer.parseInt(map.get("train"))).enqueue(new Callback<List<TrainCostModel>>() {
             @Override
             public void onResponse(Call<List<TrainCostModel>> call, Response<List<TrainCostModel>> response) {
                 if (response.isSuccessful()) {
@@ -139,8 +140,8 @@ public class TrainFragmentReservationCheck extends Fragment {
                         Toast.makeText(getContext(), "You don't have enough credits please charge your balance", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    trainTicketModel.setCost(trainCostModel.getTrainCost());
-                    updateViews(trainTicketModel);
+                    map.put("cost", trainCostModel.getTrainCost());
+                    updateViews();
                 }
             }
 
@@ -153,13 +154,13 @@ public class TrainFragmentReservationCheck extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateViews(TrainTicketModel trainTicketModel) {
-        from.setText(trainTicketModel.getStartStation());
-        to.setText(trainTicketModel.getEndStation());
-        date.setText(formateDate(trainTicketModel.getTicketTime()));
-        time.setText(formateTime(trainTicketModel.getTicketTime()));
-        quantity.setText(trainTicketModel.getQuantity() + " Ticket");
-        cost.setText(trainTicketModel.getCost() + " EGP");
+    private void updateViews() {
+        from.setText(map.get("start"));
+        to.setText(map.get("end"));
+        date.setText(formateDate(map.get("time")));
+        time.setText(formateTime(map.get("time")));
+        quantity.setText(map.get("quantity") + " Ticket");
+        cost.setText(map.get("cost") + " EGP");
     }
 
     private String formateDate(String ticketTime) {
@@ -188,21 +189,28 @@ public class TrainFragmentReservationCheck extends Fragment {
 
     private void saveTicket() {
         int myId = sharedPreferences.getInt(TOKEN, 0);
-        Log.d(TAG, "saveTicket: " + myId + " " + trainTicketModel.getStartStation() + " " + trainTicketModel.getEndStation() + " " + trainTicketModel.getTicketTime() + " " + trainTicketModel.getQuantity());
-        MyRetroFitHelper.getInstance().saveTrainTicket(myId, trainTicketModel.getStartStation(), trainTicketModel.getEndStation(), trainTicketModel.getTicketTime(), Integer.parseInt(trainTicketModel.getQuantity())).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    listener.gotoFragment(2);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailureSaveTrainTicket: " + t.toString());
-            }
-        });
+        MyRetroFitHelper.getInstance().saveTrainTicket(
+                myId,
+                map.get("start"),
+                map.get("end"),
+                map.get("time"),
+                Integer.valueOf(map.get("quantity")),
+                Integer.valueOf(map.get("train")))
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            listener.gotoFragment(2);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onFailureSaveTrainTicket: " + t.toString());
+                    }
+                });
     }
 
     public interface TrainListener {

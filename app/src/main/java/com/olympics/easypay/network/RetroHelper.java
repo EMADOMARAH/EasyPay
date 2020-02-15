@@ -149,7 +149,8 @@ public interface RetroHelper {
             @Query("php_reserve_from") String from,
             @Query("php_reserve_to") String to,
             @Query("php_ticket_time") String time,
-            @Query("php_quantity") int quantity
+            @Query("php_quantity") int quantity,
+            @Query("php_avilable_trains") int availableTrain
     );
 
     @POST("show_credits.php")
