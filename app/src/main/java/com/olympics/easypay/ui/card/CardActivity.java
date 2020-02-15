@@ -28,11 +28,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.CardNumberModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.about.AboutActivity;
-import com.olympics.easypay.ui.help.HelpActivity;
 import com.olympics.easypay.ui.home.MainActivity;
+import com.olympics.easypay.ui.menu.about.AboutActivity;
+import com.olympics.easypay.ui.menu.help.HelpActivity;
+import com.olympics.easypay.ui.menu.settings.SettingsActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
 
 import java.math.BigInteger;
@@ -70,7 +70,8 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+        finishAfterTransition();
     }
 
     @Override
@@ -291,12 +292,14 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
 
     private void addCard() {
         startActivity(new Intent(getApplicationContext(), CardAddActivity.class));
-        finish();
+        overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+        finishAfterTransition();
     }
 
     private void delCard() {
         startActivity(new Intent(getApplicationContext(), CardDeleteActivity.class));
-        finish();
+        overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+        finishAfterTransition();
     }
 
 //    private void deleteCard(BigInteger cardNo) {
@@ -324,12 +327,15 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.info:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.help:
                 startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
@@ -341,7 +347,8 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+                overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+                finishAfterTransition();
                 return true;
         }
         return false;

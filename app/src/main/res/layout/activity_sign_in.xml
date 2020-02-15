@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="42dp"
         android:src="@drawable/ic_logo"
+        android:transitionName="lgo"
         app:layout_constraintBottom_toTopOf="@id/txt1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

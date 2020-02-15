@@ -29,8 +29,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.ui.menu.settings.SettingsActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
 
 import java.math.BigInteger;
@@ -245,7 +245,6 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
                             .putString(CARD, card.toString())
                             .apply();
                     onBackPressed();
-                    onBackPressed();
                 }
             }
 
@@ -312,7 +311,8 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+                overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+                finishAfterTransition();
                 return true;
         }
         return false;
@@ -321,6 +321,7 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), CardActivity.class));
-        finish();
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+        finishAfterTransition();
     }
 }

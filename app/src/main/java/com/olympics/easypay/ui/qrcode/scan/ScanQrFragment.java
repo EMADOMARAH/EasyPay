@@ -136,7 +136,7 @@ public class ScanQrFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
-                        activity.finish();
+                        activity.onBackPressed();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -158,7 +158,7 @@ public class ScanQrFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
-                        activity.finish();
+                        activity.onBackPressed();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

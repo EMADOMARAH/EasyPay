@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.registration;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,10 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,8 @@ import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
 import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.utils.FieldValidator;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +49,7 @@ import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
+@SuppressWarnings("ConstantConditions")
 public class SignInActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";
@@ -54,11 +61,40 @@ public class SignInActivity extends AppCompatActivity {
     Retrofit retrofit;
     RetroHelper helper;
     SharedPreferences sharedPreferences;
+    View view;
+    ImageView imageView;
+    boolean isPendingFinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        Bundle bundle = getIntent().getBundleExtra("coordinates");
+
+        if (bundle != null) {
+            overridePendingTransition(R.anim.do_none, R.anim.do_none);
+            setContentView(R.layout.activity_sign_in);
+
+            view = findViewById(android.R.id.content);
+
+            final int x = bundle.getInt("x");
+            final int y = bundle.getInt("y");
+            if (savedInstanceState == null) {
+                view.setVisibility(View.INVISIBLE);
+                view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        int w = view.getWidth();
+                        int h = view.getHeight();
+                        float r = (float) Math.hypot(w, h);
+                        ViewAnimationUtils.createCircularReveal(view, x, y, 0, r).setDuration(1000).start();
+                        view.setVisibility(View.VISIBLE);
+                        view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
+            }
+        } else {
+            setContentView(R.layout.activity_sign_in);
+        }
 
         initViews();
         initListeners();
@@ -120,7 +156,7 @@ public class SignInActivity extends AppCompatActivity {
     private void retrieveToken(String email, String phone) {
         MyRetroFitHelper.getInstance().retrievePassword(email, phone).enqueue(new Callback<List<RetrievePasswordModel>>() {
             @Override
-            public void onResponse(Call<List<RetrievePasswordModel>> call, Response<List<RetrievePasswordModel>> response) {
+            public void onResponse(@NotNull Call<List<RetrievePasswordModel>> call, @NotNull Response<List<RetrievePasswordModel>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().get(0).getId() == null || response.body().get(0).getId().equals("NULL")) {
                         Toast.makeText(SignInActivity.this, "User doesn't exist", Toast.LENGTH_SHORT).show();
@@ -148,7 +184,7 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<RetrievePasswordModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<RetrievePasswordModel>> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailureRetrieveToken: " + t.toString());
                 Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
@@ -158,7 +194,7 @@ public class SignInActivity extends AppCompatActivity {
     private void loginWithNewPass(final int id, String pass, String repass) {
         MyRetroFitHelper.getInstance().changePassword(id, pass, repass).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         Toast.makeText(SignInActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
@@ -171,7 +207,7 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailureChangePassword: " + t.toString());
                 Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
@@ -189,7 +225,7 @@ public class SignInActivity extends AppCompatActivity {
     private void checkEmail(final String email, final String pass) {
         helper.checkEmailForLogin(email).enqueue(new Callback<List<EmailCheckModel>>() {
             @Override
-            public void onResponse(Call<List<EmailCheckModel>> call, Response<List<EmailCheckModel>> response) {
+            public void onResponse(@NotNull Call<List<EmailCheckModel>> call, @NotNull Response<List<EmailCheckModel>> response) {
                 if (response.isSuccessful()) {
                     String s = response.body().get(0).getEmail();
                     if (s.equals("Email Exist")) {
@@ -204,7 +240,7 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<EmailCheckModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<EmailCheckModel>> call, @NotNull Throwable t) {
                 Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailureEmail: " + t.toString());
             }
@@ -214,9 +250,8 @@ public class SignInActivity extends AppCompatActivity {
     private void checkPass(final String email, final String pass) {
         helper.checkPassword(email, pass).enqueue(new Callback<List<PasswordCheckModel>>() {
             @Override
-            public void onResponse(Call<List<PasswordCheckModel>> call, Response<List<PasswordCheckModel>> response) {
+            public void onResponse(@NotNull Call<List<PasswordCheckModel>> call, @NotNull Response<List<PasswordCheckModel>> response) {
                 if (response.isSuccessful()) {
-                    String s = response.body().get(0).getEmail();
                     String s1 = response.body().get(0).getPassword();
                     if (s1.equals("password successful")) {
                         login(email, pass);
@@ -228,7 +263,7 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<PasswordCheckModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<PasswordCheckModel>> call, @NotNull Throwable t) {
                 Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailurePass: " + t.toString());
             }
@@ -238,7 +273,7 @@ public class SignInActivity extends AppCompatActivity {
     private void login(final String email, final String pass) {
         helper.login(email, pass).enqueue(new Callback<List<TokenModel>>() {
             @Override
-            public void onResponse(Call<List<TokenModel>> call, Response<List<TokenModel>> response) {
+            public void onResponse(@NotNull Call<List<TokenModel>> call, @NotNull Response<List<TokenModel>> response) {
                 if (response.isSuccessful()) {
                     int token = Integer.parseInt(response.body().get(0).getId());
                     if (checkBox.isChecked()) {
@@ -264,7 +299,7 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<TokenModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<TokenModel>> call, @NotNull Throwable t) {
                 Log.d(TAG, "onFailureLogin: " + t.toString());
                 Toast.makeText(SignInActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
@@ -272,16 +307,40 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void gotoSignUp() {
-        startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+        int x = (gotoSignUpBtn.getRight() + gotoSignUpBtn.getLeft()) / 2;
+        int y = (gotoSignUpBtn.getTop() + gotoSignUpBtn.getBottom()) / 2;
+        Bundle bundle = new Bundle();
+        bundle.putInt("x", x);
+        bundle.putInt("y", y);
+        startActivity(new Intent(getApplicationContext(), SignUpActivity.class).putExtra("coordinates", bundle));
         finish();
     }
 
     private void gotoMain() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        isPendingFinish = true;
+        startActivity(
+                new Intent(getApplicationContext(), MainActivity.class),
+                ActivityOptions.makeSceneTransitionAnimation(
+                        SignInActivity.this, imageView, "lgo").toBundle()
+        );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isPendingFinish) {
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        imageView.setTransitionName(null);
         finish();
     }
 
     private void initViews() {
+        imageView = findViewById(R.id.imageView);
         forgetBtn = findViewById(R.id.frgt);
         emailEdt = findViewById(R.id.email_signin);
         passEdt = findViewById(R.id.pass_signin);

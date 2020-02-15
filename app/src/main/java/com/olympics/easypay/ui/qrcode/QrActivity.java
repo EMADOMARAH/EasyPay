@@ -19,13 +19,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
-import com.olympics.easypay.ui.about.AboutActivity;
-import com.olympics.easypay.ui.help.HelpActivity;
 import com.olympics.easypay.ui.home.MainActivity;
+import com.olympics.easypay.ui.menu.about.AboutActivity;
+import com.olympics.easypay.ui.menu.help.HelpActivity;
+import com.olympics.easypay.ui.menu.settings.SettingsActivity;
 import com.olympics.easypay.ui.qrcode.my.MyQrFragment;
 import com.olympics.easypay.ui.qrcode.scan.ScanQrFragment;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
 
 import static com.olympics.easypay.utils.Constants.CARD;
@@ -46,7 +46,8 @@ public class QrActivity extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+        finishAfterTransition();
     }
 
     @Override
@@ -137,12 +138,15 @@ public class QrActivity extends AppCompatActivity implements NavigationView.OnNa
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.info:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.help:
                 startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
@@ -154,7 +158,8 @@ public class QrActivity extends AppCompatActivity implements NavigationView.OnNa
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+                overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+                finishAfterTransition();
                 return true;
         }
         return false;

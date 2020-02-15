@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,13 +22,15 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.about.AboutActivity;
-import com.olympics.easypay.ui.help.HelpActivity;
 import com.olympics.easypay.ui.home.payment.PaymentFragment;
 import com.olympics.easypay.ui.home.wallet.WalletFragment;
+import com.olympics.easypay.ui.menu.about.AboutActivity;
+import com.olympics.easypay.ui.menu.help.HelpActivity;
+import com.olympics.easypay.ui.menu.settings.SettingsActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
+
+import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +41,7 @@ import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
+@SuppressWarnings({"ConstantConditions", "deprecation"})
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ViewPager viewPager;
@@ -45,6 +50,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Exit")
+                .setMessage("Do you want to exit EasyPay?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .create().show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +80,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initRetro() {
         MyRetroFitHelper.getInstance().show(getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0)).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
 
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
                 Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
@@ -134,12 +154,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.info:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.help:
                 startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
@@ -151,7 +174,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+                overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+                finishAfterTransition();
                 return true;
         }
         return false;

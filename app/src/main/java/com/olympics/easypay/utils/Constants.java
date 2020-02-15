@@ -25,6 +25,7 @@ public class Constants {
 
     //IntentKeys
     public static final String MODEL_KEY = "ModelKey";
+    public static final String BUNDLE_KEY = "BundleKey";
 
     //Patterns
     public static final Pattern PATTERN_pass_digits =

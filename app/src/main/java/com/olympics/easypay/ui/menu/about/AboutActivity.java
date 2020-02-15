@@ -1,4 +1,4 @@
-package com.olympics.easypay.ui.about;
+package com.olympics.easypay.ui.menu.about;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
-import com.olympics.easypay.ui.help.HelpActivity;
+import com.olympics.easypay.ui.menu.help.HelpActivity;
+import com.olympics.easypay.ui.menu.settings.SettingsActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.ui.settings.SettingsActivity;
 import com.olympics.easypay.utils.Constants;
 
 import static com.olympics.easypay.utils.Constants.CARD;
@@ -30,6 +30,12 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+        finishAfterTransition();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +89,15 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.info:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.help:
                 startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.logout:
                 getSharedPreferences(Constants.SHARED_PREFS, 0)
@@ -100,7 +109,8 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+                overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+                finishAfterTransition();
                 return true;
         }
         return false;

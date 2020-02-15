@@ -35,12 +35,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class PaymentFragmentNeutral extends Fragment {
     private static final String TAG = "MyTag";
     private TextView myBalanceTxt, lastBus, lastMetro, lastTrain;
-    private Retrofit retrofit;
     private RetroHelper helper;
-    private SharedPreferences sharedPreferences;
     private int myId;
 
     public PaymentFragmentNeutral() {
@@ -61,7 +60,8 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), BusPaymentActivity.class));
-                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+                getActivity().finishAfterTransition();
             }
         });
 
@@ -70,7 +70,8 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), MetroPaymentActivity.class));
-                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+                getActivity().finishAfterTransition();
             }
         });
 
@@ -79,7 +80,8 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), TrainPaymentActivity.class));
-                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+                getActivity().finishAfterTransition();
             }
         });
 
@@ -88,7 +90,8 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), QrActivity.class));
-                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+                getActivity().finishAfterTransition();
             }
         });
     }
@@ -165,12 +168,13 @@ public class PaymentFragmentNeutral extends Fragment {
     }
 
     private void initSharedPrefs() {
-        sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0);
         myId = sharedPreferences.getInt(Constants.TOKEN, 0);
     }
 
     private void getBalance() {
         helper.getBalance(myId).enqueue(new Callback<List<BalanceModel>>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<List<BalanceModel>> call, Response<List<BalanceModel>> response) {
                 if (response.isSuccessful()) {
@@ -188,7 +192,7 @@ public class PaymentFragmentNeutral extends Fragment {
     }
 
     private void initRetroFit() {
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

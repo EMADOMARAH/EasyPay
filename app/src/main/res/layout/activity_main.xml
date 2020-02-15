@@ -5,6 +5,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_three"
     android:layoutDirection="rtl"
     >
 
@@ -21,10 +22,11 @@
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="match_parent"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
                 android:src="@drawable/ic_group_29"
+                android:transitionName="lgo"
                 tools:ignore="ContentDescription"
                 />
 
@@ -82,6 +84,7 @@
         android:id="@+id/side_nav"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_nav_main"
         app:menu="@menu/main_nav"

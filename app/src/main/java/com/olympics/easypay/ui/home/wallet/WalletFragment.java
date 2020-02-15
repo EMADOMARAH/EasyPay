@@ -1,5 +1,6 @@
 package com.olympics.easypay.ui.home.wallet;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,15 +29,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class WalletFragment extends Fragment {
 
     private static final String TAG = "MyTag";
     private TextView myBalanceTxt;
     private TextView lastChargeTxt;
     private TextView chargeDateTxt;
-    private Retrofit retrofit;
     private RetroHelper helper;
-    private SharedPreferences sharedPreferences;
     private int myId;
 
     public WalletFragment() {
@@ -52,7 +52,8 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), HistoryActivity.class));
-                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+                getActivity().finishAfterTransition();
             }
         });
 
@@ -65,7 +66,8 @@ public class WalletFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CardActivity.class));
-                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+                getActivity().finishAfterTransition();
             }
         });
     }
@@ -81,6 +83,7 @@ public class WalletFragment extends Fragment {
 
     private void getData() {
         helper.getWallet(myId).enqueue(new Callback<List<WalletModel>>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<List<WalletModel>> call, Response<List<WalletModel>> response) {
                 if (response.isSuccessful()) {
@@ -103,7 +106,7 @@ public class WalletFragment extends Fragment {
     }
 
     private void initRetroFit() {
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -111,7 +114,7 @@ public class WalletFragment extends Fragment {
     }
 
     private void initSharedPrefs() {
-        sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0);
         myId = sharedPreferences.getInt(Constants.TOKEN, 0);
     }
 }

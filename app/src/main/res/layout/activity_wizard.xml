@@ -5,6 +5,7 @@
     android:id="@+id/viewPager_wizard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_three"
     android:overScrollMode="never"
     tools:context=".ui.wizard.WizardActivity"
     />

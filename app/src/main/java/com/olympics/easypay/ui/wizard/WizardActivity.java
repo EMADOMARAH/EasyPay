@@ -47,6 +47,7 @@ public class WizardActivity extends AppCompatActivity implements WizardFragment.
                 .putBoolean(Constants.FIRST_TIME, false)
                 .apply();
         startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-        finish();
+        overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
+        finishAfterTransition();
     }
 }

@@ -1,4 +1,4 @@
-package com.olympics.easypay.ui.settings;
+package com.olympics.easypay.ui.menu.settings;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -27,8 +27,8 @@ import com.olympics.easypay.models.PasswordCheckModel;
 import com.olympics.easypay.models.SetSettingModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.network.RetroHelper;
-import com.olympics.easypay.ui.about.AboutActivity;
-import com.olympics.easypay.ui.help.HelpActivity;
+import com.olympics.easypay.ui.menu.about.AboutActivity;
+import com.olympics.easypay.ui.menu.help.HelpActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
 import com.olympics.easypay.utils.FieldValidator;
 
@@ -44,6 +44,7 @@ import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MyTag";
@@ -57,6 +58,12 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+        finishAfterTransition();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +186,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                                                     .apply();
                                             startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                            finish();
+                                            onBackPressed();
                                         }
                                     }
 
@@ -227,7 +234,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             public void onFailure(Call<List<GetSettingModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureGetSetting: " + t.toString());
                 Toast.makeText(SettingsActivity.this, "Server error", Toast.LENGTH_SHORT).show();
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -248,12 +255,15 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.info:
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.help:
                 startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+                overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
                 return true;
             case R.id.logout:
                 getSharedPreferences(SHARED_PREFS, 0)
@@ -265,7 +275,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                         .apply();
                 startActivity(new Intent(getApplicationContext(), SignInActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+                onBackPressed();
                 return true;
         }
         return false;
