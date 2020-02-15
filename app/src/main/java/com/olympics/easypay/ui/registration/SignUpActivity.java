@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";
-    TextInputLayout nameEdt, emailEdt, passEdt, phoneEdt;
+    TextInputLayout nameEdt, emailEdt, passEdt, repassEdt, phoneEdt;
     TextView gotoSignInBtn;
     Button confirmSignUp;
     CheckBox checkBox;
@@ -64,6 +64,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean validatePass() {
         return FieldValidator.checkPassword(passEdt);
+    }
+
+    private boolean validateRePass() {
+        return FieldValidator.checkRePassword(repassEdt, passEdt);
     }
 
     private void checkEmail(final String name, final String email, final String phone, final String pass) {
@@ -193,6 +197,7 @@ public class SignUpActivity extends AppCompatActivity {
         emailEdt = findViewById(R.id.email_signup);
         phoneEdt = findViewById(R.id.phone_signup);
         passEdt = findViewById(R.id.pass_signup);
+        repassEdt = findViewById(R.id.repass_signup);
         checkBox = findViewById(R.id.chk);
 
         gotoSignInBtn.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +213,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String email = emailEdt.getEditText().getText().toString().trim();
                 String phone = phoneEdt.getEditText().getText().toString().trim();
                 String pass = passEdt.getEditText().getText().toString().trim();
-                if (validateName() & validateEmail() & validatePhone() & validatePass()) {
+                if (validateName() & validateEmail() & validatePhone() & validatePass() & validateRePass()) {
                     checkEmail(name, email, phone, pass);
                 }
             }

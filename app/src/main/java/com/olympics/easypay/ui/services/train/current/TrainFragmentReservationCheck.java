@@ -140,7 +140,8 @@ public class TrainFragmentReservationCheck extends Fragment {
                         Toast.makeText(getContext(), "You don't have enough credits please charge your balance", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    map.put("cost", trainCostModel.getTrainCost());
+                    int total = Integer.valueOf(trainCostModel.getTrainCost()) * Integer.valueOf(map.get("quantity"));
+                    map.put("cost", total + "");
                     updateViews();
                 }
             }
@@ -189,14 +190,14 @@ public class TrainFragmentReservationCheck extends Fragment {
 
     private void saveTicket() {
         int myId = sharedPreferences.getInt(TOKEN, 0);
-
         MyRetroFitHelper.getInstance().saveTrainTicket(
                 myId,
                 map.get("start"),
                 map.get("end"),
                 map.get("time"),
                 Integer.valueOf(map.get("quantity")),
-                Integer.valueOf(map.get("train")))
+                Integer.valueOf(map.get("train")),
+                Integer.valueOf(map.get("cost")))
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
