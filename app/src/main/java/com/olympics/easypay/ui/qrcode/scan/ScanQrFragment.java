@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -38,10 +39,18 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
+@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class ScanQrFragment extends Fragment {
     private static final String TAG = "MyTag";
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            codeScanner.startPreview();
+        }
+    };
     private Vibrator vibrator;
     private CodeScanner codeScanner;
+    private Handler handler;
     private CodeScannerView codeScannerView;
     private AppCompatActivity activity;
     private int id;
@@ -78,6 +87,7 @@ public class ScanQrFragment extends Fragment {
 
         activity = (AppCompatActivity) getActivity();
         vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+        handler = new Handler();
 
         id = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
 
@@ -114,19 +124,32 @@ public class ScanQrFragment extends Fragment {
     }
 
     private void jsonParse(String json) {
+        Log.d(TAG, "jsonParse: " + json);
         try {
             JSONObject root = new JSONArray(json).getJSONObject(0);
-            switch (root.getString("Type")) {
-                case "bus":
-                    initBus(root.getInt("line_number"));
-                    break;
-                case "metro":
-                    initMetro(root.getInt("ticket_number"));
-                    break;
+            if (root.has("Type")) {
+                switch (root.getString("Type")) {
+                    case "bus":
+                        initBus(root.getInt("line_number"));
+                        break;
+                    case "metro":
+                        initMetro(root.getInt("ticket_number"));
+                        break;
+                    default:
+                        error();
+                        break;
+                }
+            } else {
+                error();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void error() {
+        Toast.makeText(activity, "Wrong QR", Toast.LENGTH_SHORT).show();
+        handler.postDelayed(runnable, 2000);
     }
 
     private void initBus(int lineNumber) {
