@@ -55,10 +55,12 @@ public class MetroFragmentCurrentPending extends Fragment {
                 if (response.isSuccessful()) {
                     MetroTicketModel metroTicketModel = response.body().get(0);
                     if (metroTicketModel == null) {
+                        Log.d(TAG, "onResponse: metroTicketModel");
                         showError();
                         return;
                     }
                     if (metroTicketModel.getTicketNumber() == null) {
+                        Log.d(TAG, "onResponse: getTicketNumber");
                         showError();
                         return;
                     }
