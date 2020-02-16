@@ -42,6 +42,7 @@ public class TrainFragmentReservationCheck extends Fragment {
     @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
     private Map<String, String> map;
+    private Button confirmBtn;
 
     public TrainFragmentReservationCheck() {
         super(R.layout.fragment_train_reservation_check);
@@ -78,7 +79,7 @@ public class TrainFragmentReservationCheck extends Fragment {
             }
         });
 
-        Button confirmBtn = view.findViewById(R.id.confirm_train);
+        confirmBtn = view.findViewById(R.id.confirm_train);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +139,12 @@ public class TrainFragmentReservationCheck extends Fragment {
                     TrainCostModel trainCostModel = response.body().get(0);
                     if (Integer.valueOf(trainCostModel.getTrainCost()) > Integer.valueOf(trainCostModel.getMyBalance())) {
                         Toast.makeText(getContext(), "You don't have enough credits please charge your balance", Toast.LENGTH_SHORT).show();
-                        return;
+                        confirmBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(getContext(), "You don't have enough credits please charge your balance", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                     int total = Integer.valueOf(trainCostModel.getTrainCost()) * Integer.valueOf(map.get("quantity"));
                     map.put("cost", total + "");

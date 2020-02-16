@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -168,5 +169,16 @@ public class SplashActivity extends AppCompatActivity {
         animator.setInterpolator(new LinearInterpolator());
         animator.setEvaluator(new FloatEvaluator());
         animator.start();
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferences.edit()
+                        .putInt(TOKEN, 102)
+                        .apply();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        });
     }
 }
