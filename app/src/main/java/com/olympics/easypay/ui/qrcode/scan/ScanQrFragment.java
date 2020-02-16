@@ -23,6 +23,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 import com.olympics.easypay.R;
+import com.olympics.easypay.models.BalanceModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.utils.Constants;
 
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -42,18 +44,19 @@ import static android.app.Activity.RESULT_OK;
 @SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class ScanQrFragment extends Fragment {
     private static final String TAG = "MyTag";
+    private Vibrator vibrator;
+    private CodeScanner codeScanner;
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             codeScanner.startPreview();
         }
     };
-    private Vibrator vibrator;
-    private CodeScanner codeScanner;
     private Handler handler;
     private CodeScannerView codeScannerView;
     private AppCompatActivity activity;
     private int id;
+    private int balance;
 
     public ScanQrFragment() {
         super(R.layout.fragment_qr_scan);
@@ -91,7 +94,25 @@ public class ScanQrFragment extends Fragment {
 
         id = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
 
+        initBalance();
         initQR();
+    }
+
+    private void initBalance() {
+        MyRetroFitHelper.getInstance().getBalance(id).enqueue(new Callback<List<BalanceModel>>() {
+            @Override
+            public void onResponse(Call<List<BalanceModel>> call, Response<List<BalanceModel>> response) {
+                if (response.isSuccessful()) {
+                    balance = response.body().get(0).getCurrentBalance();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BalanceModel>> call, Throwable t) {
+                Log.d(TAG, "onFailureBalance: " + t.toString());
+                Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -125,6 +146,10 @@ public class ScanQrFragment extends Fragment {
 
     private void jsonParse(String json) {
         Log.d(TAG, "jsonParse: " + json);
+        if (balance < 10) {
+            Toast.makeText(activity, "You must have at least 10 EGP in your balance, please refill then try again", Toast.LENGTH_LONG).show();
+            return;
+        }
         try {
             JSONObject root = new JSONArray(json).getJSONObject(0);
             if (root.has("Type")) {
