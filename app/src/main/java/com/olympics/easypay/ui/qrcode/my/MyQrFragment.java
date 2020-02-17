@@ -23,7 +23,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.olympics.easypay.utils.Constants.BASE_PERSONAL;
-import static com.olympics.easypay.utils.Constants.BASE_QR;
 import static com.olympics.easypay.utils.Constants.BASE_URL;
 
 @SuppressWarnings({"ConstantConditions", "NullableProblems"})

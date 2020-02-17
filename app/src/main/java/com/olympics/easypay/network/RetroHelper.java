@@ -31,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
+import static com.olympics.easypay.utils.Constants.BASE_PERSONAL;
 import static com.olympics.easypay.utils.Constants.BASE_QR;
 
 public interface RetroHelper {
@@ -190,7 +191,7 @@ public interface RetroHelper {
             @Query("php_id") int id
     );
 
-    @POST(BASE_QR + "personal_qr.php")
+    @POST(BASE_PERSONAL + "personal_qr.php")
     Call<ResponseBody> getMyQR(
             @Query("php_id") int id
     );
