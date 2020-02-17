@@ -106,8 +106,8 @@ public class TrainFragmentReservationSuccess extends Fragment {
     private void updateViews(TrainTicketModel trainTicketModel) {
         start.setText(trainTicketModel.getStartStation());
         end.setText(trainTicketModel.getEndStation());
-        date.setText(trainTicketModel.getTicketTime());//TODO date time
-        time.setText(trainTicketModel.getTicketTime());
+        date.setText(trainTicketModel.getTicketTime().split(" ")[0]);
+        time.setText(trainTicketModel.getTicketTime().split(" ")[1]);
         quantity.setText(trainTicketModel.getQuantity() + "");
         payDate.setText(trainTicketModel.getReserveTime());
         ticketCost.setText(trainTicketModel.getCost() + " EGP");
