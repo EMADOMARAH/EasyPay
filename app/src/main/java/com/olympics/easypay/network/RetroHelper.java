@@ -258,4 +258,12 @@ public interface RetroHelper {
             @Query("php_id") int id,
             @Query("php_train_number") int trainNumber
     );
+
+    @POST("check")
+    Call<ResponseBody> checkValidEmail(
+            @Query("access_key") String id,
+            @Query("email") String email,
+            @Query("smtp") int smtp,
+            @Query("format") int format
+    );
 }

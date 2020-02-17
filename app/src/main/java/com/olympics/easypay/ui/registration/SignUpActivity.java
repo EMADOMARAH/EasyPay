@@ -19,17 +19,25 @@ import com.olympics.easypay.models.EmailCheckModel;
 import com.olympics.easypay.models.PhoneCheckModel;
 import com.olympics.easypay.models.TokenModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
+import com.olympics.easypay.network.RetroHelper;
+import com.olympics.easypay.utils.Constants;
 import com.olympics.easypay.utils.FieldValidator;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";
@@ -77,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String s = response.body().get(0).getEmail();
                     if (s.equals("Email Available")) {
-                        checkPhone(name, email, phone, pass);
+                        checkValidEmail(name, email, phone, pass);
                         emailEdt.setError(null);
                     } else {
                         emailEdt.setError("Email already exists");
@@ -91,6 +99,70 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(SignUpActivity.this, "Server error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void checkValidEmail(final String name, final String email, final String phone, final String pass) {
+        new Retrofit.Builder()
+                .baseUrl("http://apilayer.net/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(RetroHelper.class)
+                .checkValidEmail(Constants.API_KEY, email, 1, 1).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject root = new JSONObject(response.body().string());
+
+                        boolean s = root.getBoolean("smtp_check");
+
+                        if (s) {
+                            checkPhone(name, email, phone, pass);
+                            emailEdt.setError(null);
+                        } else {
+                            emailEdt.setError("Email doesn't exist");
+                        }
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailureSMTP: " + t.toString());
+                Toast.makeText(SignUpActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+//        MyRetroFitHelper.getInstance().checkValidEmail(email).enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+//                if (response.isSuccessful()) {
+//                    try {
+//                        JSONObject root = new JSONObject(response.body().string());
+//
+//                        String s = root.getString("");
+//
+//                        if (s.equals("Email Available")) {
+//                            checkPhone(name, email, phone, pass);
+//                            emailEdt.setError(null);
+//                        } else {
+//                            emailEdt.setError("Email doesn't exist");
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+//                Log.d(TAG, "onFailureValidEmail: " + t.toString());
+//                Toast.makeText(SignUpActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void checkPhone(final String name, final String email, final String phone, final String pass) {
