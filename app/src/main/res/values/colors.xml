@@ -1,47 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
 
     <color name="white">#ffffff</color>
-    <color name="black_58">#94000000</color>
     <color name="black">#000000</color>
     <color name="tealish">#1dc9ab</color>
-    <color name="blue_green">#148a75</color>
-    <color name="tealish_two">#1bb79c</color>
-    <color name="light_grey_blue">#89c5cc</color>
-    <color name="camo_green">#3d2216</color>
-    <color name="milk_chocolate">#57331f</color>
-    <color name="light_royal_blue">#2b44ff</color>
-    <color name="blue_blue">#1f28cf</color>
-    <color name="silver">#c5cfd6</color>
-    <color name="greyblue">#69a1ac</color>
-    <color name="dirt_brown">#784931</color>
-    <color name="dirt_brown_two">#915b3c</color>
-    <color name="black_10">#1a000000</color>
-    <color name="pale_grey">#dde3e9</color>
-    <color name="pale_brown">#b28b67</color>
-    <color name="black_two">#2c2c2c</color>
-    <color name="perrywinkle">#8991dc</color>
-    <color name="black_20">#33000000</color>
-    <color name="dark_grey_blue">#2f3676</color>
-    <color name="white_two">#e4e4e4</color>
-    <color name="brownish">#997659</color>
-    <color name="off_blue">#5c63ab</color>
-    <color name="dark_blue_grey">#191847</color>
     <color name="white_three">#f8f8f8</color>
-    <color name="white_four">#ededed</color>
     <color name="aquamarine">#0adfba</color>
-    <color name="bright_sky_blue">#00d1fc</color>
     <color name="warm_grey">#a1a1a1</color>
-    <color name="midnight">#010002</color>
     <color name="greyish">#b2b2b2</color>
-    <color name="greyish_brown">#414141</color>
-    <color name="pinkish_grey">#c2c2c2</color>
-    <color name="pale_olive_green">#99d16c</color>
-    <color name="baby_green">#8affa1</color>
-    <color name="squash">#f0c41b</color>
-    <color name="maize">#f3d55c</color>
     <color name="sunflower_yellow">#ffd204</color>
 </resources>

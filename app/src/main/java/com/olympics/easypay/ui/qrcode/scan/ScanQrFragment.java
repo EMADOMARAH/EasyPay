@@ -158,7 +158,7 @@ public class ScanQrFragment extends Fragment {
                         initBus(root.getInt("line_number"));
                         break;
                     case "metro":
-                        initMetro(root.getInt("ticket_number"));
+                        initMetro(root.getInt("station_number"));
                         break;
                     default:
                         error();
@@ -199,8 +199,8 @@ public class ScanQrFragment extends Fragment {
         });
     }
 
-    private void initMetro(int ticketNumber) {
-        MyRetroFitHelper.getInstance().reserveMetro(id, ticketNumber).enqueue(new Callback<ResponseBody>() {
+    private void initMetro(int metroStation) {
+        MyRetroFitHelper.getInstance().reserveMetro(id, metroStation).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {

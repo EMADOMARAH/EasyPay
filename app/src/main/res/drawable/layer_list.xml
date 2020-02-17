@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/serge_kutuzov_1_a_2_b_4_o_mi_ys_m_unsplash" />
-    <item android:drawable="@drawable/gradient" />
-</layer-list>

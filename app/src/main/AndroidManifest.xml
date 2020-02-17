@@ -38,21 +38,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />
-
-        <!--        <meta-data-->
-        <!--            android:name="com.google.android.gms.wallet.api.enabled"-->
-        <!--            android:value="true"-->
-        <!--            /> &lt;!&ndash; <activity android:name=".ui.StripeActivity"> &ndash;&gt;-->
-        <!--  -->
-        <!-- </activity> -->
-        <activity
-            android:name=".ui.CheckoutActivityJava"
-            android:screenOrientation="portrait"
-            />
-        <activity
-            android:name=".ui.CheckoutActivity"
-            android:screenOrientation="portrait"
-            />
         <activity
             android:name=".ui.card.CardActivity"
             android:screenOrientation="portrait"
