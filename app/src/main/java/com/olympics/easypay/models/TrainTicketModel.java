@@ -3,7 +3,7 @@ package com.olympics.easypay.models;
 import com.google.gson.annotations.SerializedName;
 
 public class TrainTicketModel {
-    @SerializedName("start_Station")
+    @SerializedName("Start_Station")
     private String startStation;
 
     @SerializedName("End_Station")
@@ -24,7 +24,10 @@ public class TrainTicketModel {
     @SerializedName("chair_number")
     private String chairNumber;
 
-    public TrainTicketModel(String startStation, String endStation, String ticketTime, String reserveTime, String quantity, String cost, String chairNumber) {
+    @SerializedName("line_id")
+    private String lineId;
+
+    public TrainTicketModel(String startStation, String endStation, String ticketTime, String reserveTime, String quantity, String cost, String chairNumber, String lineId) {
         this.startStation = startStation;
         this.endStation = endStation;
         this.ticketTime = ticketTime;
@@ -32,6 +35,7 @@ public class TrainTicketModel {
         this.quantity = quantity;
         this.cost = cost;
         this.chairNumber = chairNumber;
+        this.lineId = lineId;
     }
 
     public String getStartStation() {
@@ -88,5 +92,13 @@ public class TrainTicketModel {
 
     public void setChairNumber(String chairNumber) {
         this.chairNumber = chairNumber;
+    }
+
+    public String getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(String lineId) {
+        this.lineId = lineId;
     }
 }
