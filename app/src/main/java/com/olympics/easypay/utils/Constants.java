@@ -11,7 +11,8 @@ import java.util.regex.Pattern;
 public class Constants {
     //Network
     public static final String BASE_URL = "http://196.221.197.51/";
-    public static final String BASE_QR = "easypayqr/personal_qr/";
+    public static final String BASE_QR = "EasyPayQr/";
+    public static final String BASE_PERSONAL = "easypayqr/personal_qr/";
     public static final String BASE_LINK = "http://196.221.197.51/EasyPay/";
     public static final String API_KEY = "58e2783240320ddcfe031255d49783d4";
 

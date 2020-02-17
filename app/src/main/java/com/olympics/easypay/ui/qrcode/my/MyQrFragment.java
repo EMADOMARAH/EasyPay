@@ -22,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.olympics.easypay.utils.Constants.BASE_PERSONAL;
 import static com.olympics.easypay.utils.Constants.BASE_QR;
 import static com.olympics.easypay.utils.Constants.BASE_URL;
 
@@ -60,7 +61,7 @@ public class MyQrFragment extends Fragment {
                         s = s.substring(10);
                         s = s.split("<")[0];
                         Log.d(TAG, "onResponse: " + s);
-                        Glide.with(getContext()).load(BASE_URL + BASE_QR + s).into(imageView);
+                        Glide.with(getContext()).load(BASE_URL + BASE_PERSONAL + s).into(imageView);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
