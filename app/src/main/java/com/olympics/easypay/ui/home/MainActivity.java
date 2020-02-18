@@ -3,6 +3,7 @@ package com.olympics.easypay.ui.home;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ import static com.olympics.easypay.utils.Constants.TOKEN;
 @SuppressWarnings({"ConstantConditions", "deprecation"})
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "MyTag";
     ViewPager viewPager;
     TabLayout tabLayout;
     DrawerLayout drawerLayout;
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
                 Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureShow: " + t.toString());
             }
         });
     }

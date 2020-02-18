@@ -27,11 +27,13 @@ import com.olympics.easypay.models.BalanceModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.utils.Constants;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -184,6 +186,7 @@ public class ScanQrFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                        getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).edit().putLong(Constants.BUS_TIME, Calendar.getInstance().getTimeInMillis()).apply();
                         activity.onBackPressed();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -199,24 +202,35 @@ public class ScanQrFragment extends Fragment {
         });
     }
 
-    private void initMetro(int metroStation) {
-        MyRetroFitHelper.getInstance().reserveMetro(id, metroStation).enqueue(new Callback<ResponseBody>() {
+    private void initMetro(final int metroStation) {
+        MyRetroFitHelper.getInstance().show(id).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
-                        activity.onBackPressed();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                MyRetroFitHelper.getInstance().reserveMetro(id, metroStation).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            try {
+                                Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                                activity.onBackPressed();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onFailureMetro: " + t.toString());
+                    }
+                });
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailureMetro: " + t.toString());
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureShow: " + t.toString());
             }
         });
     }

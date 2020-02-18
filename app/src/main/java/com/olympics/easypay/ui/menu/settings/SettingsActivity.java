@@ -60,6 +60,12 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     Toolbar toolbar;
 
     @Override
+    public void onBackPressed() {
+        finishAfterTransition();
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);

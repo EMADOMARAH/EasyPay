@@ -50,7 +50,8 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
         if (fragment != null) {
             metroFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
         } else {
-            super.onBackPressed();
+            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+            finishAfterTransition();
         }
     }
 

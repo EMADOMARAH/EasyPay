@@ -50,6 +50,12 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
     Toolbar toolbar;
 
     @Override
+    public void onBackPressed() {
+        finishAfterTransition();
+        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);

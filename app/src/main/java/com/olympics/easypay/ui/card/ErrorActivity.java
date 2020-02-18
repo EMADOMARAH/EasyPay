@@ -9,6 +9,12 @@ import com.olympics.easypay.R;
 public class ErrorActivity extends AppCompatActivity {
 
     @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
+        finishAfterTransition();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error);

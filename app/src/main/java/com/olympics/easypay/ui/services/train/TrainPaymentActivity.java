@@ -53,7 +53,8 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
         if (fragment != null) {
             trainFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
         } else {
-            super.onBackPressed();
+            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+            finishAfterTransition();
         }
     }
 

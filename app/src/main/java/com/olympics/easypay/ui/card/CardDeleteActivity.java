@@ -66,6 +66,12 @@ public class CardDeleteActivity extends AppCompatActivity implements NavigationV
     private Handler handler = new Handler();
 
     @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
+        finishAfterTransition();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_delete);

@@ -76,6 +76,12 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
     };
 
     @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
+        finishAfterTransition();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_add);
