@@ -206,35 +206,35 @@ public class ScanQrFragment extends Fragment {
         });
     }
 
-    private void initMetro(final int metroStation) {
-        MyRetroFitHelper.getInstance().show(id).enqueue(new Callback<Void>() {
+    private void initMetro(int metroStation) {
+        MyRetroFitHelper.getInstance().reserveMetro(id, metroStation).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
-                MyRetroFitHelper.getInstance().reserveMetro(id, metroStation).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            try {
-                                Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                        MyRetroFitHelper.getInstance().show(id).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                                 activity.onBackPressed();
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onFailureMetro: " + t.toString());
+                            @Override
+                            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onFailureShow: " + t.toString());
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
+                }
             }
 
             @Override
-            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailureShow: " + t.toString());
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureMetro: " + t.toString());
             }
         });
     }
