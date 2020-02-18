@@ -9,6 +9,7 @@
     <string name="ticket_number">Ticket Number</string>
     <string name="payment_date">Payment Date</string>
     <string name="line_number">Line Number</string>
+    <string name="line_name">Line Name</string>
     <string name="current">Current</string>
     <string name="history">History</string>
     <string name="line">Line</string>

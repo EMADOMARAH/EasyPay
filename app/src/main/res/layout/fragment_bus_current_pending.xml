@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="26dp"
-                        android:text="@string/line_number"
+                        android:text="@string/line_name"
                         android:textColor="@color/tealish"
                         android:textSize="13sp"
                         />

@@ -35,7 +35,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5sp"
-                    android:text="@string/line_number"
+                    android:text="@string/line_name"
                     android:textColor="@color/tealish"
                     android:textSize="13sp"
                     />
