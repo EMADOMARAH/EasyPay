@@ -40,8 +40,8 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
         finishAfterTransition();
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
     }
 
     @Override

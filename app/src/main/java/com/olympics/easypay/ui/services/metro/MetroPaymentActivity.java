@@ -2,9 +2,11 @@ package com.olympics.easypay.ui.services.metro;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
+import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.ui.menu.about.AboutActivity;
 import com.olympics.easypay.ui.menu.help.HelpActivity;
 import com.olympics.easypay.ui.menu.settings.SettingsActivity;
@@ -27,6 +30,10 @@ import com.olympics.easypay.ui.services.metro.current.MetroFragmentCurrent;
 import com.olympics.easypay.ui.services.metro.history.MetroFragmentHistory;
 import com.olympics.easypay.utils.Constants;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static com.olympics.easypay.utils.Constants.CARD;
 import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
@@ -34,11 +41,11 @@ import static com.olympics.easypay.utils.Constants.TOKEN;
 
 public class MetroPaymentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "MyTag";
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
-
     ViewPager viewPager;
     TabLayout tabLayout;
     MetroFragmentCurrent metroFragmentCurrent;
@@ -50,8 +57,8 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
         if (fragment != null) {
             metroFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
         } else {
-            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
             finishAfterTransition();
+            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
         }
     }
 
@@ -63,6 +70,22 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
         initToolbar();
         initDrawer();
         initViews();
+        initData();
+    }
+
+    private void initData() {
+        MyRetroFitHelper.getInstance().show(getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(TOKEN, 0)).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d(TAG, "onFailureShow: " + t.toString());
+                Toast.makeText(MetroPaymentActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initToolbar() {

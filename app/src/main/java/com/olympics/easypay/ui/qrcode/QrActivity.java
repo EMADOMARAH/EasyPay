@@ -45,7 +45,7 @@ public class QrActivity extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onBackPressed() {
         finishAfterTransition();
-        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
     }
 
     @Override

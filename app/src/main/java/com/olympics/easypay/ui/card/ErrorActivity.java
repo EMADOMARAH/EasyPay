@@ -10,8 +10,8 @@ public class ErrorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
         finishAfterTransition();
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
     }
 
     @Override

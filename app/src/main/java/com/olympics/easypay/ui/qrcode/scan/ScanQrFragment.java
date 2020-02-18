@@ -148,18 +148,22 @@ public class ScanQrFragment extends Fragment {
 
     private void jsonParse(String json) {
         Log.d(TAG, "jsonParse: " + json);
-        if (balance < 10) {
-            Toast.makeText(activity, "You must have at least 10 EGP in your balance, please refill then try again", Toast.LENGTH_LONG).show();
-            return;
-        }
         try {
             JSONObject root = new JSONArray(json).getJSONObject(0);
             if (root.has("Type")) {
                 switch (root.getString("Type")) {
                     case "bus":
+                        if (balance < 4) {
+                            Toast.makeText(activity, "You must have at least 4 EGP in your balance, please recharge then try again", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         initBus(root.getInt("line_number"));
                         break;
                     case "metro":
+                        if (balance < 10) {
+                            Toast.makeText(activity, "You must have at least 10 EGP in your balance, please recharge then try again", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         initMetro(root.getInt("station_number"));
                         break;
                     default:

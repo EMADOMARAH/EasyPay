@@ -34,7 +34,7 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
     @Override
     public void onBackPressed() {
         finishAfterTransition();
-        overridePendingTransition(R.anim.left_zero, R.anim.left_zero);
+        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
     }
 
     @Override

@@ -60,8 +60,8 @@ public class BusPaymentActivity extends AppCompatActivity implements NavigationV
         if (fragment != null) {
             busFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
         } else {
-            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
             finishAfterTransition();
+            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
         }
     }
 
