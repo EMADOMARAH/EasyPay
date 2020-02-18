@@ -30,7 +30,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapter.TrainHistoryListener {
 
     private static final String TAG = "MyTag";

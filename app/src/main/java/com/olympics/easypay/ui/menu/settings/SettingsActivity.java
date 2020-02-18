@@ -44,7 +44,6 @@ import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MyTag";

@@ -30,7 +30,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class WalletFragment extends Fragment {
 
     private static final String TAG = "MyTag";

@@ -43,7 +43,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class TrainFragmentReservationForm extends Fragment {
 
     private static final String TAG = "MyTag";
@@ -65,6 +64,10 @@ public class TrainFragmentReservationForm extends Fragment {
 
     public TrainFragmentReservationForm() {
         super(R.layout.fragment_train_reservation_form);
+    }
+
+    public static TrainFragmentReservationForm getInstance() {
+        return new TrainFragmentReservationForm();
     }
 
     @Override

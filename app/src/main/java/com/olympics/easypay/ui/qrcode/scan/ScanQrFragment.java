@@ -42,8 +42,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.olympics.easypay.utils.Constants.BUS_TIME;
+import static com.olympics.easypay.utils.Constants.SHARED_PREFS;
 
-@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class ScanQrFragment extends Fragment {
     private static final String TAG = "MyTag";
     private Vibrator vibrator;
@@ -183,15 +184,36 @@ public class ScanQrFragment extends Fragment {
         handler.postDelayed(runnable, 2000);
     }
 
-    private void initBus(int lineNumber) {
-        MyRetroFitHelper.getInstance().reserveBus(id, lineNumber).enqueue(new Callback<ResponseBody>() {
+    private void initBus(final int lineNumber) {
+        MyRetroFitHelper.getInstance().isMetroPending(id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
-                        Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
-                        getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).edit().putLong(Constants.BUS_TIME, Calendar.getInstance().getTimeInMillis()).apply();
-                        activity.onBackPressed();
+                        if (response.body().string().equals("pending ticket")) {
+                            Toast.makeText(activity, "Can't reserve bus while in metro", Toast.LENGTH_SHORT).show();
+                        } else {
+                            MyRetroFitHelper.getInstance().reserveBus(id, lineNumber).enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        try {
+                                            Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                                            getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).edit().putLong(BUS_TIME, Calendar.getInstance().getTimeInMillis()).apply();
+                                            activity.onBackPressed();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "onFailureBus: " + t.toString());
+                                }
+                            });
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -201,7 +223,7 @@ public class ScanQrFragment extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(activity, "Server error", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailureBus: " + t.toString());
+                Log.d(TAG, "onFailurePending: " + t.toString());
             }
         });
     }
@@ -213,6 +235,7 @@ public class ScanQrFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                        getActivity().getSharedPreferences(SHARED_PREFS, 0).edit().remove(BUS_TIME).apply();
                         MyRetroFitHelper.getInstance().show(id).enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {

@@ -47,7 +47,6 @@ import static com.olympics.easypay.utils.Constants.EMAIL;
 import static com.olympics.easypay.utils.Constants.PASS;
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
-@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class CardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MyTag";

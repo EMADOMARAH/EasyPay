@@ -29,7 +29,7 @@ public class TrainFragmentReservation extends Fragment {
         switch (page) {
             case 0:
                 if (reservation1 == null) {
-                    reservation1 = new TrainFragmentReservationForm();
+                    reservation1 = TrainFragmentReservationForm.getInstance();
                     getChildFragmentManager()
                             .beginTransaction()
                             .add(R.id.container_train, reservation1)
@@ -43,7 +43,7 @@ public class TrainFragmentReservation extends Fragment {
                 break;
             case 1:
                 if (reservation2 == null) {
-                    reservation2 = new TrainFragmentReservationCheck();
+                    reservation2 = TrainFragmentReservationCheck.getInstance();
                     getChildFragmentManager()
                             .beginTransaction()
                             .add(R.id.container_train, reservation2)
@@ -57,7 +57,7 @@ public class TrainFragmentReservation extends Fragment {
                 break;
             case 2:
                 if (reservation3 == null) {
-                    reservation3 = new TrainFragmentReservationSuccess();
+                    reservation3 = TrainFragmentReservationSuccess.getInstance();
                     getChildFragmentManager()
                             .beginTransaction()
                             .add(R.id.container_train, reservation3)

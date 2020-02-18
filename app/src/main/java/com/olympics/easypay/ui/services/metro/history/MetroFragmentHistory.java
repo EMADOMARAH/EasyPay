@@ -30,7 +30,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapter.MetroHistoryListener {
 
     private static final String TAG = "MyTag";

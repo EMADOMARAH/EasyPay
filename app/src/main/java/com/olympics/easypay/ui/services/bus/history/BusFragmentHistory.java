@@ -32,7 +32,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.BusHistoryListener {
     private static final String TAG = "MyTag";
     private BusHistoryAdapter adapter;

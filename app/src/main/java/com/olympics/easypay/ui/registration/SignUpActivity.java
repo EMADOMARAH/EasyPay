@@ -37,7 +37,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "MyTag";

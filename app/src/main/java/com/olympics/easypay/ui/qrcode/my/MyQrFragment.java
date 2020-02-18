@@ -25,7 +25,6 @@ import retrofit2.Response;
 import static com.olympics.easypay.utils.Constants.BASE_PERSONAL;
 import static com.olympics.easypay.utils.Constants.BASE_URL;
 
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class MyQrFragment extends Fragment {
 
     private static final String TAG = "MyTag";

@@ -28,7 +28,6 @@ import retrofit2.Response;
 
 import static com.olympics.easypay.utils.Constants.BASE_URL;
 
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class TrainFragmentReservationSuccess extends Fragment {
 
     private static final String TAG = "MyTag";
@@ -37,6 +36,10 @@ public class TrainFragmentReservationSuccess extends Fragment {
 
     public TrainFragmentReservationSuccess() {
         super(R.layout.fragment_train_reservation_success);
+    }
+
+    public static TrainFragmentReservationSuccess getInstance() {
+        return new TrainFragmentReservationSuccess();
     }
 
     @Override

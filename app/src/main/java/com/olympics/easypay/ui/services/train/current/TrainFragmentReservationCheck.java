@@ -32,7 +32,6 @@ import retrofit2.Response;
 
 import static com.olympics.easypay.utils.Constants.TOKEN;
 
-@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class TrainFragmentReservationCheck extends Fragment {
 
     private static final String TAG = "MyTag";
@@ -46,6 +45,10 @@ public class TrainFragmentReservationCheck extends Fragment {
 
     public TrainFragmentReservationCheck() {
         super(R.layout.fragment_train_reservation_check);
+    }
+
+    public static TrainFragmentReservationCheck getInstance() {
+        return new TrainFragmentReservationCheck();
     }
 
     @Override
