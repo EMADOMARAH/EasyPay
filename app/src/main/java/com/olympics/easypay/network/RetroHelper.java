@@ -282,4 +282,19 @@ public interface RetroHelper {
     Call<List<BusTicketModel>> getBusTicketByNumber(
             @Query("php_pass_ticket") int ticketNumber
     );
+
+    @POST("bus_history.php")
+    Call<ResponseBody> getLastBusTrip(
+            @Query("php_id") int id
+    );
+
+    @POST("metro_history.php")
+    Call<ResponseBody> getLastMetroTrip(
+            @Query("php_id") int id
+    );
+
+    @POST("train_history.php")
+    Call<ResponseBody> getLastTrainTrip(
+            @Query("php_id") int id
+    );
 }

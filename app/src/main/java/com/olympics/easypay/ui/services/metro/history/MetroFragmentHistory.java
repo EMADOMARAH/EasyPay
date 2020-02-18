@@ -18,13 +18,19 @@ import com.olympics.easypay.ui.services.ErrorHistoryFragment;
 import com.olympics.easypay.ui.services.metro.MetroTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings({"NullableProblems", "ConstantConditions"})
 public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapter.MetroHistoryListener {
 
     private static final String TAG = "MyTag";
@@ -55,46 +61,69 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
 
     private void getData() {
         myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
-        MyRetroFitHelper.getInstance().getMetroHistory(myId).enqueue(new Callback<List<MetroHistoryModel>>() {
+        MyRetroFitHelper.getInstance().getLastMetroTrip(myId).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<List<MetroHistoryModel>> call, Response<List<MetroHistoryModel>> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    List<MetroHistoryModel> list = response.body();
-                    if (list == null) {
-                        showError();
-                        return;
+                    try {
+                        JSONArray array = new JSONArray(response.body().string());
+                        if (array.get(0) instanceof JSONArray) {
+                            showError();
+                            return;
+                        }
+                        MyRetroFitHelper.getInstance().getMetroHistory(myId).enqueue(new Callback<List<MetroHistoryModel>>() {
+                            @Override
+                            public void onResponse(Call<List<MetroHistoryModel>> call, Response<List<MetroHistoryModel>> response) {
+                                if (response.isSuccessful()) {
+                                    List<MetroHistoryModel> list = response.body();
+                                    if (list == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0) == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getStartStation() == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getStartStation().equals("null")) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getStartStation().equals("NULL")) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.isEmpty()) {
+                                        showError();
+                                        return;
+                                    }
+                                    adapter.setMetroHistoryModelList(list);
+                                } else {
+                                    showError();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
+                                Log.d(TAG, "onFailureMetroHistory: " + t.toString());
+                                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                getActivity().finish();
+                            }
+                        });
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
                     }
-                    if (list.get(0) == null) {
-                        showError();
-                        return;
-                    }
-                    if (list.get(0).getStartStation() == null) {
-                        showError();
-                        return;
-                    }
-                    if (list.get(0).getStartStation().equals("null")) {
-                        showError();
-                        return;
-                    }
-                    if (list.get(0).getStartStation().equals("NULL")) {
-                        showError();
-                        return;
-                    }
-                    if (list.isEmpty()) {
-                        showError();
-                        return;
-                    }
-                    adapter.setMetroHistoryModelList(list);
-                } else {
-                    showError();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
-                Log.d(TAG, "onFailureMetroHistory: " + t.toString());
-                showError();
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailureLastMetro: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
             }
         });
     }
@@ -110,7 +139,7 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
     public void onItemSelected(int position) {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, MetroTicketFragment.getInstance(adapter.getMetroHistoryModelList().get(position).getTicketNumber()))
+                .add(R.id.container, MetroTicketFragment.getInstance(adapter.getMetroHistoryModelList().get(position).getTicketNumber()),"ticket")
                 .commit();
     }
 }

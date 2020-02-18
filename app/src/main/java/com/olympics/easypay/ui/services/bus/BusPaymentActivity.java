@@ -42,6 +42,8 @@ public class BusPaymentActivity extends AppCompatActivity implements NavigationV
 
     ViewPager viewPager;
     TabLayout tabLayout;
+    BusFragmentCurrent busFragmentCurrent;
+    BusFragmentHistory busFragmentHistory;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,9 +57,14 @@ public class BusPaymentActivity extends AppCompatActivity implements NavigationV
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-        finishAfterTransition();
+        Fragment fragment = busFragmentHistory.getChildFragmentManager().findFragmentByTag("ticket");
+        if (fragment != null) {
+            busFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
+        } else {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+            finishAfterTransition();
+        }
     }
 
     private void initToolbar() {
@@ -102,10 +109,13 @@ public class BusPaymentActivity extends AppCompatActivity implements NavigationV
         viewPager = findViewById(R.id.viewPager_bus);
         tabLayout = findViewById(R.id.tabLayout_bus);
 
+        busFragmentCurrent = BusFragmentCurrent.getInstance();
+        busFragmentHistory = BusFragmentHistory.getInstance();
+
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             Fragment[] fragments = new Fragment[]{
-                    BusFragmentCurrent.getInstance(),
-                    BusFragmentHistory.getInstance(),
+                    busFragmentCurrent,
+                    busFragmentHistory
             };
 
             String[] strings = new String[]{

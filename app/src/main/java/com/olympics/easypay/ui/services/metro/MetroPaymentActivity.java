@@ -42,12 +42,19 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
 
     ViewPager viewPager;
     TabLayout tabLayout;
+    MetroFragmentCurrent metroFragmentCurrent;
+    MetroFragmentHistory metroFragmentHistory;
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-        finishAfterTransition();
+        Fragment fragment = metroFragmentHistory.getChildFragmentManager().findFragmentByTag("ticket");
+        if (fragment != null) {
+            metroFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
+        } else {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+            finishAfterTransition();
+        }
     }
 
     @Override
@@ -102,10 +109,13 @@ public class MetroPaymentActivity extends AppCompatActivity implements Navigatio
         viewPager = findViewById(R.id.viewPager_metro);
         tabLayout = findViewById(R.id.tabLayout_metro);
 
+        metroFragmentCurrent = new MetroFragmentCurrent();
+        metroFragmentHistory = new MetroFragmentHistory();
+
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             private Fragment[] fragments = new Fragment[]{
-                    new MetroFragmentCurrent(),
-                    new MetroFragmentHistory()
+                    metroFragmentCurrent,
+                    metroFragmentHistory
             };
 
             private String[] strings = new String[]{

@@ -18,9 +18,14 @@ import com.olympics.easypay.ui.services.ErrorHistoryFragment;
 import com.olympics.easypay.ui.services.train.TrainTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,51 +59,72 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     }
 
     private void getData() {
-        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
-        MyRetroFitHelper.getInstance()
-                .getTrainHistory(myId)
-                .enqueue(new Callback<List<TrainHistoryModel>>() {
-                    @Override
-                    public void onResponse(Call<List<TrainHistoryModel>> call, Response<List<TrainHistoryModel>> response) {
-                        if (response.isSuccessful()) {
-                            List<TrainHistoryModel> list = response.body();
-                            if (list == null) {
-                                showError();
-                                return;
-                            }
-                            if (list.get(0) == null) {
-                                showError();
-                                return;
-                            }
-                            if (list.get(0).getStartStation() == null) {
-                                showError();
-                                return;
-                            }
-                            if (list.get(0).getStartStation().equals("null")) {
-                                showError();
-                                return;
-                            }
-                            if (list.get(0).getStartStation().equals("NULL")) {
-                                showError();
-                                return;
-                            }
-                            if (list.isEmpty()) {
-                                showError();
-                                return;
-                            }
-                            adapter.setTrainHistoryModelList(list);
-                        } else {
+        final int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+        MyRetroFitHelper.getInstance().getLastTrainTrip(myId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONArray array=new JSONArray(response.body().string());
+                        if (array.get(0) instanceof JSONArray){
                             showError();
+                            return;
                         }
-                    }
+                        MyRetroFitHelper.getInstance().getTrainHistory(myId).enqueue(new Callback<List<TrainHistoryModel>>() {
+                            @Override
+                            public void onResponse(Call<List<TrainHistoryModel>> call, Response<List<TrainHistoryModel>> response) {
+                                if (response.isSuccessful()) {
+                                    List<TrainHistoryModel> list = response.body();
+                                    if (list == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0) == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getStartStation() == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getStartStation().equals("null")) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getStartStation().equals("NULL")) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.isEmpty()) {
+                                        showError();
+                                        return;
+                                    }
+                                    adapter.setTrainHistoryModelList(list);
+                                } else {
+                                    showError();
+                                }
+                            }
 
-                    @Override
-                    public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
-                        showError();
-                        Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onFailureTrainHistory: " + t.toString());
+                            @Override
+                            public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
+                                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onFailureTrainHistory: " + t.toString());
+                                getActivity().finish();
+                            }
+                        });
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
                     }
-                });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailureLastTrain: " + t.toString());
+                getActivity().finish();
+            }
+        });
     }
 
     private void showError() {
@@ -112,7 +138,7 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     public void onItemSelected(int position) {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, TrainTicketFragment.getInstance(adapter.getTrainHistoryModelList().get(position).getTicketNumber()))
+                .add(R.id.container, TrainTicketFragment.getInstance(adapter.getTrainHistoryModelList().get(position).getTicketNumber()),"ticket")
                 .commit();
     }
 }

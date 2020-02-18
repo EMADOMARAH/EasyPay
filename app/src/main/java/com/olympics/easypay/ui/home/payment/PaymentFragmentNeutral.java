@@ -27,8 +27,13 @@ import com.olympics.easypay.ui.services.metro.MetroPaymentActivity;
 import com.olympics.easypay.ui.services.train.TrainPaymentActivity;
 import com.olympics.easypay.utils.Constants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,61 +112,202 @@ public class PaymentFragmentNeutral extends Fragment {
     }
 
     private void getLastTrips() {
-        helper.getBusHistory(myId).enqueue(new Callback<List<BusHistoryModel>>() {
+        helper.getLastBusTrip(myId).enqueue(new Callback<ResponseBody>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<List<BusHistoryModel>> call, Response<List<BusHistoryModel>> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    String s = response.body().get(response.body().size() - 1).getTicketDate();
-                    if (s.equals("NULL")) {
-                        lastBus.setText("No trips made yet");
-                    } else {
-                        lastBus.setText("Last trip: " + s);
+                    try {
+                        JSONArray array = new JSONArray(response.body().string());
+                        try {
+                            if (array.get(0) instanceof JSONArray) {
+                                lastBus.setText("No trips made yet");
+                            } else {
+                                helper.getBusHistory(myId).enqueue(new Callback<List<BusHistoryModel>>() {
+                                    @SuppressLint("SetTextI18n")
+                                    @Override
+                                    public void onResponse(Call<List<BusHistoryModel>> call, Response<List<BusHistoryModel>> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body() == null) {
+                                                lastBus.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (response.body().isEmpty()) {
+                                                lastBus.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (response.body().get(response.body().size() - 1) == null) {
+                                                lastBus.setText("No trips made yet");
+                                                return;
+                                            }
+                                            String s = response.body().get(response.body().size() - 1).getTicketDate();
+                                            if (s == null) {
+                                                lastBus.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (s.equals("null")) {
+                                                lastBus.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (s.equals("NULL")) {
+                                                lastBus.setText("No trips made yet");
+                                                return;
+                                            }
+                                            lastBus.setText("Last trip: " + s);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
+                                        Log.d(TAG, "onFailureBusHistory: " + t.toString());
+                                        Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
-                Log.d(TAG, "onFailureBusHistory: " + t.toString());
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailureLastBus: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
 
-        helper.getMetroHistory(myId).enqueue(new Callback<List<MetroHistoryModel>>() {
+        helper.getLastMetroTrip(myId).enqueue(new Callback<ResponseBody>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<List<MetroHistoryModel>> call, Response<List<MetroHistoryModel>> response) {
-                String s = response.body().get(response.body().size() - 1).getTicketDate();
-                if (s.equals("NULL")) {
-                    lastMetro.setText("No trips made yet");
-                } else {
-                    lastMetro.setText("Last trip: " + s);
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONArray array = new JSONArray(response.body().string());
+                        if (array.get(0) instanceof JSONArray) {
+                            lastMetro.setText("No trips made yet");
+                        } else {
+                            helper.getMetroHistory(myId).enqueue(new Callback<List<MetroHistoryModel>>() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onResponse(Call<List<MetroHistoryModel>> call, Response<List<MetroHistoryModel>> response) {
+                                    if (response.isSuccessful()) {
+                                        if (response.body() == null) {
+                                            lastMetro.setText("No trips made yet");
+                                            return;
+                                        }
+                                        if (response.body().isEmpty()) {
+                                            lastMetro.setText("No trips made yet");
+                                            return;
+                                        }
+                                        if (response.body().get(response.body().size() - 1) == null) {
+                                            lastMetro.setText("No trips made yet");
+                                            return;
+                                        }
+                                        String s = response.body().get(response.body().size() - 1).getTicketDate();
+                                        if (s == null) {
+                                            lastMetro.setText("No trips made yet");
+                                            return;
+                                        }
+                                        if (s.equals("null")) {
+                                            lastMetro.setText("No trips made yet");
+                                            return;
+                                        }
+                                        if (s.equals("NULL")) {
+                                            lastMetro.setText("No trips made yet");
+                                            return;
+                                        }
+                                        lastMetro.setText("Last trip: " + s);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
+                                    Log.d(TAG, "onFailureMetroHistory: " + t.toString());
+                                    Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
-                Log.d(TAG, "onFailureMetroHistory: " + t.toString());
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailureLastMetro: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
 
-        helper.getTrainHistory(myId).enqueue(new Callback<List<TrainHistoryModel>>() {
+        helper.getLastTrainTrip(myId).enqueue(new Callback<ResponseBody>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<List<TrainHistoryModel>> call, Response<List<TrainHistoryModel>> response) {
-                String s = response.body().get(response.body().size() - 1).getReserveTime();
-                if (s.equals("NULL")) {
-                    lastTrain.setText("No trips made yet");
-                } else {
-                    lastTrain.setText("Last trip: " + s);
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONArray array = new JSONArray(response.body().string());
+                        try {
+                            if (array.get(0) instanceof JSONArray) {
+                                lastTrain.setText("No trips made yet");
+                            } else {
+                                helper.getTrainHistory(myId).enqueue(new Callback<List<TrainHistoryModel>>() {
+                                    @SuppressLint("SetTextI18n")
+                                    @Override
+                                    public void onResponse(Call<List<TrainHistoryModel>> call, Response<List<TrainHistoryModel>> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body() == null) {
+                                                lastTrain.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (response.body().isEmpty()) {
+                                                lastTrain.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (response.body().get(response.body().size() - 1) == null) {
+                                                lastTrain.setText("No trips made yet");
+                                                return;
+                                            }
+                                            String s = response.body().get(response.body().size() - 1).getReserveTime();
+                                            if (s == null) {
+                                                lastTrain.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (s.equals("null")) {
+                                                lastTrain.setText("No trips made yet");
+                                                return;
+                                            }
+                                            if (s.equals("NULL")) {
+                                                lastTrain.setText("No trips made yet");
+                                                return;
+                                            }
+                                            lastTrain.setText("Last trip: " + s);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
+                                        Log.d(TAG, "onFailureTrainHistory: " + t.toString());
+                                        Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
-                Log.d(TAG, "onFailureTrainHistory: " + t.toString());
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailureLastTrain: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });

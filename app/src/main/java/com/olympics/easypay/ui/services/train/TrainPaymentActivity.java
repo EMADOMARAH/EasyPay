@@ -50,9 +50,14 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-        finishAfterTransition();
+        Fragment fragment = trainFragmentHistory.getChildFragmentManager().findFragmentByTag("ticket");
+        if (fragment != null) {
+            trainFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
+        } else {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
+            finishAfterTransition();
+        }
     }
 
     @Override

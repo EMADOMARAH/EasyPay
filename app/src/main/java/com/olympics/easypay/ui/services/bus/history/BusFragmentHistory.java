@@ -20,13 +20,19 @@ import com.olympics.easypay.ui.services.ErrorHistoryFragment;
 import com.olympics.easypay.ui.services.bus.BusTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.BusHistoryListener {
     private static final String TAG = "MyTag";
     private BusHistoryAdapter adapter;
@@ -60,49 +66,70 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
     }
 
     private void initRetro() {
-        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
-        MyRetroFitHelper
-                .getInstance()
-                .getBusHistory(myId).enqueue(new Callback<List<BusHistoryModel>>() {
+        final int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
+        MyRetroFitHelper.getInstance().getLastBusTrip(myId).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<List<BusHistoryModel>> call, Response<List<BusHistoryModel>> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    List<BusHistoryModel> list = response.body();
-                    if (list == null) {
-                        showError();
-                        return;
+                    try {
+                        JSONArray array = new JSONArray(response.body().string());
+                        if (array.get(0) instanceof JSONArray) {
+                            showError();
+                            return;
+                        }
+                        MyRetroFitHelper.getInstance().getBusHistory(myId).enqueue(new Callback<List<BusHistoryModel>>() {
+                            @Override
+                            public void onResponse(Call<List<BusHistoryModel>> call, Response<List<BusHistoryModel>> response) {
+                                if (response.isSuccessful()) {
+                                    List<BusHistoryModel> list = response.body();
+                                    if (list == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0) == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getTicketNumber() == null) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getTicketNumber().equals("null")) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.get(0).getTicketNumber().equals("NULL")) {
+                                        showError();
+                                        return;
+                                    }
+                                    if (list.isEmpty()) {
+                                        showError();
+                                        return;
+                                    }
+                                    adapter.setBusHistoryModelList(list);
+                                } else {
+                                    showError();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
+                                Log.d(TAG, "onFailureBusHistory: " + t.toString());
+                                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                getActivity().finish();
+                            }
+                        });
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
                     }
-                    if (list.get(0) == null) {
-                        showError();
-                        return;
-                    }
-                    if (list.get(0).getTicketNumber() == null) {
-                        showError();
-                        return;
-                    }
-                    if (list.get(0).getTicketNumber().equals("null")) {
-                        showError();
-                        return;
-                    }
-                    if (list.get(0).getTicketNumber().equals("NULL")) {
-                        showError();
-                        return;
-                    }
-                    if (list.isEmpty()) {
-                        showError();
-                        return;
-                    }
-                    adapter.setBusHistoryModelList(list);
-                } else {
-                    showError();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
-                Log.d(TAG, "onFailureBusHistory: " + t.toString());
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailureLastBus: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
-                showError();
+                getActivity().finish();
             }
         });
     }
@@ -118,7 +145,7 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
     public void onItemSelected(int position) {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, BusTicketFragment.getInstance(adapter.getBusHistoryModelList().get(position).getTicketNumber()))
+                .add(R.id.container, BusTicketFragment.getInstance(adapter.getBusHistoryModelList().get(position).getTicketNumber()),"ticket")
                 .commit();
     }
 }
