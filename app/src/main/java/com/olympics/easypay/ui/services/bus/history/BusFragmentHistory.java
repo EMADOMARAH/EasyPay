@@ -17,6 +17,7 @@ import com.olympics.easypay.R;
 import com.olympics.easypay.models.BusHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.ui.services.ErrorHistoryFragment;
+import com.olympics.easypay.ui.services.bus.BusTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
 import java.util.ArrayList;
@@ -115,6 +116,9 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
 
     @Override
     public void onItemSelected(int position) {
-
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, BusTicketFragment.getInstance(adapter.getBusHistoryModelList().get(position).getTicketNumber()))
+                .commit();
     }
 }

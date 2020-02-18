@@ -15,6 +15,7 @@ import com.olympics.easypay.R;
 import com.olympics.easypay.models.MetroHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.ui.services.ErrorHistoryFragment;
+import com.olympics.easypay.ui.services.metro.MetroTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
 import java.util.ArrayList;
@@ -107,6 +108,9 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
 
     @Override
     public void onItemSelected(int position) {
-
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, MetroTicketFragment.getInstance(adapter.getMetroHistoryModelList().get(position).getTicketNumber()))
+                .commit();
     }
 }

@@ -1,4 +1,4 @@
-package com.olympics.easypay.ui.services.metro.current;
+package com.olympics.easypay.ui.services.metro;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.MetroTicketModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.services.metro.ErrorMetroFragment;
-import com.olympics.easypay.utils.Constants;
 import com.olympics.easypay.utils.Spacify;
 
 import java.util.List;
@@ -24,13 +22,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MetroFragmentCurrentSuccess extends Fragment {
+public class MetroTicketFragment extends Fragment {
 
     private static final String TAG = "MyTag";
     private TextView ticket, start, end, date, cost;
 
-    public MetroFragmentCurrentSuccess() {
+    public MetroTicketFragment() {
         super(R.layout.fragment_metro_current_success);
+    }
+
+    public static MetroTicketFragment getInstance(String ticketNumber) {
+        Bundle bundle = new Bundle();
+        bundle.putString("ticket", ticketNumber);
+        MetroTicketFragment fragment = new MetroTicketFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -52,45 +58,22 @@ public class MetroFragmentCurrentSuccess extends Fragment {
     }
 
     private void initData() {
-        int myId = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
-        MyRetroFitHelper.getInstance().getMetroTicket(myId).enqueue(new Callback<List<MetroTicketModel>>() {
+//        final int id = getActivity().getSharedPreferences(SHARED_PREFS, 0).getInt(TOKEN, 0);
+        int no = Integer.valueOf(getArguments().getString("ticket"));
+        MyRetroFitHelper.getInstance().getMetroTicketByNumber(no).enqueue(new Callback<List<MetroTicketModel>>() {
             @Override
             public void onResponse(Call<List<MetroTicketModel>> call, Response<List<MetroTicketModel>> response) {
                 if (response.isSuccessful()) {
-                    MetroTicketModel metroTicketModel = response.body().get(0);
-                    if (metroTicketModel == null) {
-                        showError();
-                        return;
-                    }
-                    if (metroTicketModel.getTicketNumber() == null) {
-                        showError();
-                        return;
-                    }
-                    if (metroTicketModel.getTicketNumber().equals("null")) {
-                        showError();
-                        return;
-                    }
-                    if (metroTicketModel.getTicketNumber().equals("NULL")) {
-                        showError();
-                        return;
-                    }
-                    updateData(metroTicketModel);
+                    updateData(response.body().get(0));
                 }
             }
 
             @Override
             public void onFailure(Call<List<MetroTicketModel>> call, Throwable t) {
-                Log.d(TAG, "onFailureMetroTicket: " + t.toString());
+                Log.d(TAG, "onFailureMetroTicketByNumber: " + t.toString());
                 Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void showError() {
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.container, new ErrorMetroFragment())
-                .commit();
     }
 
     @SuppressLint("SetTextI18n")

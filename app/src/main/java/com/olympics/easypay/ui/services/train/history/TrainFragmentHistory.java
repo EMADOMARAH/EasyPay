@@ -15,6 +15,7 @@ import com.olympics.easypay.R;
 import com.olympics.easypay.models.TrainHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
 import com.olympics.easypay.ui.services.ErrorHistoryFragment;
+import com.olympics.easypay.ui.services.train.TrainTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapter.TrainHistoryListener {
 
     private static final String TAG = "MyTag";
@@ -108,6 +110,9 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
 
     @Override
     public void onItemSelected(int position) {
-
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, TrainTicketFragment.getInstance(adapter.getTrainHistoryModelList().get(position).getTicketNumber()))
+                .commit();
     }
 }

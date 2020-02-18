@@ -3,6 +3,9 @@ package com.olympics.easypay.models;
 import com.google.gson.annotations.SerializedName;
 
 public class MetroHistoryModel {
+    @SerializedName("ticket_number")
+    private String ticketNumber;
+
     @SerializedName("Start_Station")
     private String startStation;
 
@@ -12,7 +15,8 @@ public class MetroHistoryModel {
     @SerializedName("ticket_date")
     private String ticketDate;
 
-    public MetroHistoryModel(String startStation, String endStation, String ticketDate) {
+    public MetroHistoryModel(String ticketNumber, String startStation, String endStation, String ticketDate) {
+        this.ticketNumber = ticketNumber;
         this.startStation = startStation;
         this.endStation = endStation;
         this.ticketDate = ticketDate;
@@ -40,5 +44,13 @@ public class MetroHistoryModel {
 
     public void setTicketDate(String ticketDate) {
         this.ticketDate = ticketDate;
+    }
+
+    public String getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(String ticketNumber) {
+        this.ticketNumber = ticketNumber;
     }
 }

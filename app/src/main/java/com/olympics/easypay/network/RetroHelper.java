@@ -267,4 +267,19 @@ public interface RetroHelper {
             @Query("smtp") int smtp,
             @Query("format") int format
     );
+
+    @POST("pass_ticket_train.php")
+    Call<List<TrainTicketModel>> getTrainTicketByNumber(
+            @Query("php_pass_ticket") int ticketNumber
+    );
+
+    @POST("pass_ticket_metro.php")
+    Call<List<MetroTicketModel>> getMetroTicketByNumber(
+            @Query("php_pass_ticket") int ticketNumber
+    );
+
+    @POST("pass_ticket_bus.php")
+    Call<List<BusTicketModel>> getBusTicketByNumber(
+            @Query("php_pass_ticket") int ticketNumber
+    );
 }
