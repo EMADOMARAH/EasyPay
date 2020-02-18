@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.MetroHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.services.ErrorHistoryFragment;
+import com.olympics.easypay.ui.services.metro.ErrorMetroFragment;
 import com.olympics.easypay.ui.services.metro.MetroTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
@@ -131,7 +131,7 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
     private void showError() {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, new ErrorHistoryFragment())
+                .add(R.id.container, new ErrorMetroFragment())
                 .commit();
     }
 
@@ -139,7 +139,7 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
     public void onItemSelected(int position) {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, MetroTicketFragment.getInstance(adapter.getMetroHistoryModelList().get(position).getTicketNumber()),"ticket")
+                .add(R.id.container, MetroTicketFragment.getInstance(adapter.getMetroHistoryModelList().get(position).getTicketNumber()), "ticket")
                 .commit();
     }
 }

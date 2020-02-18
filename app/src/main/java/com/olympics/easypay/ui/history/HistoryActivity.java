@@ -26,7 +26,6 @@ import com.olympics.easypay.ui.menu.about.AboutActivity;
 import com.olympics.easypay.ui.menu.help.HelpActivity;
 import com.olympics.easypay.ui.menu.settings.SettingsActivity;
 import com.olympics.easypay.ui.registration.SignInActivity;
-import com.olympics.easypay.ui.services.ErrorHistoryFragment;
 import com.olympics.easypay.utils.Constants;
 
 import java.util.ArrayList;

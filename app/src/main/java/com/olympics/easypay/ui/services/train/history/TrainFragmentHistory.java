@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.TrainHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.services.ErrorHistoryFragment;
+import com.olympics.easypay.ui.services.train.ErrorTrainFragment;
 import com.olympics.easypay.ui.services.train.TrainTicketFragment;
 import com.olympics.easypay.utils.Constants;
 
@@ -130,7 +130,7 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     private void showError() {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, new ErrorHistoryFragment())
+                .add(R.id.container, new ErrorTrainFragment())
                 .commit();
     }
 

@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.BusHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.services.ErrorHistoryFragment;
 import com.olympics.easypay.ui.services.bus.BusTicketFragment;
+import com.olympics.easypay.ui.services.bus.ErrorBusFragment;
 import com.olympics.easypay.utils.Constants;
 
 import org.json.JSONArray;
@@ -137,7 +137,7 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
     private void showError() {
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, new ErrorHistoryFragment())
+                .add(R.id.container, new ErrorBusFragment())
                 .commit();
     }
 
