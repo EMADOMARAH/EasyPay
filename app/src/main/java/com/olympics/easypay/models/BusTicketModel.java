@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class BusTicketModel {
     @SerializedName("ticket_number")
     private String ticketNumber;
-    @SerializedName("line_number")
+    @SerializedName("line_name")
     private String lineNumber;
     @SerializedName("ticket_date")
     private String ticketDate;
