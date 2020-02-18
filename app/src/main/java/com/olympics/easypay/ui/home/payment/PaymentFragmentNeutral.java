@@ -64,9 +64,8 @@ public class PaymentFragmentNeutral extends Fragment {
         cardView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), BusPaymentActivity.class));
+                startActivity(new Intent(PaymentFragmentNeutral.this.getContext(), BusPaymentActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-                getActivity().finishAfterTransition();
             }
         });
 
@@ -74,9 +73,8 @@ public class PaymentFragmentNeutral extends Fragment {
         cardView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), MetroPaymentActivity.class));
+                startActivity(new Intent(PaymentFragmentNeutral.this.getContext(), MetroPaymentActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-                getActivity().finishAfterTransition();
             }
         });
 
@@ -84,9 +82,8 @@ public class PaymentFragmentNeutral extends Fragment {
         cardView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), TrainPaymentActivity.class));
+                startActivity(new Intent(PaymentFragmentNeutral.this.getContext(), TrainPaymentActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-                getActivity().finishAfterTransition();
             }
         });
 
@@ -94,9 +91,8 @@ public class PaymentFragmentNeutral extends Fragment {
         openQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), QrActivity.class));
+                startActivity(new Intent(PaymentFragmentNeutral.this.getContext(), QrActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-                getActivity().finishAfterTransition();
             }
         });
     }
@@ -160,7 +156,7 @@ public class PaymentFragmentNeutral extends Fragment {
                                     @Override
                                     public void onFailure(Call<List<BusHistoryModel>> call, Throwable t) {
                                         Log.d(TAG, "onFailureBusHistory: " + t.toString());
-                                        Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PaymentFragmentNeutral.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -176,7 +172,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailureLastBus: " + t.toString());
-                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PaymentFragmentNeutral.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -227,7 +223,7 @@ public class PaymentFragmentNeutral extends Fragment {
                                 @Override
                                 public void onFailure(Call<List<MetroHistoryModel>> call, Throwable t) {
                                     Log.d(TAG, "onFailureMetroHistory: " + t.toString());
-                                    Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(PaymentFragmentNeutral.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -240,7 +236,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailureLastMetro: " + t.toString());
-                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PaymentFragmentNeutral.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -292,7 +288,7 @@ public class PaymentFragmentNeutral extends Fragment {
                                     @Override
                                     public void onFailure(Call<List<TrainHistoryModel>> call, Throwable t) {
                                         Log.d(TAG, "onFailureTrainHistory: " + t.toString());
-                                        Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PaymentFragmentNeutral.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -308,7 +304,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailureLastTrain: " + t.toString());
-                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PaymentFragmentNeutral.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -332,7 +328,7 @@ public class PaymentFragmentNeutral extends Fragment {
             @Override
             public void onFailure(Call<List<BalanceModel>> call, Throwable t) {
                 Log.d(TAG, "onFailureBalance: " + t.toString());
-                Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PaymentFragmentNeutral.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
             }
         });
     }

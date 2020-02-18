@@ -28,7 +28,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.CardNumberModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.menu.about.AboutActivity;
 import com.olympics.easypay.ui.menu.help.HelpActivity;
 import com.olympics.easypay.ui.menu.settings.SettingsActivity;
@@ -67,13 +66,6 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
     private int id;
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-        finishAfterTransition();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,13 +286,11 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     private void addCard() {
         startActivity(new Intent(getApplicationContext(), CardAddActivity.class));
         overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-        finishAfterTransition();
     }
 
     private void delCard() {
         startActivity(new Intent(getApplicationContext(), CardDeleteActivity.class));
         overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-        finishAfterTransition();
     }
 
 //    private void deleteCard(BigInteger cardNo) {

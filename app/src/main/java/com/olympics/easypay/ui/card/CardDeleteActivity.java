@@ -292,11 +292,4 @@ public class CardDeleteActivity extends AppCompatActivity implements NavigationV
             }
         });
     }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), CardActivity.class));
-        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-        finishAfterTransition();
-    }
 }

@@ -21,7 +21,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.olympics.easypay.R;
 import com.olympics.easypay.models.ChargeHistoryModel;
 import com.olympics.easypay.network.MyRetroFitHelper;
-import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.menu.about.AboutActivity;
 import com.olympics.easypay.ui.menu.help.HelpActivity;
 import com.olympics.easypay.ui.menu.settings.SettingsActivity;
@@ -49,13 +48,6 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-        finishAfterTransition();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,7 +19,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.olympics.easypay.R;
-import com.olympics.easypay.ui.home.MainActivity;
 import com.olympics.easypay.ui.menu.about.AboutActivity;
 import com.olympics.easypay.ui.menu.help.HelpActivity;
 import com.olympics.easypay.ui.menu.settings.SettingsActivity;
@@ -54,9 +53,7 @@ public class TrainPaymentActivity extends AppCompatActivity implements TrainFrag
         if (fragment != null) {
             trainFragmentHistory.getChildFragmentManager().beginTransaction().remove(fragment).commit();
         } else {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-            finishAfterTransition();
+            super.onBackPressed();
         }
     }
 

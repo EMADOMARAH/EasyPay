@@ -54,7 +54,6 @@ public class WalletFragment extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), HistoryActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-                getActivity().finishAfterTransition();
             }
         });
 
@@ -68,7 +67,6 @@ public class WalletFragment extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CardActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-                getActivity().finishAfterTransition();
             }
         });
 
@@ -78,7 +76,6 @@ public class WalletFragment extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), ErrorActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
-                getActivity().finishAfterTransition();
             }
         });
     }

@@ -32,12 +32,6 @@ public class AboutActivity extends AppCompatActivity implements NavigationView.O
     Toolbar toolbar;
 
     @Override
-    public void onBackPressed() {
-        overridePendingTransition(R.anim.left_zero, R.anim.zero_right);
-        finishAfterTransition();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
