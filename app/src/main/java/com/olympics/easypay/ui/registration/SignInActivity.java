@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -112,6 +113,7 @@ public class SignInActivity extends AppCompatActivity {
                 final Dialog dialog = new Dialog(SignInActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_email_phone);
+                dialog.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels, WindowManager.LayoutParams.WRAP_CONTENT);
                 dialog.findViewById(R.id.conf).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -141,6 +143,7 @@ public class SignInActivity extends AppCompatActivity {
                     final Dialog dialog = new Dialog(SignInActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.dialog_new_pass);
+                    dialog.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels, WindowManager.LayoutParams.WRAP_CONTENT);
                     dialog.findViewById(R.id.conf).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

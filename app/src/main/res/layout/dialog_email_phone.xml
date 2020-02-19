@@ -15,7 +15,7 @@
         android:layout_marginEnd="20dp"
         android:text="@string/enter_your_email_and_phone"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         />
 

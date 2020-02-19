@@ -101,4 +101,5 @@
     <string name="working_in_progress_nplease_use_pay_with_card_for_now">Working in progress please use Pay with Card for now</string>
     <string name="you_don_t_have_any_train_data_before_please_scan_a_qr_ticket">You don\'t have any train data before please fill a reservation form</string>
     <string name="you_don_t_have_any_charge_data_before_please_scan_a_qr_ticket">You don\'t have any charge history before please fill your balance</string>
+    <string name="transfer_credit">Transfer Credits</string>
 </resources>

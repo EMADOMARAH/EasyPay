@@ -151,7 +151,7 @@ public interface RetroHelper {
             @Query("php_reserve_to") String to,
             @Query("php_ticket_time") String time,
             @Query("php_quantity") int quantity,
-            @Query("php_avilable_trains") int availableTrain,
+            @Query("php_avilable_train") int availableTrain,
             @Query("php_total_cost") int totalCost
     );
 
@@ -295,6 +295,14 @@ public interface RetroHelper {
 
     @POST("train_history.php")
     Call<ResponseBody> getLastTrainTrip(
+            @Query("php_id") int id
+    );
+
+    @POST("transfer_money.php")
+    Call<ResponseBody> transferCredits(
+            @Query("Easypay_Account_Name") String name,
+            @Query("Account_Email") String email,
+            @Query("Transfer_Amount") int amount,
             @Query("php_id") int id
     );
 }
