@@ -42,11 +42,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.app.Activity.RESULT_OK;
+
 public class PaymentFragment extends Fragment {
     private static final String TAG = "MyTag";
-    private SharedPreferences sharedPreferences;
     private TextView myBalanceTxt, lastBus, lastMetro, lastTrain;
     private ImageView pendingBus, pendingMetro;
+    private CardView cardView1;
+    private CardView cardView2;
+    private CardView cardView3;
+    private LinearLayout openQrBtn;
+    private SharedPreferences sharedPreferences;
     private RetroHelper helper;
     private int myId;
 
@@ -65,8 +71,30 @@ public class PaymentFragment extends Fragment {
         lastTrain = view.findViewById(R.id.lastTrain);
         pendingBus = view.findViewById(R.id.pendingBus);
         pendingMetro = view.findViewById(R.id.pendingMetro);
+        cardView1 = view.findViewById(R.id.bus_card);
+        cardView2 = view.findViewById(R.id.metro_card);
+        cardView3 = view.findViewById(R.id.train_card);
+        openQrBtn = view.findViewById(R.id.openQR);
+    }
 
-        CardView cardView1 = view.findViewById(R.id.bus_card);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        initListeners();
+        initSharedPrefs();
+        initRetroFit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getBalance();
+        getLastTrips();
+        getPending();
+    }
+
+    private void initListeners() {
         cardView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +103,6 @@ public class PaymentFragment extends Fragment {
             }
         });
 
-        CardView cardView2 = view.findViewById(R.id.metro_card);
         cardView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,34 +111,35 @@ public class PaymentFragment extends Fragment {
             }
         });
 
-        CardView cardView3 = view.findViewById(R.id.train_card);
         cardView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PaymentFragment.this.getContext(), TrainPaymentActivity.class));
+                startActivityForResult(new Intent(PaymentFragment.this.getContext(), TrainPaymentActivity.class), 111);
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
             }
         });
 
-        LinearLayout openQrBtn = view.findViewById(R.id.openQR);
         openQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PaymentFragment.this.getContext(), QrActivity.class));
+                startActivityForResult(new Intent(PaymentFragment.this.getContext(), QrActivity.class), 222);
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
             }
         });
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        initSharedPrefs();
-        initRetroFit();
-        getBalance();
-        getLastTrips();
-        getPending();
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 111 && resultCode == RESULT_OK) {
+            getBalance();
+            getLastTrips();
+        }
+        if (requestCode == 222 && resultCode == RESULT_OK) {
+            getBalance();
+            getLastTrips();
+            getPending();
+        }
     }
 
     private void getPending() {

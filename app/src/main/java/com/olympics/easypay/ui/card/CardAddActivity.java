@@ -246,6 +246,7 @@ public class CardAddActivity extends AppCompatActivity implements NavigationView
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Toast.makeText(CardAddActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 if (response.isSuccessful()) {
+                    setResult(RESULT_OK);
                     sharedPreferences
                             .edit()
                             .putString(CARD, card.toString())

@@ -1,6 +1,7 @@
 package com.olympics.easypay.ui.services.train.current;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -94,7 +95,11 @@ public class TrainFragmentReservationCheck extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         initData();
     }
 
@@ -211,6 +216,7 @@ public class TrainFragmentReservationCheck extends Fragment {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
+                            getActivity().setResult(Activity.RESULT_OK);
                             listener.gotoFragment(2);
                         }
                     }

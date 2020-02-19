@@ -30,6 +30,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.app.Activity.RESULT_OK;
+
 public class WalletFragment extends Fragment {
 
     private static final String TAG = "MyTag";
@@ -64,7 +66,7 @@ public class WalletFragment extends Fragment {
         payCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), CardActivity.class));
+                startActivityForResult(new Intent(getContext(), CardActivity.class), 111);
                 getActivity().overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
             }
         });
@@ -80,11 +82,24 @@ public class WalletFragment extends Fragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 111 && resultCode == RESULT_OK) {
+            getData();
+        }
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         initSharedPrefs();
         initRetroFit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         getData();
     }
 

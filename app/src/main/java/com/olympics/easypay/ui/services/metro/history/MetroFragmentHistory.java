@@ -54,7 +54,11 @@ public class MetroFragmentHistory extends Fragment implements MetroHistoryAdapte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         getData();
     }
 

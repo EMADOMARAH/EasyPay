@@ -284,6 +284,7 @@ public class CardDeleteActivity extends AppCompatActivity implements NavigationV
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
+                    setResult(RESULT_OK);
                     Toast.makeText(CardDeleteActivity.this, "Card Deleted", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 } else {

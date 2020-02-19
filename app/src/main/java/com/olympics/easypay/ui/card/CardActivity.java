@@ -277,6 +277,7 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(CardActivity.this, "Charged Successfully", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
                 }
             }
 
@@ -289,16 +290,27 @@ public class CardActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void addCard() {
-        startActivity(new Intent(getApplicationContext(), CardAddActivity.class));
+        startActivityForResult(new Intent(getApplicationContext(), CardAddActivity.class), 111);
         overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
     }
 
     private void delCard() {
-        startActivity(new Intent(getApplicationContext(), CardDeleteActivity.class));
+        startActivityForResult(new Intent(getApplicationContext(), CardDeleteActivity.class), 222);
         overridePendingTransition(R.anim.right_zero, R.anim.zero_left);
     }
 
-//    private void deleteCard(BigInteger cardNo) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 111 && resultCode == RESULT_OK) {
+            initData();
+        }
+        if (requestCode == 222 && resultCode == RESULT_OK) {
+            initData();
+        }
+    }
+
+    //    private void deleteCard(BigInteger cardNo) {
 //        MyRetroFitHelper.getInstance().deleteCard(id, cardNo).enqueue(new Callback<Void>() {
 //            @Override
 //            public void onResponse(Call<Void> call, Response<Void> response) {

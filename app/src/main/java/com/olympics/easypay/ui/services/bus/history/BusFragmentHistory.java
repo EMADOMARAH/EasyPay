@@ -60,7 +60,11 @@ public class BusFragmentHistory extends Fragment implements BusHistoryAdapter.Bu
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         initRetro();
     }
 

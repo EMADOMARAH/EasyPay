@@ -53,7 +53,11 @@ public class TrainFragmentHistory extends Fragment implements TrainHistoryAdapte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         getData();
     }
 

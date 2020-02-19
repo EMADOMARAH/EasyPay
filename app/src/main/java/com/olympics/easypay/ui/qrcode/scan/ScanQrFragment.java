@@ -97,8 +97,13 @@ public class ScanQrFragment extends Fragment {
 
         id = getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).getInt(Constants.TOKEN, 0);
 
-        initBalance();
         initQR();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initBalance();
     }
 
     private void initBalance() {
@@ -199,6 +204,7 @@ public class ScanQrFragment extends Fragment {
                                     if (response.isSuccessful()) {
                                         try {
                                             Toast.makeText(activity, response.body().string(), Toast.LENGTH_SHORT).show();
+                                            getActivity().setResult(RESULT_OK);
                                             getActivity().getSharedPreferences(Constants.SHARED_PREFS, 0).edit().putLong(BUS_TIME, Calendar.getInstance().getTimeInMillis()).apply();
                                             activity.onBackPressed();
                                         } catch (IOException e) {
@@ -239,6 +245,7 @@ public class ScanQrFragment extends Fragment {
                         MyRetroFitHelper.getInstance().show(id).enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                                getActivity().setResult(RESULT_OK);
                                 activity.onBackPressed();
                             }
 
