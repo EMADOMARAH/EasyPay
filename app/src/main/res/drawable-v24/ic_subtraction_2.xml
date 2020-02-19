@@ -2,12 +2,15 @@
     android:width="335dp"
     android:height="52dp"
     android:viewportWidth="335"
-    android:viewportHeight="52">
-  <path
-      android:pathData="M10,0h315a10,10 0,0 1,10 10v32a10,10 0,0 1,-10 10H10A10,10 0,0 1,0 42V10A10,10 0,0 1,10 0z"
-      android:fillColor="#fff"
-      android:strokeColor="#00000000"/>
-  <path
-      android:pathData="M10,1c-4.963,0 -9,4.037 -9,9v32c0,4.963 4.037,9 9,9h315c4.963,0 9,-4.037 9,-9V10c0,-4.963 -4.037,-9 -9,-9H10m0,-1h315c5.523,0 10,4.477 10,10v32c0,5.523 -4.477,10 -10,10H10C4.477,52 0,47.523 0,42V10C0,4.477 4.477,0 10,0z"
-      android:fillColor="#fff"/>
+    android:viewportHeight="52"
+    >
+    <path
+        android:fillColor="#fff"
+        android:pathData="M10,0h315a10,10 0,0 1,10 10v32a10,10 0,0 1,-10 10H10A10,10 0,0 1,0 42V10A10,10 0,0 1,10 0z"
+        android:strokeColor="#00000000"
+        />
+    <path
+        android:fillColor="#fff"
+        android:pathData="M10,1c-4.963,0 -9,4.037 -9,9v32c0,4.963 4.037,9 9,9h315c4.963,0 9,-4.037 9,-9V10c0,-4.963 -4.037,-9 -9,-9H10m0,-1h315c5.523,0 10,4.477 10,10v32c0,5.523 -4.477,10 -10,10H10C4.477,52 0,47.523 0,42V10C0,4.477 4.477,0 10,0z"
+        />
 </vector>
